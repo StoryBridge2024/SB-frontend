@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './getMessage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -32,7 +33,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const GetMessage()),
+                );
               })
         ],
       ),
