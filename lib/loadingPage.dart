@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import './makingFairytale.dart';
+
 class SendAPI extends StatefulWidget {
   final String text;
   const SendAPI({super.key, required this.text});
@@ -18,7 +20,11 @@ class _SendAPIState extends State<SendAPI> {
 
     //일단 여기에 대기할 수 있게 만들었는데, 나중에 API 받아와지면 넘어가게 만들면 될듯
     Future.delayed(const Duration(milliseconds: 2000), () {
-
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const MakeFairytale()),
+      );
     });
 
     return Scaffold(
