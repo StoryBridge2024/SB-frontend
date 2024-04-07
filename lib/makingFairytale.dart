@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './makingCharacter.dart';
 
 class MakeFairytale extends StatelessWidget {
   const MakeFairytale({super.key});
@@ -220,7 +221,11 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                             index += 1;
                                           });
                                         } else if (index == 2) {
-
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => const MakeCharacter()),
+                                          );
                                         }
                                       },
                                       child: Text(
