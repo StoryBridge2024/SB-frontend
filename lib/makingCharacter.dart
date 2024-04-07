@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './getImage.dart';
 
 class MakeCharacter extends StatelessWidget {
   const MakeCharacter({super.key});
@@ -73,7 +74,11 @@ class MakeCharacter extends StatelessWidget {
                                                       width: 250,
                                                     ),
                                                     onPressed: () {
-
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                              const GetImageFromCamera()));
                                                     },
                                                   ))),
                                           Flexible(
@@ -100,7 +105,11 @@ class MakeCharacter extends StatelessWidget {
                                                       width: 300,
                                                     ),
                                                     onPressed: () {
-
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                              const GetImageFromGallery()));
                                                     },
                                                   )))
                                         ],
