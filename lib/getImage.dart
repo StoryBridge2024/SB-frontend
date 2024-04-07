@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import './makeCharacterFace.dart';
+
 class GetImageFromGallery extends StatefulWidget {
   const GetImageFromGallery({super.key});
 
@@ -27,7 +29,13 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
     final length = MediaQuery.of(context).size.width;
 
     if (file != null) {
-
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MakeCharacterFace(file: file)),
+        );
+      });
     };
 
     return Scaffold(
@@ -84,7 +92,13 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     final length = MediaQuery.of(context).size.width;
 
     if (file != null) {
-
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MakeCharacterFace(file: file)),
+        );
+      });
     };
 
     return Scaffold(
