@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import './loadingPage.dart';
 
 class GetMessage extends StatefulWidget {
   const GetMessage({super.key});
@@ -70,7 +70,11 @@ class _GetMessageState extends State<GetMessage> {
                                         color: Colors.white, fontSize: 30),
                                   ),
                                   onPressed: () {
-
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SendAPI(text: tec.text)),
+                                    );
                                   },
                                 )))
                       ],
