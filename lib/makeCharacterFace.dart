@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import './makeCharacterBody.dart';
+
 class MakeCharacterFace extends StatefulWidget {
   final XFile? file;
 
@@ -90,7 +92,11 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                                 size: 50,
                               ),
                               onPressed: () {
-
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const MakeCharacterBody()));
                               }),
                         ),
                       )
