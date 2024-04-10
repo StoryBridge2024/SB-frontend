@@ -9,7 +9,7 @@ class GetMessage extends StatefulWidget {
 }
 
 class _GetMessageState extends State<GetMessage> {
-  var tec = TextEditingController(text:'');
+  var tec = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -24,64 +24,71 @@ class _GetMessageState extends State<GetMessage> {
               child: Text(
                 '교훈 입력',
                 style: TextStyle(
-                    fontSize: 60,
-                    color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA)),
+                  fontSize: 60,
+                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                ),
               ),
             ),
             Expanded(
-                child: Scaffold(
-                    backgroundColor: Color(0x00ffffff),
-                    body: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Container(),
+              child: Scaffold(
+                backgroundColor: Color(0x00ffffff),
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Container(),
+                    ),
+                    Flexible(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(50),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(200),
+                          color: Colors.white,
                         ),
-                        Flexible(
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.all(50),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(200),
-                                color: Colors.white,
+                        margin: EdgeInsets.fromLTRB(200, 0, 200, 0),
+                        child: TextField(
+                          style: TextStyle(fontSize: 40),
+                          controller: tec,
+                          decoration: InputDecoration(
+                            hintText: '아이에게 전하고 싶은 메세지를 입력해주세요',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                            shape: StadiumBorder(),
+                            padding: EdgeInsets.all(30),
+                          ),
+                          child: Text(
+                            '다음',
+                            style: TextStyle(color: Colors.white, fontSize: 30),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SendAPI(text: tec.text),
                               ),
-                              margin: EdgeInsets.fromLTRB(200, 0, 200, 0),
-                              child: TextField(
-                                style: TextStyle(fontSize: 40),
-                                controller: tec,
-                                decoration: InputDecoration(
-                                  hintText: '아이에게 전하고 싶은 메세지를 입력해주세요',
-                                ),
-                              ),
-                            )),
-                        Flexible(
-                            child: Container(
-                                padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                                alignment: Alignment.centerRight,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color.fromARGB(
-                                          0xFF, 0x3B, 0x2F, 0xCA),
-                                      shape: StadiumBorder(),
-                                      padding: EdgeInsets.all(30)),
-                                  child: Text(
-                                    '다음',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 30),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SendAPI(text: tec.text)),
-                                    );
-                                  },
-                                )))
-                      ],
-                    )))
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
-    );;
+    );
   }
 }
