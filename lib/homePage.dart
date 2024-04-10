@@ -21,24 +21,27 @@ class HomePage extends StatelessWidget {
             ),
           ),
           TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.all(40)),
-                backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(0x75, 0x91, 0xB6, 0xFF)),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(EdgeInsets.all(40)),
+              backgroundColor: MaterialStateProperty.all(
+                Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
               ),
-              child: Text(
-                '동화 제작하기',
-                style: TextStyle(
-                  fontSize: 50,
+            ),
+            child: Text(
+              '동화 제작하기',
+              style: TextStyle(
+                fontSize: 50,
+              ),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const GetMessage(),
                 ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const GetMessage()),
-                );
-              })
+              );
+            },
+          ),
         ],
       ),
     );

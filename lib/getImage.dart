@@ -15,13 +15,17 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
   XFile? file;
 
   Future<void> _pickImage() async {
-    ImagePicker().pickImage(source: ImageSource.gallery).then((image) {
-      if (image != null) {
-        setState(() {
-          file = image;
-        });
-      }
-    });
+    ImagePicker().pickImage(source: ImageSource.gallery).then(
+      (image) {
+        if (image != null) {
+          setState(
+            () {
+              file = image;
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -29,14 +33,17 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
     final length = MediaQuery.of(context).size.width;
 
     if (file != null) {
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MakeCharacterFace(file: file)),
-        );
-      });
-    };
+      Future.delayed(
+        const Duration(milliseconds: 2000),
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MakeCharacterFace(file: file)),
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -46,26 +53,25 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
         ],
       ),
       body: Center(
-          child: Container(
-            color: Colors.grey,
-            height: length,
-            width: length,
-            child: (file != null)
-                ? Image.file(
-              File(file!.path),
-              fit: BoxFit.cover,
-            )
-                : const Icon(
-              Icons.image,
-              size: 50,
-              color: Colors.white,
-            ),
-          )),
+        child: Container(
+          color: Colors.grey,
+          height: length,
+          width: length,
+          child: (file != null)
+              ? Image.file(
+                  File(file!.path),
+                  fit: BoxFit.cover,
+                )
+              : const Icon(
+                  Icons.image,
+                  size: 50,
+                  color: Colors.white,
+                ),
+        ),
+      ),
     );
   }
 }
-
-
 
 class GetImageFromCamera extends StatefulWidget {
   const GetImageFromCamera({super.key});
@@ -78,13 +84,17 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
   XFile? file;
 
   Future<void> _pickImage() async {
-    ImagePicker().pickImage(source: ImageSource.camera).then((image) {
-      if (image != null) {
-        setState(() {
-          file = image;
-        });
-      }
-    });
+    ImagePicker().pickImage(source: ImageSource.camera).then(
+      (image) {
+        if (image != null) {
+          setState(
+            () {
+              file = image;
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -92,14 +102,17 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     final length = MediaQuery.of(context).size.width;
 
     if (file != null) {
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MakeCharacterFace(file: file)),
-        );
-      });
-    };
+      Future.delayed(
+        const Duration(milliseconds: 2000),
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MakeCharacterFace(file: file)),
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -109,22 +122,22 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
         ],
       ),
       body: Center(
-          child: Container(
-            color: Colors.grey,
-            height: length,
-            width: length,
-            child: (file != null)
-                ? Image.file(
-              File(file!.path),
-              fit: BoxFit.cover,
-
-            )
-                : const Icon(
-              Icons.image,
-              size: 50,
-              color: Colors.white,
-            ),
-          )),
+        child: Container(
+          color: Colors.grey,
+          height: length,
+          width: length,
+          child: (file != null)
+              ? Image.file(
+                  File(file!.path),
+                  fit: BoxFit.cover,
+                )
+              : const Icon(
+                  Icons.image,
+                  size: 50,
+                  color: Colors.white,
+                ),
+        ),
+      ),
     );
   }
 }
