@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './showFairytale.dart';
 
 class MakeCharacterBody extends StatelessWidget {
   const MakeCharacterBody({super.key});
@@ -40,7 +41,11 @@ class MakeCharacterBody extends StatelessWidget {
                               size: 50,
                             ),
                             onPressed: () {
-
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const ShowFairytale()));
                             }),
                       ),
                     )
