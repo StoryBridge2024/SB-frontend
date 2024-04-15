@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './loadingPage.dart';
+import 'makingFairytale.dart';
 
 class GetMessage extends StatefulWidget {
   const GetMessage({super.key});
@@ -75,7 +75,7 @@ class _GetMessageState extends State<GetMessage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SendAPI(text: tec.text),
+                                builder: (context) => MakeFairytale(),
                               ),
                             );
                           },

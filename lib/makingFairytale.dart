@@ -1,60 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/api/openai_api.dart';
 
 import './makingCharacter.dart';
+import 'models/script_model.dart';
 
 class MakeFairytale extends StatelessWidget {
-  const MakeFairytale({super.key});
+  MakeFairytale({super.key});
+
+  final Future<ScriptModel> scriptModel = OpenAI().createCompletion();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                '이야기가 완성되었어요!',
-                style: TextStyle(
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
-                  fontSize: 80,
-                ),
-              ),
-            ),
-            Container(
-              child: Text(
-                '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
-                style: TextStyle(fontSize: 50),
-              ),
-            ),
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all(
-                  EdgeInsets.all(40),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                ),
-              ),
-              child: Text(
-                '배치하기',
-                style: TextStyle(
-                  fontSize: 50,
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PlacingCharacter(),
+          backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+          body: FutureBuilder(
+            future: scriptModel,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                print(snapshot.data?.choices);
+                if (snapshot.data?.choices == null) {
+                  return Text('데이터가 없습니다.');
+                }
+                return ListView(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            '이야기가 완성되었어요!',
+                            style: TextStyle(
+                              color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                              fontSize: 80,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
+                          style: TextStyle(fontSize: 50),
+                        ),
+                        TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(
+                              EdgeInsets.all(40),
+                            ),
+                            backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
+                            ),
+                          ),
+                          child: Text(
+                            '배치하기',
+                            style: TextStyle(
+                              fontSize: 50,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PlacingCharacter(),
+                              ),
+                            );
+                          },
+                        ),
+                        Text(
+                          (snapshot.data?.choices[0])["message"]["content"],
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              } else {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        '이야기를 만드는 중입니다',
+                        style: TextStyle(
+                          color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                          fontSize: 80,
+                        ),
+                      ),
+                      CircularProgressIndicator(
+                        color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
+                        strokeWidth: 10,
+                      ),
+                    ],
                   ),
                 );
-              },
-            )
-          ],
-        ),
-      ),
+              }
+            },
+          )),
     );
   }
 }
