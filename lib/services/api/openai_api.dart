@@ -6,7 +6,8 @@ import '../../constants/prompt.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
-  final String baseUrl = 'https://api.openai.com/v1/';
+  final String baseScriptUrl = 'https://api.openai.com/v1/';
+  final String baseImageUrl = 'https://api.openai.com/v1/';
 
   OpenAI._privateConstructor();
 
@@ -16,9 +17,9 @@ class OpenAI {
     return _instance;
   }
 
-  Future<ScriptModel> createCompletion() async {
+  Future<OriginalScriptModel> createCompletion() async {
     final response = await post(
-      Uri.parse('${baseUrl}chat/completions'),
+      Uri.parse('${baseScriptUrl}chat/completions'),
       headers: {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
@@ -28,7 +29,9 @@ class OpenAI {
     if (response.statusCode != 200) {
       throw Exception('Failed to load response');
     }
-    ScriptModel scriptModel = ScriptModel.fromJson(json.decode(response.body));
-    return scriptModel;
+    var responseBody=utf8.decode(response.bodyBytes);
+    OriginalScriptModel originalScriptModel =
+        OriginalScriptModel.fromJson(json.decode(responseBody));
+    return originalScriptModel;
   }
 }
