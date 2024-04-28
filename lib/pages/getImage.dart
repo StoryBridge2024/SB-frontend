@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import './makeCharacterFace.dart';
+import 'makeCharacterFace.dart';
 
 class GetImageFromGallery extends StatefulWidget {
   const GetImageFromGallery({super.key});

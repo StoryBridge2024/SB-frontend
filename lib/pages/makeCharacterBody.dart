@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './showFairytale.dart';
+import 'showFairytale.dart';
 
 class MakeCharacterBody extends StatelessWidget {
   const MakeCharacterBody({super.key});

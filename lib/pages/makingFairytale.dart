@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
-import './makingCharacter.dart';
-import 'models/script_model.dart';
+import 'makingCharacter.dart';
+import '../models/script_model.dart';
 
 class MakeFairytale extends StatelessWidget {
   final String text;

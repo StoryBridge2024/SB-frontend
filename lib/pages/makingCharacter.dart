@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './getImage.dart';
+import 'getImage.dart';
 
 class MakeCharacter extends StatelessWidget {
   const MakeCharacter({super.key});

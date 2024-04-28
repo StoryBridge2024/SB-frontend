@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './getMessage.dart';
+import 'getMessage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
