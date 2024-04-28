@@ -1,5 +1,14 @@
 # SB-frontend
 
+# How to Setup
+## dotenv
+1. 최상위 디렉토리에 '.env'파일 생성
+2. 디스코드 Settings 채널에 올려둔 내용을 위 파일에 기입
+
+- **주의** 
+    - dotenv파일에는 apiKey처럼 공개되면 안되는 내용이 들어가는거라 github에 올라가면 안됌
+    - push하기 전에 항상 dotenv파일 올라가지 않는지 확인하기
+
 # 가이드라인
 
 ## 브랜치 전략
