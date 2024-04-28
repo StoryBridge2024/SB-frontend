@@ -1,4 +1,4 @@
-const textPrompt = {
+const Map<String, dynamic> textPrompt = {
   "model": "gpt-4-turbo-preview",
   "response_format": {"type": "json_object"},
   "messages": [
@@ -10,9 +10,9 @@ const textPrompt = {
     {
       "role": "user",
       "content":
-      "The theme is '개과천선'. Characters in fairy tales must be people. Not all illustrations need to apply Action list. You should also create a fairy tale by adding one or more of the fun elements below. Each Scene of contents consist of 5 sentences."
+      "Characters in fairy tales must be people. Not all illustrations need to apply Action list. You should also create a fairy tale by adding one or more of the fun elements below. Each Scene of contents consist of 5 sentences."
     }
   ]
 };
-
+const mutablePrompt="The theme is ";
 const imagePrompt='';

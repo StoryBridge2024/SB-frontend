@@ -5,12 +5,14 @@ import './makingCharacter.dart';
 import 'models/script_model.dart';
 
 class MakeFairytale extends StatelessWidget {
-  MakeFairytale({super.key});
+  final String text;
 
-  final Future<OriginalScriptModel> scriptModel = OpenAI().createCompletion();
+  MakeFairytale(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Future<OriginalScriptModel> scriptModel =
+        OpenAI().createCompletion(text);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
@@ -18,7 +20,6 @@ class MakeFairytale extends StatelessWidget {
           future: scriptModel,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print(snapshot.data?.choices);
               if (snapshot.data?.choices == null) {
                 return Text('데이터가 없습니다.');
               }
@@ -75,13 +76,17 @@ class MakeFairytale extends StatelessWidget {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       '이야기를 만드는 중입니다',
                       style: TextStyle(
                         color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
                         fontSize: 80,
                       ),
+                    ),
+                    Text(
+                      '동화 주제: $text',
+                      style: TextStyle(fontSize: 50),
                     ),
                     CircularProgressIndicator(
                       color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),

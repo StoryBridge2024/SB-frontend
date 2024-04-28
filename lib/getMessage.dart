@@ -75,7 +75,7 @@ class _GetMessageState extends State<GetMessage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MakeFairytale(),
+                                builder: (context) => MakeFairytale(tec.text),
                               ),
                             );
                           },

@@ -17,19 +17,28 @@ class OpenAI {
     return _instance;
   }
 
-  Future<OriginalScriptModel> createCompletion() async {
+  Map<String, dynamic> deepCopy(Map<String, dynamic> source) {
+    return json.decode(json.encode(source));
+  }
+
+  Future<OriginalScriptModel> createCompletion(String theme) async {
+    String prompt = "$mutablePrompt$theme ";
+    var textPromptWithTheme = deepCopy(textPrompt);
+    textPromptWithTheme['messages']?[1]['content'] =
+        prompt + textPromptWithTheme['messages']?[1]['content'];
+
     final response = await post(
       Uri.parse('${baseScriptUrl}chat/completions'),
       headers: {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
       },
-      body: json.encode(textPrompt),
+      body: json.encode(textPromptWithTheme),
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to load response');
     }
-    var responseBody=utf8.decode(response.bodyBytes);
+    var responseBody = utf8.decode(response.bodyBytes);
     OriginalScriptModel originalScriptModel =
         OriginalScriptModel.fromJson(json.decode(responseBody));
     return originalScriptModel;

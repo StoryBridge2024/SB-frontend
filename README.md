@@ -1,5 +1,8 @@
 # SB-frontend
 
+# CheckList before Demo
+1. GPT Api billing
+
 # How to Setup
 ## dotenv
 1. 최상위 디렉토리에 '.env'파일 생성
