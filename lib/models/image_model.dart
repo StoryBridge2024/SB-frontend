@@ -1,0 +1,6 @@
+class RefinedImageModel{
+
+}
+class OriginalImageModel{
+
+}
