@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ShowFairytale extends StatelessWidget {
-  const ShowFairytale({super.key});
+  ShowFairytale({super.key, required this.image});
+  var image;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(),
+                child: Story(image: image),
               ),
             ),
           ],
@@ -38,7 +39,9 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  const Story({super.key});
+  Story({super.key, required this.image});
+
+  var image;
 
   @override
   State<Story> createState() => _StoryState();
@@ -58,11 +61,13 @@ class _StoryState extends State<Story> {
   ];
 
   //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
-  List<double> locX = [100, 100, 100];
-  List<double> locY = [100, 100, 100];
+  List<double> locX = [-100, -100, -100];
+  List<double> locY = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
+    var image = widget.image;
+
     Future.delayed(
       const Duration(milliseconds: 2000),
       () {
@@ -95,14 +100,9 @@ class _StoryState extends State<Story> {
                     ),
                   ),
                   Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
-                    child: Image.asset(
-                      'assets/image/img.png',
-                      height: 300,
-                      width: 300,
-                    ),
-                  ),
+                      left: locX.elementAt(index),
+                      top: locY.elementAt(index),
+                      child: image),
                   Positioned(
                     left: locX.elementAt(index),
                     top: locY.elementAt(index),
