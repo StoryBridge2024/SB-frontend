@@ -1,8 +1,12 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/makingFairytale.dart';
+
 
 class ShowFairytale extends StatelessWidget {
-  ShowFairytale({super.key, required this.image});
-  var image;
+  ShowFairytale({super.key, required this.images});
+
+  List<Uint8List> images;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(image: image),
+                child: Story(image: images),
               ),
             ),
           ],
@@ -61,8 +65,6 @@ class _StoryState extends State<Story> {
   ];
 
   //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
-  List<double> locX = [-100, -100, -100];
-  List<double> locY = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {

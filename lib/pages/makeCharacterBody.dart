@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,7 @@ class MakeCharacterBody extends StatelessWidget {
                                 child: Container(
                                   child: Image.asset(
                                     "assets/image/human_shape.png",
-                                    scale: 0.75,
+                                    scale: 0.85,
                                   ),
                                 ),
                               ),
@@ -76,32 +78,7 @@ class MakeCharacterBody extends StatelessWidget {
                         )),
                     Flexible(
                       flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        alignment: Alignment.bottomRight,
-                        child: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: FloatingActionButton(
-                            backgroundColor:
-                                Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
-                            shape: CircleBorder(),
-                            child: Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 50,
-                            ),
-                            onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const ShowFairytale(),
-                              //   ),
-                              // );
-                            },
-                          ),
-                        ),
-                      ),
+                      child: Container(),
                     ),
                   ],
                 ),
@@ -160,7 +137,7 @@ class _DrawBoxState extends State<DrawBox> {
                   const Expanded(child: SizedBox()),
                   Row(
                     children: _buildActions(context),
-                  )
+                  ),
                 ],
               ),
             )
@@ -200,10 +177,36 @@ class _DrawBoxState extends State<DrawBox> {
         tooltip: "Show PNG Image",
         onPressed: () => _showImage(context),
       ),
-      IconButton(
-        icon: const Icon(Icons.data_object),
-        tooltip: "Show JSON",
-        onPressed: () => _showJson(context),
+      FloatingActionButton(
+        backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+        shape: CircleBorder(),
+        child: Icon(
+          Icons.arrow_forward,
+          color: Colors.white,
+          size: 50,
+        ),
+        onPressed: () {
+          List<Uint8List> images = [];
+          var image = notifier.renderImage();
+          image.then((imgData) {
+            Uint8List imagedata = imgData.buffer.asUint8List();
+            images.add(_extractTile(imagedata, 41, 13, 12, 15) as Uint8List);
+            images.add(_extractTile(imagedata, 33, 13, 8, 4) as Uint8List);
+            images.add(_extractTile(imagedata, 25, 13, 8, 4) as Uint8List);
+            images.add(_extractTile(imagedata, 53, 13, 8, 4) as Uint8List);
+            images.add(_extractTile(imagedata, 61, 13, 8, 4) as Uint8List);
+            images.add(_extractTile(imagedata, 41, 28, 6, 10) as Uint8List);
+            images.add(_extractTile(imagedata, 41, 38, 6, 10) as Uint8List);
+            images.add(_extractTile(imagedata, 47, 28, 6, 10) as Uint8List);
+            images.add(_extractTile(imagedata, 47, 38, 6, 10) as Uint8List);
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ShowFairytale(images: images),
+            ),
+          );
+        },
       ),
     ];
   }
@@ -259,8 +262,7 @@ class _DrawBoxState extends State<DrawBox> {
           height: 400,
           width: 400,
           child: FutureBuilder<List<Uint8List>>(
-            future: image.then((imgData)
-            {
+            future: image.then((imgData) {
               Uint8List imagedata = imgData.buffer.asUint8List();
               return Future.wait([
                 _extractTile(imagedata, 41, 13, 12, 15), // 몸통
@@ -274,8 +276,10 @@ class _DrawBoxState extends State<DrawBox> {
                 _extractTile(imagedata, 47, 38, 6, 10) // 오른다리 아래
               ]);
             }),
-            builder: (BuildContext context, AsyncSnapshot<List<Uint8List>> snapshot) {
-              if (snapshot.hasData) { // 해결못함 다음 페이지로 넘기기
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Uint8List>> snapshot) {
+              if (snapshot.hasData) {
+                // 해결못함 다음 페이지로 넘기기
                 /*Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -291,7 +295,8 @@ class _DrawBoxState extends State<DrawBox> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return Image.memory(snapshot.data![index].buffer.asUint8List());
+                    return Image.memory(
+                        snapshot.data![index].buffer.asUint8List());
                   },
                 );
               } else {
@@ -313,7 +318,8 @@ class _DrawBoxState extends State<DrawBox> {
     );
   }
 
-  Future<Uint8List> _extractTile(Uint8List imageData, int startCol, int startRow, int numCols, int numRows) async {
+  Future<Uint8List> _extractTile(Uint8List imageData, int startCol,
+      int startRow, int numCols, int numRows) async {
     final codec = await instantiateImageCodec(imageData);
     final frame = await codec.getNextFrame();
     final image = frame.image;
@@ -328,12 +334,18 @@ class _DrawBoxState extends State<DrawBox> {
     // Clip and draw the top left tile
     canvas.drawImageRect(
         image,
-        Rect.fromLTWH(startCol * tileWidth.toDouble(), startRow * tileHeight.toDouble(), numCols * tileWidth.toDouble(), numRows * tileHeight.toDouble()),
-        Rect.fromLTWH(0, 0, numCols * tileWidth.toDouble(), numRows * tileHeight.toDouble()),
+        Rect.fromLTWH(
+            startCol * tileWidth.toDouble(),
+            startRow * tileHeight.toDouble(),
+            numCols * tileWidth.toDouble(),
+            numRows * tileHeight.toDouble()),
+        Rect.fromLTWH(0, 0, numCols * tileWidth.toDouble(),
+            numRows * tileHeight.toDouble()),
         paint);
 
     final picture = recorder.endRecording();
-    final img = await picture.toImage(numCols * tileWidth, numRows * tileHeight);
+    final img =
+        await picture.toImage(numCols * tileWidth, numRows * tileHeight);
     final byteData = await img.toByteData(format: ImageByteFormat.png);
     return byteData!.buffer.asUint8List();
   }
@@ -389,12 +401,12 @@ class _DrawBoxState extends State<DrawBox> {
         elevation: selected ? 4 : 0,
         shape: const CircleBorder(),
         child: InkWell(
-          onTap: () => notifier.setStrokeWidth(strokeWidth),
+          onTap: () => notifier.setStrokeWidth(strokeWidth / 4),
           customBorder: const CircleBorder(),
           child: AnimatedContainer(
             duration: kThemeAnimationDuration,
-            width: strokeWidth * 2,
-            height: strokeWidth * 2,
+            width: strokeWidth * 4,
+            height: strokeWidth * 4,
             decoration: BoxDecoration(
                 color: state.map(
                   drawing: (s) => Color(s.selectedColor),
@@ -424,33 +436,6 @@ class _DrawBoxState extends State<DrawBox> {
         _buildEraserButton(context),
       ],
     );
-  }
-
-  Widget _buildPointerModeSwitcher(BuildContext context) {
-    return ValueListenableBuilder(
-        valueListenable: notifier.select(
-          (value) => value.allowedPointersMode,
-        ),
-        builder: (context, value, child) {
-          return SegmentedButton<ScribblePointerMode>(
-            multiSelectionEnabled: false,
-            emptySelectionAllowed: false,
-            onSelectionChanged: (v) => notifier.setAllowedPointersMode(v.first),
-            segments: const [
-              ButtonSegment(
-                value: ScribblePointerMode.all,
-                icon: Icon(Icons.touch_app),
-                label: Text("All pointers"),
-              ),
-              ButtonSegment(
-                value: ScribblePointerMode.penOnly,
-                icon: Icon(Icons.draw),
-                label: Text("Pen only"),
-              ),
-            ],
-            selected: {value},
-          );
-        });
   }
 
   Widget _buildEraserButton(BuildContext context) {

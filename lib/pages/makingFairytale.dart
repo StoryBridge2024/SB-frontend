@@ -4,6 +4,9 @@ import 'package:frontend/services/api/openai_api.dart';
 import 'makingCharacter.dart';
 import '../models/script_model.dart';
 
+List<double> locX = [100, 100, 100];
+List<double> locY = [100, 100, 100];
+
 class MakeFairytale extends StatelessWidget {
   final String text;
 
@@ -294,8 +297,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MakeCharacter(),
+                                        builder: (context) => MakeCharacter(),
                                       ),
                                     );
                                   }
