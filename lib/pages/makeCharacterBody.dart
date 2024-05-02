@@ -148,6 +148,7 @@ class _DrawBoxState extends State<DrawBox> {
   }
 
   List<Widget> _buildActions(context) {
+    List<Uint8List> images = [];
     return [
       ValueListenableBuilder(
         valueListenable: notifier,
@@ -175,7 +176,7 @@ class _DrawBoxState extends State<DrawBox> {
       IconButton(
         icon: const Icon(Icons.image),
         tooltip: "Show PNG Image",
-        onPressed: () => _showImage(context),
+        onPressed: () => _showImage(context, images),
       ),
       FloatingActionButton(
         backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
@@ -186,20 +187,6 @@ class _DrawBoxState extends State<DrawBox> {
           size: 50,
         ),
         onPressed: () {
-          List<Uint8List> images = [];
-          var image = notifier.renderImage();
-          image.then((imgData) {
-            Uint8List imagedata = imgData.buffer.asUint8List();
-            images.add(_extractTile(imagedata, 41, 13, 12, 15) as Uint8List);
-            images.add(_extractTile(imagedata, 33, 13, 8, 4) as Uint8List);
-            images.add(_extractTile(imagedata, 25, 13, 8, 4) as Uint8List);
-            images.add(_extractTile(imagedata, 53, 13, 8, 4) as Uint8List);
-            images.add(_extractTile(imagedata, 61, 13, 8, 4) as Uint8List);
-            images.add(_extractTile(imagedata, 41, 28, 6, 10) as Uint8List);
-            images.add(_extractTile(imagedata, 41, 38, 6, 10) as Uint8List);
-            images.add(_extractTile(imagedata, 47, 28, 6, 10) as Uint8List);
-            images.add(_extractTile(imagedata, 47, 38, 6, 10) as Uint8List);
-          });
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -252,7 +239,7 @@ class _DrawBoxState extends State<DrawBox> {
       ),
     );
   }*/
-  void _showImage(BuildContext context) async {
+  void _showImage(BuildContext context, List<Uint8List> images) async {
     final image = notifier.renderImage();
     showDialog(
       context: context,
@@ -292,11 +279,15 @@ class _DrawBoxState extends State<DrawBox> {
                 //print(Image.memory(snapshot.data!.buffer.asUint8List())
                 //    .runtimeType);
                 //print(snapshot.data!.buffer.asUint8List().runtimeType);
+
+                images.clear();
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
+                    images.add(snapshot.data![index].buffer.asUint8List());
                     return Image.memory(
-                        snapshot.data![index].buffer.asUint8List());
+                      snapshot.data![index].buffer.asUint8List(),
+                    );
                   },
                 );
               } else {
