@@ -29,27 +29,6 @@ List<double> locY = [
   100,
 ];
 
-List<String> l = [
-  '첫번째 장면에 대한 이야기 입니다.',
-  '두번째 장면에 대한 이야기 입니다.',
-  '세번째 장면에 대한 이야기 입니다.',
-  '네번째 장면에 대한 이야기 입니다.',
-  '다섯 번째 장면에 대한 이야기 입니다.',
-  '여섯 번째 장면에 대한 이야기 입니다.',
-  '일곱 번째 장면에 대한 이야기 입니다.',
-  '여덟 번째 장면에 대한 이야기 입니다.',
-];
-List<String> img = [
-  'assets/image/img_1.png',
-  'assets/image/img_2.png',
-  'assets/image/img_3.png',
-  'assets/image/img_1.png',
-  'assets/image/img_2.png',
-  'assets/image/img_3.png',
-  'assets/image/img_2.png',
-  'assets/image/img_3.png',
-];
-
 class MakeFairytale extends StatelessWidget {
   final String text;
 
