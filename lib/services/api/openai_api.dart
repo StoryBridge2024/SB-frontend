@@ -73,7 +73,7 @@ class OpenAI {
   Future<SceneModel> createScene(String theme) async {
     Map<String,dynamic> content = await createCompletion(theme);
     List<String> images = [];
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 3; i++) {
       images.add(await createImage());
     }
     print("createScene: $content, $images");
