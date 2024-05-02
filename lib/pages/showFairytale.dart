@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/mediapipe/pose_detector_view.dart';
 import '../models/scene_model.dart';
+import "package:frontend/dummy/dummy_data.dart";
 
 late final SceneModel gSceneModel;
 
@@ -56,6 +57,7 @@ class Story extends StatefulWidget {
 
 class _StoryState extends State<Story> {
   int index = 0;
+  int max = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class _StoryState extends State<Story> {
     Future.delayed(
       const Duration(milliseconds: 2000),
       () {
-        if (index < 7) {
+        if (index < max-1) {
           setState(
             () {
               index += 1;
@@ -86,14 +88,15 @@ class _StoryState extends State<Story> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: PoseDetectorView(),
+                    child: Image.asset(imgs.elementAt(index)),
                   ),
-                  Positioned(
-                      left: locX.elementAt(index),
-                      top: locY.elementAt(index),
-                      child: Container(
-                        child: Image.memory(images[1]),
-                      )),
+                  // Positioned(
+                  //   left: locX.elementAt(index),
+                  //   right: locY.elementAt(index),
+                  //   child: Transform.rotate(
+                  //       angle: -90*3.141592/180,
+                  //       child: PoseDetectorView(images:images)),
+                  // ),
                 ],
               ),
             ),
@@ -111,7 +114,8 @@ class _StoryState extends State<Story> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        gSceneModel.scriptModelList[index].scene_contents,
+                        texts.elementAt(index),
+//                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),

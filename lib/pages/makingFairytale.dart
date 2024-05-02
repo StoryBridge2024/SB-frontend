@@ -174,11 +174,7 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
-  int max = 8;
-
-  //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
-  List<double> locX = [100, 100, 100];
-  List<double> locY = [100, 100, 100];
+  int max = 2;
 
   @override
   Widget build(BuildContext context) {

@@ -252,15 +252,15 @@ class _DrawBoxState extends State<DrawBox> {
             future: image.then((imgData) {
               Uint8List imagedata = imgData.buffer.asUint8List();
               return Future.wait([
-                _extractTile(imagedata, 41, 13, 12, 15), // 몸통
-                _extractTile(imagedata, 33, 13, 8, 4), // 왼팔 팔꿈치~어깨
-                _extractTile(imagedata, 25, 13, 8, 4), // 왼팔 손~팔꿈치
-                _extractTile(imagedata, 53, 13, 8, 4), // 오른팔 팔꿈치~어깨
-                _extractTile(imagedata, 61, 13, 8, 4), // 오른팔 손~팔꿈치
-                _extractTile(imagedata, 41, 28, 6, 10), // 왼다리 위
-                _extractTile(imagedata, 41, 38, 6, 10), // 왼다리 아래
-                _extractTile(imagedata, 47, 28, 6, 10), // 오른다리 위
-                _extractTile(imagedata, 47, 38, 6, 10) // 오른다리 아래
+                _extractTile(imagedata, 41, 13, 12, 15), //0 몸통
+                _extractTile(imagedata, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
+                _extractTile(imagedata, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
+                _extractTile(imagedata, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
+                _extractTile(imagedata, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
+                _extractTile(imagedata, 41, 28, 6, 10), //5 왼다리 위
+                _extractTile(imagedata, 41, 38, 6, 10), //6 왼다리 아래
+                _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
+                _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
             }),
             builder: (BuildContext context,

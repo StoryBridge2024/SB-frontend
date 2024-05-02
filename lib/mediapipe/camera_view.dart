@@ -1,17 +1,19 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
-import 'package:frontend/main.dart';
+import '../main.dart';
 
 // 카메라 화면
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
-      required this.customPaint,
-      required this.onImage,
-      this.initialDirection = CameraLensDirection.back})
+        required this.customPaint,
+        required this.onImage,
+        this.initialDirection = CameraLensDirection.back})
       : super(key: key);
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
@@ -31,6 +33,8 @@ class _CameraViewState extends State<CameraView> {
   int _cameraIndex = -1;
   // 확대 축소 레벨
   double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
+  // 카메라 렌즈 변경 변수
+  bool _changingCameraLens = false;
 
   @override
   void initState() {
@@ -38,13 +42,13 @@ class _CameraViewState extends State<CameraView> {
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
     if (cameras.any(
-      (element) =>
-          element.lensDirection == widget.initialDirection &&
+          (element) =>
+      element.lensDirection == widget.initialDirection &&
           element.sensorOrientation == 90,
     )) {
       _cameraIndex = cameras.indexOf(
         cameras.firstWhere((element) =>
-            element.lensDirection == widget.initialDirection &&
+        element.lensDirection == widget.initialDirection &&
             element.sensorOrientation == 90),
       );
     } else {
@@ -74,7 +78,26 @@ class _CameraViewState extends State<CameraView> {
       // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
       body: _liveFeedBody(),
       // 전면<->후면 변경 버튼
+      floatingActionButton: _floatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  // 전면<->후면 카메라 변경 버튼
+  Widget? _floatingActionButton() {
+    if (cameras.length == 1) return null;
+    return SizedBox(
+        height: 70.0,
+        width: 70.0,
+        child: FloatingActionButton(
+          onPressed: _switchLiveCamera,
+          child: Icon(
+            Platform.isIOS
+                ? Icons.flip_camera_ios_outlined
+                : Icons.flip_camera_android_outlined,
+            size: 40,
+          ),
+        ));
   }
 
   // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
@@ -94,7 +117,50 @@ class _CameraViewState extends State<CameraView> {
     // to prevent scaling down, invert the value
     if (scale < 1) scale = 1 / scale;
 
-    return Container();
+    return Container(
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          // 전면 후면 변경 시 화면 변경 처리
+          Transform.scale(
+            scale: scale,
+            child: Center(
+              child: _changingCameraLens
+                  ? const Center(
+                child: Text('Changing camera lens'),
+              )
+                  : CameraPreview(_controller!),
+            ),
+          ),
+          // 추출된 스켈레톤 그리기
+          if (widget.customPaint != null) widget.customPaint!,
+          // 화면 확대 축소 위젯
+          Positioned(
+            bottom: 100,
+            left: 50,
+            right: 50,
+            child: Slider(
+              value: zoomLevel,
+              min: minZoomLevel,
+              max: maxZoomLevel,
+              onChanged: (newSliderValue) {
+                setState(() {
+                  zoomLevel = newSliderValue;
+                  _controller!.setZoomLevel(zoomLevel);
+                });
+              },
+              divisions: (maxZoomLevel - 1).toInt() < 1
+                  ? null
+                  : (maxZoomLevel - 1).toInt(),
+            ),
+          ),
+          // if (_byteImage != null)
+          //   Image.memory(_byteImage!, width: 100, height: 100),
+          // if (_byteImage != null)
+          //   Image(image: MemoryImage(_byteImage!), width: 100, height: 100),
+        ],
+      ),
+    );
   }
 
   // 실시간으로 카메라에서 이미지 받기(비동기적)
@@ -128,6 +194,16 @@ class _CameraViewState extends State<CameraView> {
     _controller = null;
   }
 
+  // 전면<->후면 카메라 변경 함수
+  Future _switchLiveCamera() async {
+    setState(() => _changingCameraLens = true);
+    _cameraIndex = (_cameraIndex + 1) % cameras.length;
+
+    await _stopLiveFeed();
+    await _startLiveFeed();
+    setState(() => _changingCameraLens = false);
+  }
+
   // 카메라에서 실시간으로 받아온 이미치 처리: PoseDetectorView에서 받아온 함수인 onImage(이미지에 포즈가 추출되었으면 스켈레톤 그려주는 함수) 실행
   Future _processCameraImage(CameraImage image) async {
     final WriteBuffer allBytes = WriteBuffer();
@@ -137,19 +213,19 @@ class _CameraViewState extends State<CameraView> {
     final bytes = allBytes.done().buffer.asUint8List();
 
     final Size imageSize =
-        Size(image.width.toDouble(), image.height.toDouble());
+    Size(image.width.toDouble(), image.height.toDouble());
 
     final camera = cameras[_cameraIndex];
     final imageRotation =
-        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+    InputImageRotationValue.fromRawValue(camera.sensorOrientation);
     if (imageRotation == null) return;
 
     final inputImageFormat =
-        InputImageFormatValue.fromRawValue(image.format.raw);
+    InputImageFormatValue.fromRawValue(image.format.raw);
     if (inputImageFormat == null) return;
 
     final planeData = image.planes.map(
-      (Plane plane) {
+          (Plane plane) {
         return InputImagePlaneMetadata(
           bytesPerRow: plane.bytesPerRow,
           height: plane.height,
@@ -166,7 +242,7 @@ class _CameraViewState extends State<CameraView> {
     );
 
     final inputImage =
-        InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+    InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
     // PoseDetectorView에서 받아온 함수인 onImage(이미지에 포즈가 추출되었으면 스켈레톤 그려주는 함수) 실행
     widget.onImage(inputImage);

@@ -1,14 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import './pose_painter.dart';
 import './pose_arrange.dart';
-import './movement_follow.dart';
+import 'package:frontend/mediapipe/movement_follow.dart';
+
 import 'camera_view.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({super.key});
+  const PoseDetectorView({super.key, required this.images});
+
+  final List<Uint8List> images;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -17,7 +22,7 @@ class PoseDetectorView extends StatefulWidget {
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   // 스켈레톤 추출 변수 선언(google_mlkit_pose_detection 라이브러리)
   final PoseDetector _poseDetector =
-      PoseDetector(options: PoseDetectorOptions());
+  PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   // 스켈레톤 모양을 그려주는 변수
@@ -45,38 +50,34 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   Widget build(BuildContext context) {
     // 카메라뷰 보이기
-    return Scaffold(
-      body: Container(
-        child: Column(
+    return Column(
+      children: [
+        Container(
+          height: 100,
+          child: Text(_kindOfPose),
+        ),
+        Stack(
           children: [
             Container(
-              height: 100,
-              child: Text(_kindOfPose),
+              height: 500,
+              width: 500,
+              child: CameraView(
+                // 스켈레톤 그려주는 객체 전달
+                customPaint: _customPaint,
+                // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
+                onImage: (inputImage) {
+                  processImage(inputImage);
+                },
+              ),
             ),
-            Stack(
-              children: [
-                Container(
-                  height: 600,
-                  width: 340,
-                  child: CameraView(
-                    // 스켈레톤 그려주는 객체 전달
-                    customPaint: _customPaint,
-                    // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
-                    onImage: (inputImage) {
-                      processImage(inputImage);
-                    },
-                  ),
-                ),
-                Container(
-                  height: 600,
-                  width: 340,
-                  child: _movementFollow,
-                )
-              ],
-            ),
+            Container(
+              height: 500,
+              width: 500,
+              child: _movementFollow,
+            )
           ],
         ),
-      ),
+      ],
     );
   }
 
@@ -86,15 +87,18 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (_isBusy) return;
     _isBusy = true;
     // poseDetector에서 추출된 포즈 가져오기
+    List<Uint8List> images = widget.images;
     List<Pose> poses = await _poseDetector.processImage(inputImage);
 
     // 이미지가 정상적이면 포즈에 스켈레톤 그려주기
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      final kindOfPose =
-          PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
+      final painter = PosePainter(poses, inputImage.inputImageData!.size,
+          inputImage.inputImageData!.imageRotation);
+      _customPaint = CustomPaint(painter: painter);
+      final kindOfPose = PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();
-      final movementFollow = MovementFollow(poses: poses);
+      final movementFollow = MovementFollow(poses: poses, images: images);
       _movementFollow = movementFollow;
     } else {
       // 추출된 포즈 없음

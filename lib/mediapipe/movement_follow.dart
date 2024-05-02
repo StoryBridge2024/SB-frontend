@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,8 +7,9 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'dart:math';
 
 class MovementFollow extends StatefulWidget {
-  const MovementFollow({super.key, required this.poses});
+  const MovementFollow({super.key, required this.poses, required this.images});
 
+  final List<Uint8List> images;
   final List<Pose> poses;
 
   @override
@@ -38,11 +41,26 @@ class _MovementFollowState extends State<MovementFollow> {
     return angle;
   }
 
-  Widget boxbox(var p1, var p2, String image) {
+  Widget boxbox(var p1, var p2, Uint8List image) {
     return Positioned(
-      right: ((p1!.x + p2!.x) / 2) * (340 / 720) -
-          length(p1, p2) / 2, //화면 비율에 따른 크기로 변환하는 과정 필요
-      top: ((p1!.y + p2!.y) / 2) * (600 / 1280) - length(p1, p2) / 2,
+      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) *
+          (500 / 720), //화면 비율에 따른 크기로 변환하는 과정 필요
+      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * (500 / 1280),
+      child: Transform.rotate(
+        angle: angle(p1, p2),
+        child: Image.memory(
+          image,
+          width: length(p1, p2),
+        ),
+      ),
+    );
+  }
+
+  Widget boxbox2(var p1, var p2, String image) {
+    return Positioned(
+      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) *
+          (500 / 720), //화면 비율에 따른 크기로 변환하는 과정 필요
+      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * (500 / 1280),
       child: Transform.rotate(
         angle: angle(p1, p2),
         child: Image.asset(
@@ -55,26 +73,25 @@ class _MovementFollowState extends State<MovementFollow> {
 
   @override
   Widget build(BuildContext context) {
+    List<Uint8List> images = widget.images;
     List<Pose> poses = widget.poses;
     var ret;
 
     for (final pose in poses) {
-      //print(pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0);
-
       ret = Stack(
         children: [
           boxbox(pose.landmarks[PoseLandmarkType.leftWrist],
-              pose.landmarks[PoseLandmarkType.leftElbow], "assets/charater/larm.png"),
+              pose.landmarks[PoseLandmarkType.leftWrist], images[2]),
+          boxbox(pose.landmarks[PoseLandmarkType.leftWrist],
+              pose.landmarks[PoseLandmarkType.leftElbow], images[2]),
           boxbox(pose.landmarks[PoseLandmarkType.leftElbow],
-              pose.landmarks[PoseLandmarkType.leftShoulder], "assets/charater/larm.png"),
+              pose.landmarks[PoseLandmarkType.leftShoulder], images[1]),
           boxbox(pose.landmarks[PoseLandmarkType.rightWrist],
-              pose.landmarks[PoseLandmarkType.rightElbow], "assets/charater/rarm.png"),
-          boxbox(
-              pose.landmarks[PoseLandmarkType.rightElbow],
-              pose.landmarks[PoseLandmarkType.rightShoulder],
-              "assets/charater/rarm.png"),
+              pose.landmarks[PoseLandmarkType.rightElbow], images[4]),
+          boxbox(pose.landmarks[PoseLandmarkType.rightElbow],
+              pose.landmarks[PoseLandmarkType.rightShoulder], images[3]),
           boxbox(pose.landmarks[PoseLandmarkType.rightEar],
-              pose.landmarks[PoseLandmarkType.leftEar], "assets/charater/face.jpg")
+              pose.landmarks[PoseLandmarkType.leftEar], images[0]),
         ],
       );
     }
