@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
 import 'makingCharacter.dart';
-import '../models/script_model.dart';
+
+late final SceneModel gSceneModel;
 
 List<double> locX = [
   100,
@@ -53,18 +57,15 @@ class MakeFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Future<OriginalScriptModel> scriptModel =
-        OpenAI().createCompletion(text);
+    final Future<SceneModel> sceneModel = OpenAI().createScene(text);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
         body: FutureBuilder(
-          future: scriptModel,
+          future: sceneModel,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data?.choices == null) {
-                return Text('데이터가 없습니다.');
-              }
+              gSceneModel = snapshot.data as SceneModel;
               return ListView(
                 children: [
                   Column(
@@ -107,7 +108,6 @@ class MakeFairytale extends StatelessWidget {
                           );
                         },
                       ),
-                      Text((snapshot.data?.choices[0])["message"]["content"]),
                     ],
                   ),
                 ],
@@ -215,8 +215,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Image.asset(
-                      img.elementAt(index),
+                    child: Image.memory(
+                      base64Decode(gSceneModel.b64_images.elementAt(index)),
                       height: 500,
                       width: 500,
                     ),
@@ -266,7 +266,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        l.elementAt(index),
+                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),

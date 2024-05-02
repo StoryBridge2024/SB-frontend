@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
+import 'package:frontend/mediapipe/pose_detector_view.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images});
@@ -82,11 +83,7 @@ class _StoryState extends State<Story> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Image.asset(
-                      img.elementAt(index),
-                      height: 500,
-                      width: 500,
-                    ),
+                    child: PoseDetectorView(),
                   ),
                   Positioned(
                       left: locX.elementAt(index),

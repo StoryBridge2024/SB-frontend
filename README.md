@@ -146,7 +146,7 @@
 - TS 컴파일러가 충분히 추론 가능할 경우 달지 않아도 됩니다.
 - [참고 문서](https://www.typescriptlang.org/docs/handbook/type-inference.html#handbook-content)
 
-### 11. 기타
+### 12. 기타
 
 - eslint, prettier 설정을 따릅니다.
 - 애매하면 최대한 strict하게 짜시면 됩니다.
