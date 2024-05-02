@@ -17,6 +17,8 @@ class MakeCharacterFace extends StatefulWidget {
 class _MakeCharacterFaceState extends State<MakeCharacterFace> {
   double locX = 0;
   double locY = 0;
+  double scaleFactor = 1.0;
+  double baseScaleFactor = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -49,36 +51,35 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                     Positioned(
                       left: locX,
                       top: locY,
-                      child: Image.file(
-                        File(file!.path),
-                        fit: BoxFit.cover,
-                        scale: 2,
+                      child: GestureDetector(
+                        child: Image.file(
+                          File(file!.path),
+                          fit: BoxFit.cover,
+                          scale: 1 / scaleFactor,
+                        ),
+                        onScaleStart: (touch) {
+                          baseScaleFactor = scaleFactor;
+                        },
+                        onScaleUpdate: (touch) {
+                          setState(
+                            () {
+                              locX += touch.focalPointDelta.dx;
+                              locY += touch.focalPointDelta.dy;
+                              if (touch.scale != 1) {
+                                scaleFactor = baseScaleFactor * touch.scale;
+                              }
+                              print(scaleFactor);
+                            },
+                          );
+                        },
                       ),
                     ),
                     Center(
-                      child: Container(
-                        color: Colors.red,
-                        width: 100,
-                        height: 100,
-                        child: Text('여기에 얼굴 틀 넣어야됨'),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 2000,
-                        height: 2000,
-                        color: Color(0x0000000),
-                        child: GestureDetector(
-                          onScaleUpdate: (touch) {
-                            setState(
-                              () {
-                                locX += touch.focalPointDelta.dx;
-                                locY += touch.focalPointDelta.dy;
-                              },
-                            );
-                          },
+                      child: IgnorePointer(
+                        ignoring: true,
+                        child: Image.asset(
+                          'assets/image/face.png',
+                          color: Colors.red,
                         ),
                       ),
                     ),
