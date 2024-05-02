@@ -43,6 +43,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  google_mlkit_commons: ^0.3.0
+  google_mlkit_pose_detection: ^0.6.0
+  camera: ^0.10.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
