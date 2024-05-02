@@ -8,6 +8,48 @@ import 'makingCharacter.dart';
 
 late final SceneModel gSceneModel;
 
+List<double> locX = [
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+];
+List<double> locY = [
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+  100,
+];
+
+List<String> l = [
+  '첫번째 장면에 대한 이야기 입니다.',
+  '두번째 장면에 대한 이야기 입니다.',
+  '세번째 장면에 대한 이야기 입니다.',
+  '네번째 장면에 대한 이야기 입니다.',
+  '다섯 번째 장면에 대한 이야기 입니다.',
+  '여섯 번째 장면에 대한 이야기 입니다.',
+  '일곱 번째 장면에 대한 이야기 입니다.',
+  '여덟 번째 장면에 대한 이야기 입니다.',
+];
+List<String> img = [
+  'assets/image/img_1.png',
+  'assets/image/img_2.png',
+  'assets/image/img_3.png',
+  'assets/image/img_1.png',
+  'assets/image/img_2.png',
+  'assets/image/img_3.png',
+  'assets/image/img_2.png',
+  'assets/image/img_3.png',
+];
+
 class MakeFairytale extends StatelessWidget {
   final String text;
 
@@ -153,6 +195,7 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
+  int max = 8;
 
   //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
   List<double> locX = [100, 100, 100];
@@ -274,18 +317,17 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (index < 2) {
+                                  if (index < max - 1) {
                                     setState(
                                       () {
                                         index += 1;
                                       },
                                     );
-                                  } else if (index == 2) {
+                                  } else if (index == max - 1) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            const MakeCharacter(),
+                                        builder: (context) => MakeCharacter(),
                                       ),
                                     );
                                   }
