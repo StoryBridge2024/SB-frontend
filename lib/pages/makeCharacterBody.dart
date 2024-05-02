@@ -208,7 +208,7 @@ class _DrawBoxState extends State<DrawBox> {
     ];
   }
 
-  void _showImage(BuildContext context) async {
+  /*void _showImage(BuildContext context) async {
     final image = notifier.renderImage();
     showDialog(
       context: context,
@@ -248,6 +248,94 @@ class _DrawBoxState extends State<DrawBox> {
         ],
       ),
     );
+  }*/
+  void _showImage(BuildContext context) async {
+    final image = notifier.renderImage();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Generated Image"),
+        content: SizedBox(
+          height: 400,
+          width: 400,
+          child: FutureBuilder<List<Uint8List>>(
+            future: image.then((imgData)
+            {
+              Uint8List imagedata = imgData.buffer.asUint8List();
+              return Future.wait([
+                _extractTile(imagedata, 41, 13, 12, 15), // 몸통
+                _extractTile(imagedata, 33, 13, 8, 4), // 왼팔 팔꿈치~어깨
+                _extractTile(imagedata, 25, 13, 8, 4), // 왼팔 손~팔꿈치
+                _extractTile(imagedata, 53, 13, 8, 4), // 오른팔 팔꿈치~어깨
+                _extractTile(imagedata, 61, 13, 8, 4), // 오른팔 손~팔꿈치
+                _extractTile(imagedata, 41, 28, 6, 10), // 왼다리 위
+                _extractTile(imagedata, 41, 38, 6, 10), // 왼다리 아래
+                _extractTile(imagedata, 47, 28, 6, 10), // 오른다리 위
+                _extractTile(imagedata, 47, 38, 6, 10) // 오른다리 아래
+              ]);
+            }),
+            builder: (BuildContext context, AsyncSnapshot<List<Uint8List>> snapshot) {
+              if (snapshot.hasData) { // 해결못함 다음 페이지로 넘기기
+                /*Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ShowFairytale(
+                          image: Image.memory(
+                            snapshot.data!.buffer.asUint8List(),
+                            scale: 2,
+                          ))),
+                );*/
+                //print(Image.memory(snapshot.data!.buffer.asUint8List())
+                //    .runtimeType);
+                //print(snapshot.data!.buffer.asUint8List().runtimeType);
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Image.memory(snapshot.data![index].buffer.asUint8List());
+                  },
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              print(image.runtimeType);
+            },
+            child: const Text("Close"),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<Uint8List> _extractTile(Uint8List imageData, int startCol, int startRow, int numCols, int numRows) async {
+    final codec = await instantiateImageCodec(imageData);
+    final frame = await codec.getNextFrame();
+    final image = frame.image;
+
+    final int tileWidth = image.width ~/ 92;
+    final int tileHeight = image.height ~/ 46;
+
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder);
+    final paint = Paint();
+
+    // Clip and draw the top left tile
+    canvas.drawImageRect(
+        image,
+        Rect.fromLTWH(startCol * tileWidth.toDouble(), startRow * tileHeight.toDouble(), numCols * tileWidth.toDouble(), numRows * tileHeight.toDouble()),
+        Rect.fromLTWH(0, 0, numCols * tileWidth.toDouble(), numRows * tileHeight.toDouble()),
+        paint);
+
+    final picture = recorder.endRecording();
+    final img = await picture.toImage(numCols * tileWidth, numRows * tileHeight);
+    final byteData = await img.toByteData(format: ImageByteFormat.png);
+    return byteData!.buffer.asUint8List();
   }
 
   void _showJson(BuildContext context) {
