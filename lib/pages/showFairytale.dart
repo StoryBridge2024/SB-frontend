@@ -2,6 +2,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/mediapipe/pose_detector_view.dart';
+import '../models/scene_model.dart';
+
+late final SceneModel gSceneModel;
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images});
@@ -108,7 +111,7 @@ class _StoryState extends State<Story> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        l.elementAt(index),
+                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
