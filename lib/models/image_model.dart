@@ -1,6 +1,8 @@
-class RefinedImageModel{
+class ImageResponse {
+  final int created;
+  List<dynamic> data;
 
-}
-class OriginalImageModel{
-
+  ImageResponse.fromJson(Map<String, dynamic> json)
+      : created = json['created'],
+        data = json['data'];
 }
