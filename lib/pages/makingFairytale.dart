@@ -6,6 +6,8 @@ import 'package:frontend/services/api/openai_api.dart';
 
 import 'makingCharacter.dart';
 
+late final SceneModel gSceneModel;
+
 class MakeFairytale extends StatelessWidget {
   final String text;
 
@@ -13,7 +15,7 @@ class MakeFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<SceneModel> sceneModel = OpenAI().createScene(text);
+    final Future<SceneModel> sceneModel = OpenAI().createScene(text);
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
@@ -21,6 +23,7 @@ class MakeFairytale extends StatelessWidget {
           future: sceneModel,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              gSceneModel = snapshot.data as SceneModel;
               return ListView(
                 children: [
                   Column(
@@ -63,8 +66,6 @@ class MakeFairytale extends StatelessWidget {
                           );
                         },
                       ),
-                      Text((snapshot.data!.scriptModelList[0].scene_contents)),
-                      Image.memory(base64Decode(snapshot.data!.b64_images[0])),
                     ],
                   ),
                 ],
@@ -152,16 +153,6 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
-  List<String> l = [
-    '첫번째 장면에 대한 이야기입니다.',
-    '두번째 장면에 대한 이야기입니다.',
-    '세번째 장면에 대한 이야기입니다.'
-  ];
-  List<String> img = [
-    'assets/image/img_1.png',
-    'assets/image/img_2.png',
-    'assets/image/img_3.png'
-  ];
 
   //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
   List<double> locX = [100, 100, 100];
@@ -181,8 +172,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Image.asset(
-                      img.elementAt(index),
+                    child: Image.memory(
+                      base64Decode(gSceneModel.b64_images.elementAt(index)),
                       height: 500,
                       width: 500,
                     ),
@@ -232,7 +223,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        l.elementAt(index),
+                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
