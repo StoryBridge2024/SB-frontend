@@ -57,7 +57,7 @@ class OpenAI {
     //compose prompt with theme
     String prompt = "$MUTABLE_IMAGE_PROMPT$theme.";
     var imagePromptWithTheme = deepCopy(IMAGE_PROMPT);
-    imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']} $prompt";
+    imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
     print("createImage: $imagePromptWithTheme");
 
     //post request
