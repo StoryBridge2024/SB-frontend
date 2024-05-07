@@ -85,7 +85,7 @@ class OpenAI {
       imageFutures
           .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
-    List<String> images= await Future.wait(imageFutures);
+    List<String> images = await Future.wait(imageFutures);
     print("createScene: $content, $images");
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
