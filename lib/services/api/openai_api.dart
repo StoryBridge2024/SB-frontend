@@ -78,13 +78,18 @@ class OpenAI {
 
   //i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
+    DateTime st = DateTime.now();
     Map<String, dynamic> content = await createCompletion(theme);
-    List<String> images = [];
+    List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
-      images.add(await createImage(
-          content["scene"][i]["description_of_illustration"]));
+      imageFutures
+          .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
+    List<String> images= await Future.wait(imageFutures);
     print("createScene: $content, $images");
+    DateTime et = DateTime.now();
+    Duration d = et.difference(st);
+    print("createScene: ${d.inSeconds}초 걸림");
     return SceneModel(content: content, images: images);
   }
 }
