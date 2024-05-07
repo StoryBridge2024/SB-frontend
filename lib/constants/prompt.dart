@@ -1,5 +1,5 @@
 //6 sentences를 1로 바꿈, 수정하자
-const Map<String, dynamic> TEXT_PROMPT = {
+const Map<String, dynamic> SCRIPT_PROMPT = {
   "model": "gpt-4-turbo-preview",
   "response_format": {
     "type": "json_object"
@@ -15,11 +15,13 @@ const Map<String, dynamic> TEXT_PROMPT = {
     }
   ]
 };
-const MUTABLE_PROMPT="The theme is ";
+const MUTABLE_SCRIPT_PROMPT="The theme is ";
+
 const IMAGE_PROMPT={
   "model": "dall-e-3",
-  "prompt": "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS: A forest clearing at twilight, with a path leading into the village. You should draw only background except characters.",
+  "prompt": "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS: Just draw a picture that looks like a 7-year-old drew it with crayons! ",
   "quality": "hd",
   "style": "natural",
   "response_format": "b64_json"
 };
+const MUTABLE_IMAGE_PROMPT="Please draw ";
