@@ -23,10 +23,10 @@ class OpenAI {
     return json.decode(json.encode(source));
   }
 
-  Future<Map<String,dynamic>> createCompletion(String theme) async {
+  Future<Map<String, dynamic>> createCompletion(String theme) async {
     //compose prompt with theme
-    String prompt = "$MUTABLE_PROMPT$theme ";
-    var textPromptWithTheme = deepCopy(TEXT_PROMPT);
+    String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
+    var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
     textPromptWithTheme['messages']?[1]['content'] =
         prompt + textPromptWithTheme['messages']?[1]['content'];
 
@@ -47,12 +47,19 @@ class OpenAI {
     var responseBody = utf8.decode(response.bodyBytes);
     ScriptResponse scriptResponse =
         ScriptResponse.fromJson(json.decode(responseBody));
-    Map<String,dynamic> content = json.decode(scriptResponse.choices[0]["message"]["content"]);
+    Map<String, dynamic> content =
+        json.decode(scriptResponse.choices[0]["message"]["content"]);
     print("createCompletion: $content");
     return content;
   }
 
-  Future<String> createImage() async {
+  Future<String> createImage(String theme) async {
+    //compose prompt with theme
+    String prompt = "$MUTABLE_IMAGE_PROMPT$theme.";
+    var imagePromptWithTheme = deepCopy(IMAGE_PROMPT);
+    imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
+    print("createImage: $imagePromptWithTheme");
+
     //post request
     final response = await post(
       Uri.parse('${baseImageUrl}images/generations'),
@@ -60,7 +67,7 @@ class OpenAI {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
       },
-      body: json.encode(IMAGE_PROMPT),
+      body: json.encode(imagePromptWithTheme),
     );
     print("createImage: ${response.body}");
     ImageResponse imageResponse =
@@ -71,12 +78,18 @@ class OpenAI {
 
   //i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
-    Map<String,dynamic> content = await createCompletion(theme);
-    List<String> images = [];
+    DateTime st = DateTime.now();
+    Map<String, dynamic> content = await createCompletion(theme);
+    List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
-      images.add(await createImage());
+      imageFutures
+          .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
+    List<String> images = await Future.wait(imageFutures);
     print("createScene: $content, $images");
+    DateTime et = DateTime.now();
+    Duration d = et.difference(st);
+    print("createScene: ${d.inSeconds}초 걸림");
     return SceneModel(content: content, images: images);
   }
 }

@@ -6,7 +6,7 @@ import 'package:frontend/services/api/openai_api.dart';
 
 import 'makingCharacter.dart';
 
-late final SceneModel gSceneModel;
+SceneModel? gSceneModel;
 
 List<double> locX = [
   100,
@@ -195,7 +195,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     left: 0,
                     right: 0,
                     child: Image.memory(
-                      base64Decode(gSceneModel.b64_images.elementAt(index)),
+                      base64Decode(gSceneModel!.b64_images.elementAt(index)),
                       height: 500,
                       width: 500,
                     ),
@@ -245,7 +245,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        gSceneModel.scriptModelList[index].scene_contents,
+                        gSceneModel!.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
