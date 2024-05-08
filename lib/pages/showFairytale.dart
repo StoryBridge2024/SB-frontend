@@ -64,9 +64,9 @@ class _StoryState extends State<Story> {
     var images = widget.images;
 
     Future.delayed(
-      const Duration(milliseconds: 2000),
+      const Duration(milliseconds: 10000),
       () {
-        if (index < max-1) {
+        if (index < max - 1) {
           setState(
             () {
               index += 1;
@@ -86,17 +86,36 @@ class _StoryState extends State<Story> {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 0,
-                    right: 0,
-                    child: Image.asset(imgs.elementAt(index)),
+                    left: locX.elementAt(index) - 100,
+                    right: locY.elementAt(index) - 100,
+                    child: Container(
+                      width: 500,
+                      height: 500,
+                      child: Image.asset(
+                        imgs.elementAt(index),
+                      ),
+//                      child: Image.asset(gSceneModel.b64_images[index]),
+                    ),
                   ),
-                  // Positioned(
-                  //   left: locX.elementAt(index),
-                  //   right: locY.elementAt(index),
-                  //   child: Transform.rotate(
-                  //       angle: -90*3.141592/180,
-                  //       child: PoseDetectorView(images:images)),
-                  // ),
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                        height: 300,
+                        width: 300,
+                        child: Transform.scale(
+                          scale: 0.5,
+                          child: Transform.rotate(
+                            angle: 3.141592 * (3 / 2),
+                            child: PoseDetectorView(images: images),
+                          ),
+                        )),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Camera(),
+                  )
                 ],
               ),
             ),

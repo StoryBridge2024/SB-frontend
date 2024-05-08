@@ -134,7 +134,6 @@ class PoseArrange extends Object {
         kindOfPose = updatePoseCount(count, 10, "손 허리에", kindOfPose);
       }
 
-      //print(leftWristY);
       // Jumping (Hip height increase as a simple check)
       //if (leftHipY > 200 && rightHipY > 200) {  // Assuming initial standing hip height is less than 200 pixels
       //  kindOfPose = updatePoseCount(count, 11, "점프", kindOfPose);

@@ -10,8 +10,10 @@ class PosePainter extends CustomPainter {
 
   // 추출된 포즈의 랜드마크 리스트
   final List<Pose> poses;
+
   // 이미지 크기
   final Size absoluteImageSize;
+
   // 이미지 회전 정보
   final InputImageRotation rotation;
 
@@ -40,8 +42,6 @@ class PosePainter extends CustomPainter {
             1,
             paint);
       });
-
-      print(absoluteImageSize);
 
       // 점1과 점2를 선으로 이어주는 함수(랜드마크 타입1, 랜드마크 타입2, 선 색깔 타입)
       void paintLine(
