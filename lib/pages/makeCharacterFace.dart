@@ -15,6 +15,23 @@ class MakeCharacterFace extends StatefulWidget {
   State<MakeCharacterFace> createState() => _MakeCharacterFaceState();
 }
 
+class MyClipper extends CustomClipper<Path> {
+  MyClipper();
+  @override
+  Path getClip(Size size) {
+    Path path = Path()
+      ..addOval(Rect.fromCenter(center: Offset(50, 60), width: 40, height: 70))
+      ..addOval(Rect.fromPoints(Offset(150, 150), Offset(200, 200)))
+      ..close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
 class _MakeCharacterFaceState extends State<MakeCharacterFace> {
   double locX = 0;
   double locY = 0;
@@ -26,7 +43,8 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     CroppedFile? file = widget.file;
 
     return Scaffold(
-      body: Container(
+      body:
+      Container(
         color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
         child: Column(
           children: [
@@ -78,10 +96,19 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                     Center(
                       child: IgnorePointer(
                         ignoring: true,
-                        child: Image.asset(
-                          'assets/image/face.png',
-                          color: Colors.red,
+                        child: ClipPath(
+                          clipper: MyClipper(),
+                          child: (file != null)
+                              ? Image.file(
+                            File(file!.path),
+                            fit: BoxFit.cover,
+                          )
+                              : Container(),
                         ),
+                        // child: Image.asset(
+                        //   'assets/image/face.png',
+                        //   color: Colors.red,
+                        // ),
                       ),
                     ),
                     Container(
@@ -120,3 +147,4 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     );
   }
 }
+
