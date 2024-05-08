@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import 'makeCharacterBody.dart';
 
 class MakeCharacterFace extends StatefulWidget {
-  final XFile? file;
+  final CroppedFile? file;
 
   const MakeCharacterFace({super.key, required this.file});
 
@@ -22,7 +23,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
 
   @override
   Widget build(BuildContext context) {
-    XFile? file = widget.file;
+    CroppedFile? file = widget.file;
 
     return Scaffold(
       body: Container(

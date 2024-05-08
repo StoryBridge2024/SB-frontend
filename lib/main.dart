@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/pages/getImage.dart';
 import 'pages/homePage.dart';
 import 'package:camera/camera.dart';
 import 'pages/makeCharacterBody.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MakeCharacterBody(),
+      home: GetImageFromCamera(),
     );
   }
 }
