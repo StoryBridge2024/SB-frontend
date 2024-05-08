@@ -27,8 +27,8 @@ class OpenAI {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
     var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[1]['content'] =
-        prompt + textPromptWithTheme['messages']?[1]['content'];
+    textPromptWithTheme['messages']?[5]['content'] =
+        prompt + textPromptWithTheme['messages']?[5]['content'];
 
     //post request
     final response = await post(
