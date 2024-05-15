@@ -75,6 +75,7 @@ class OpenAI {
         success = true;
       } catch (e) {
         print("createImage: $e");
+        print("createImage: ${json.decode(response.body)}");
       }
     } while (!success);
     return imageResponse.data[0]["b64_json"];
@@ -88,6 +89,7 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
+        (content["scene"] as List).map((e) => ScriptModel.fromJson(e));
         success = true;
       } catch (e) {
         print("createScene: $e");
@@ -95,7 +97,7 @@ class OpenAI {
     } while (!success);
 
     List<Future<String>> imageFutures = [];
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 3; i++) {
       imageFutures
           .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
