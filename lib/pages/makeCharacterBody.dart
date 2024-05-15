@@ -187,6 +187,13 @@ class _DrawBoxState extends State<DrawBox> {
           size: 50,
         ),
         onPressed: () {
+          foo(images);
+          print(images.length);
+          print(images.length);
+          print(images.length);
+          print(images.length);
+          print(images.length);
+
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -196,6 +203,43 @@ class _DrawBoxState extends State<DrawBox> {
         },
       ),
     ];
+  }
+
+  Widget foo(var images) {
+    final image = notifier.renderImage();
+
+    return FutureBuilder<List<Uint8List>>(
+      future: image.then((imgData) {
+        Uint8List imagedata = imgData.buffer.asUint8List();
+        return Future.wait([
+          _extractTile(imagedata, 41, 13, 12, 15), //0 몸통
+          _extractTile(imagedata, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
+          _extractTile(imagedata, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
+          _extractTile(imagedata, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
+          _extractTile(imagedata, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
+          _extractTile(imagedata, 41, 28, 6, 10), //5 왼다리 위
+          _extractTile(imagedata, 41, 38, 6, 10), //6 왼다리 아래
+          _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
+          _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
+        ]);
+      }),
+      builder: (BuildContext context, AsyncSnapshot<List<Uint8List>> snapshot) {
+        if (snapshot.hasData) {
+          images.clear();
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              images.add(snapshot.data![index].buffer.asUint8List());
+              return Image.memory(
+                snapshot.data![index].buffer.asUint8List(),
+              );
+            },
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   /*void _showImage(BuildContext context) async {
@@ -266,20 +310,6 @@ class _DrawBoxState extends State<DrawBox> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<Uint8List>> snapshot) {
               if (snapshot.hasData) {
-                // 해결못함 다음 페이지로 넘기기
-                /*Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ShowFairytale(
-                          image: Image.memory(
-                            snapshot.data!.buffer.asUint8List(),
-                            scale: 2,
-                          ))),
-                );*/
-                //print(Image.memory(snapshot.data!.buffer.asUint8List())
-                //    .runtimeType);
-                //print(snapshot.data!.buffer.asUint8List().runtimeType);
-
                 images.clear();
                 return ListView.builder(
                   itemCount: snapshot.data!.length,

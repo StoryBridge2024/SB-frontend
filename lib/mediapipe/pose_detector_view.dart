@@ -71,21 +71,28 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     // 카메라뷰 보이기
     return Column(
       children: [
-        Container(
-          height: 100,
-          child: Text(_kindOfPose),
-        ),
-        Container(
-          height: 150,
-          width: 150,
-          child: CameraView(
-            // 스켈레톤 그려주는 객체 전달
-            customPaint: _customPaint,
-            // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
-            onImage: (inputImage) {
-              processImage(inputImage);
-            },
-          ),
+        Stack(
+          children: [
+            Container(
+              color: Colors.blue,
+              height: 150,
+              width: 150,
+              child: CameraView(
+                // 스켈레톤 그려주는 객체 전달
+                customPaint: _customPaint,
+                // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
+                onImage: (inputImage) {
+                  processImage(inputImage);
+                },
+              ),
+            ),
+            Container(
+              child: Transform.scale(
+                scale: 0.3,
+                child: _movementFollow,
+              ),
+            ),
+          ],
         ),
       ],
     );

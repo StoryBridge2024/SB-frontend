@@ -101,15 +101,16 @@ class _StoryState extends State<Story> {
                     left: 0,
                     top: 0,
                     child: Container(
-                        height: 300,
-                        width: 300,
-                        child: Transform.scale(
-                          scale: 0.5,
-                          child: Transform.rotate(
-                            angle: 3.141592 * (3 / 2),
-                            child: PoseDetectorView(images: images),
-                          ),
-                        )),
+                      height: 1000,
+                      width: 1000,
+                      child: Transform.scale(
+                        scale: 0.8,
+                        child: Transform.rotate(
+                          angle: 3.141592 * (3 / 2),
+                          child: PoseDetectorView(images: images),
+                        ),
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: 0,

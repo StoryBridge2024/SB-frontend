@@ -17,6 +17,26 @@ class MovementFollow extends StatefulWidget {
 }
 
 class _MovementFollowState extends State<MovementFollow> {
+  double lengthX(var p1, var p2) {
+    double x1 = p1!.x;
+    double x2 = p2!.x;
+
+    double x = (x1 - x2);
+    if (x < 0) x = -x;
+
+    return x;
+  }
+
+  double lengthY(var p1, var p2) {
+    double y1 = p1!.y;
+    double y2 = p2!.y;
+
+    double y = (y1 - y2);
+    if (y < 0) y = -y;
+
+    return y;
+  }
+
   double length(var p1, var p2) {
     double x1 = p1!.x;
     double x2 = p2!.x;
@@ -41,31 +61,58 @@ class _MovementFollowState extends State<MovementFollow> {
     return angle;
   }
 
-  Widget boxbox(var p1, var p2, Uint8List image) {
+  Widget arm(var p1, var p2, Uint8List image) {
     return Positioned(
-      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) *
-          (500 / 720), //화면 비율에 따른 크기로 변환하는 과정 필요
-      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * (500 / 1280),
+      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) * 0.25,
+      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.29,
       child: Transform.rotate(
         angle: angle(p1, p2),
         child: Image.memory(
           image,
-          width: length(p1, p2),
+          width: length(p1, p2) * 0.3,
         ),
       ),
     );
   }
 
-  Widget boxbox2(var p1, var p2, String image) {
+  Widget leg(var p1, var p2, Uint8List image) {
     return Positioned(
-      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) *
-          (500 / 720), //화면 비율에 따른 크기로 변환하는 과정 필요
-      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * (500 / 1280),
+      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) / 2) * 0.25,
+      top: (((p1!.y + p2!.y) / 2) - lengthX(p2, p1)) * 0.25,
+      child: Transform.rotate(
+        angle: angle(p1, p2) + 3.141592653579 * 0.5,
+        child: Image.memory(
+          image,
+          width: lengthX(p1, p2) * 0.3,
+        ),
+      ),
+    );
+  }
+
+  Widget body(var p1, var p2, var p3, var p4, Uint8List image) {
+    return Positioned(
+      right:
+          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p1, p2) / 2) * 0.25,
+      top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p2, p3) / 2) * 0.25,
+      child: Transform.rotate(
+        angle: angle(p1, p2),
+        child: Image.memory(
+          image,
+          width: length(p1, p2) * 0.3,
+        ),
+      ),
+    );
+  }
+
+  Widget face(var p1, var p2, String image) {
+    return Positioned(
+      right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) * 0.23,
+      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.23,
       child: Transform.rotate(
         angle: angle(p1, p2),
         child: Image.asset(
           image,
-          width: length(p1, p2),
+          width: length(p1, p2) * 0.5,
         ),
       ),
     );
@@ -78,27 +125,71 @@ class _MovementFollowState extends State<MovementFollow> {
     var ret;
 
     for (final pose in poses) {
-      ret = Stack(
-        children: [
-          boxbox(pose.landmarks[PoseLandmarkType.leftWrist],
-              pose.landmarks[PoseLandmarkType.leftWrist], images[2]),
-          boxbox(pose.landmarks[PoseLandmarkType.leftWrist],
-              pose.landmarks[PoseLandmarkType.leftElbow], images[2]),
-          boxbox(pose.landmarks[PoseLandmarkType.leftElbow],
-              pose.landmarks[PoseLandmarkType.leftShoulder], images[1]),
-          boxbox(pose.landmarks[PoseLandmarkType.rightWrist],
-              pose.landmarks[PoseLandmarkType.rightElbow], images[4]),
-          boxbox(pose.landmarks[PoseLandmarkType.rightElbow],
-              pose.landmarks[PoseLandmarkType.rightShoulder], images[3]),
-          boxbox(pose.landmarks[PoseLandmarkType.rightEar],
-              pose.landmarks[PoseLandmarkType.leftEar], images[0]),
-        ],
+      ret = Container(
+        color: Colors.red,
+        height: 2000,
+        width: 2000,
+        child: Transform.scale(
+          scale: 2,
+          child: Stack(
+            children: [
+              body(
+                pose.landmarks[PoseLandmarkType.rightShoulder],
+                pose.landmarks[PoseLandmarkType.leftShoulder],
+                pose.landmarks[PoseLandmarkType.rightHip],
+                pose.landmarks[PoseLandmarkType.leftHip],
+                images[0],
+              ), //머리
+              arm(
+                pose.landmarks[PoseLandmarkType.leftShoulder],
+                pose.landmarks[PoseLandmarkType.leftElbow],
+                images[1],
+              ), //왼쪽 팔 1
+              arm(
+                pose.landmarks[PoseLandmarkType.leftElbow],
+                pose.landmarks[PoseLandmarkType.leftThumb],
+                images[2],
+              ), //왼쪽 팔 2
+              arm(
+                pose.landmarks[PoseLandmarkType.rightElbow],
+                pose.landmarks[PoseLandmarkType.rightShoulder],
+                images[3],
+              ), //오른쪽 팔 1
+              arm(
+                pose.landmarks[PoseLandmarkType.rightThumb],
+                pose.landmarks[PoseLandmarkType.rightElbow],
+                images[4],
+              ), //오른쪽 팔 1
+              leg(
+                pose.landmarks[PoseLandmarkType.leftHip],
+                pose.landmarks[PoseLandmarkType.leftKnee],
+                images[5],
+              ), //왼쪽 다리 1
+              leg(
+                pose.landmarks[PoseLandmarkType.leftKnee],
+                pose.landmarks[PoseLandmarkType.leftAnkle],
+                images[6],
+              ), //왼쪽 다리 2
+              leg(
+                pose.landmarks[PoseLandmarkType.rightHip],
+                pose.landmarks[PoseLandmarkType.rightKnee],
+                images[7],
+              ), //오른쪽 다리 1
+              leg(
+                pose.landmarks[PoseLandmarkType.rightKnee],
+                pose.landmarks[PoseLandmarkType.rightAnkle],
+                images[8],
+              ), //오른쪽 다리 2
+              face(
+                pose.landmarks[PoseLandmarkType.rightEar],
+                pose.landmarks[PoseLandmarkType.leftEar],
+                "assets/character/face.jpg",
+              )
+            ],
+          ),
+        ),
       );
     }
-    return Container(
-      child: ret,
-      height: 600,
-      width: 340,
-    );
+    return ret;
   }
 }
