@@ -1,10 +1,7 @@
 import 'dart:convert';
-<<<<<<< feature/image_crop
 import 'dart:io';
-=======
 import 'dart:typed_data';
 import 'dart:ui';
->>>>>>> develop
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,13 +80,12 @@ class MakeCharacterBody extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              alignment: Alignment.topCenter,
+                                alignment: Alignment.topCenter,
                                 child: SizedBox(
                                   // width: 100,
                                   height: 130,
                                   child: file,
-                                )
-                            ),
+                                )),
                             // Positioned( // 주영이 태블릿에 맞게 재설정
                             //
                             //   top: 50.0,

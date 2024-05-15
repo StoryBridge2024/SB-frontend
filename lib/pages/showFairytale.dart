@@ -2,8 +2,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
-import '../models/scene_model.dart';
-import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/models/scene_model.dart';
+
+//import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/action_list.dart';
 
 late final SceneModel gSceneModel;
 
@@ -82,10 +84,11 @@ class _StoryState extends State<Story> {
                         child: Container(
                           width: 500,
                           height: 500,
-                          child: Image.asset(
-                            imgs.elementAt(value),
+                          child: Image.memory(
+                            gSceneModel.b64_images as Uint8List,
+                            //imgs.elementAt(value),
                           ),
-                          //                      child: Image.asset(gSceneModel.b64_images[index]),
+                          //child: Image.asset(gSceneModel.b64_images[index]),
                         ),
                       ),
                       Positioned(
@@ -125,8 +128,9 @@ class _StoryState extends State<Story> {
                           width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            texts.elementAt(value),
-                            //                        gSceneModel.scriptModelList[index].scene_contents,
+                            //texts.elementAt(value),
+                            gSceneModel.scriptModelList[clr_index.value]
+                                .scene_contents,
                             style: TextStyle(fontSize: 40),
                           ),
                         ),

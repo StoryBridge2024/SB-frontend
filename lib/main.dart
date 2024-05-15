@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-<<<<<<< feature/image_crop
 import 'package:frontend/pages/getImage.dart';
-=======
-import 'package:frontend/pages/makeCharacterBody.dart';
->>>>>>> develop
 import 'pages/homePage.dart';
 import 'package:camera/camera.dart';
-import 'pages/makeCharacterBody.dart';
-import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/action_list.dart';
 
 List<CameraDescription> cameras = [];
 

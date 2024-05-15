@@ -1,14 +1,19 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/showFairytale.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:image_picker/image_picker.dart';
 import 'pose_painter.dart';
 import './pose_arrange.dart';
 import 'package:camera/camera.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
+
+import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/models/scene_model.dart';
 
 import 'camera_view.dart';
 
@@ -121,12 +126,16 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
-      print(missions[clr_index.value]);
+      print(gSceneModel.scriptModelList[clr_index.value]);
+//      print(missions[clr_index.value]);
       print(clr_index.value);
-      if (_kindOfPose == missions[clr_index.value]) {
-        print("wowowowowow");
+
+      if (_kindOfPose == gSceneModel.scriptModelList[clr_index.value]) {
         clr_index.value++;
       }
+      // if (_kindOfPose == missions[clr_index.value]) {
+      //   clr_index.value++;
+      // }
     } else {
       // 추출된 포즈 없음
       _customPaint = null;

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 List<String> texts = [
   "첫번째",
   "두번째",
@@ -31,5 +29,3 @@ List<String> missions = [
   "박수치기",
   "박수치기",
 ];
-
-var clr_index = ValueNotifier<int>(0);

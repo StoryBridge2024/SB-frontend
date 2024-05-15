@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 List<String> ACTION_LIST = [
   "왼손 번쩍",
   "오른손 번쩍",
@@ -7,3 +9,5 @@ List<String> ACTION_LIST = [
   "차렷하기",
   "박수치기"
 ];
+
+var clr_index = ValueNotifier<int>(0);
