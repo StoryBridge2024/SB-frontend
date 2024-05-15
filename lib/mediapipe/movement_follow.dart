@@ -64,12 +64,17 @@ class _MovementFollowState extends State<MovementFollow> {
   Widget arm(var p1, var p2, Uint8List image) {
     return Positioned(
       right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) * 0.25,
-      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.29,
+      top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.25,
       child: Transform.rotate(
         angle: angle(p1, p2),
-        child: Image.memory(
-          image,
-          width: length(p1, p2) * 0.3,
+        child: Container(
+          width: 100,
+          height: 100,
+          child: Image.memory(
+            image,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
       ),
     );
@@ -78,12 +83,17 @@ class _MovementFollowState extends State<MovementFollow> {
   Widget leg(var p1, var p2, Uint8List image) {
     return Positioned(
       right: (((p1!.x + p2!.x) / 2) - length(p2, p1) / 2) * 0.25,
-      top: (((p1!.y + p2!.y) / 2) - lengthX(p2, p1)) * 0.25,
+      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) / 2) * 0.25,
       child: Transform.rotate(
         angle: angle(p1, p2) + 3.141592653579 * 0.5,
-        child: Image.memory(
-          image,
-          width: lengthX(p1, p2) * 0.3,
+        child: Container(
+          width: 100,
+          height: 100,
+          child: Image.memory(
+            image,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
       ),
     );
@@ -96,9 +106,14 @@ class _MovementFollowState extends State<MovementFollow> {
       top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p2, p3) / 2) * 0.25,
       child: Transform.rotate(
         angle: angle(p1, p2),
-        child: Image.memory(
-          image,
-          width: length(p1, p2) * 0.3,
+        child: Container(
+          width: 150,
+          height: 150,
+          child: Image.memory(
+            image,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
       ),
     );
@@ -140,26 +155,6 @@ class _MovementFollowState extends State<MovementFollow> {
                 pose.landmarks[PoseLandmarkType.leftHip],
                 images[0],
               ), //머리
-              arm(
-                pose.landmarks[PoseLandmarkType.leftShoulder],
-                pose.landmarks[PoseLandmarkType.leftElbow],
-                images[1],
-              ), //왼쪽 팔 1
-              arm(
-                pose.landmarks[PoseLandmarkType.leftElbow],
-                pose.landmarks[PoseLandmarkType.leftThumb],
-                images[2],
-              ), //왼쪽 팔 2
-              arm(
-                pose.landmarks[PoseLandmarkType.rightElbow],
-                pose.landmarks[PoseLandmarkType.rightShoulder],
-                images[3],
-              ), //오른쪽 팔 1
-              arm(
-                pose.landmarks[PoseLandmarkType.rightThumb],
-                pose.landmarks[PoseLandmarkType.rightElbow],
-                images[4],
-              ), //오른쪽 팔 1
               leg(
                 pose.landmarks[PoseLandmarkType.leftHip],
                 pose.landmarks[PoseLandmarkType.leftKnee],
@@ -180,6 +175,26 @@ class _MovementFollowState extends State<MovementFollow> {
                 pose.landmarks[PoseLandmarkType.rightAnkle],
                 images[8],
               ), //오른쪽 다리 2
+              arm(
+                pose.landmarks[PoseLandmarkType.leftShoulder],
+                pose.landmarks[PoseLandmarkType.leftElbow],
+                images[1],
+              ), //왼쪽 팔 1
+              arm(
+                pose.landmarks[PoseLandmarkType.leftElbow],
+                pose.landmarks[PoseLandmarkType.leftThumb],
+                images[2],
+              ), //왼쪽 팔 2
+              arm(
+                pose.landmarks[PoseLandmarkType.rightElbow],
+                pose.landmarks[PoseLandmarkType.rightShoulder],
+                images[3],
+              ), //오른쪽 팔 1
+              arm(
+                pose.landmarks[PoseLandmarkType.rightThumb],
+                pose.landmarks[PoseLandmarkType.rightElbow],
+                images[4],
+              ), //오른쪽 팔 1
               face(
                 pose.landmarks[PoseLandmarkType.rightEar],
                 pose.landmarks[PoseLandmarkType.leftEar],
