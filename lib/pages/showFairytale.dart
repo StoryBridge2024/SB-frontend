@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/mediapipe/pose_detector_view.dart';
 import '../models/scene_model.dart';
+import "package:frontend/dummy/dummy_data.dart";
 
 late final SceneModel gSceneModel;
 
@@ -56,15 +57,16 @@ class Story extends StatefulWidget {
 
 class _StoryState extends State<Story> {
   int index = 0;
+  int max = 3;
 
   @override
   Widget build(BuildContext context) {
     var images = widget.images;
 
     Future.delayed(
-      const Duration(milliseconds: 2000),
+      const Duration(milliseconds: 10000),
       () {
-        if (index < 7) {
+        if (index < max - 1) {
           setState(
             () {
               index += 1;
@@ -84,16 +86,37 @@ class _StoryState extends State<Story> {
               child: Stack(
                 children: [
                   Positioned(
-                    left: 0,
-                    right: 0,
-                    child: PoseDetectorView(),
+                    left: locX.elementAt(index) - 100,
+                    right: locY.elementAt(index) - 100,
+                    child: Container(
+                      width: 500,
+                      height: 500,
+                      child: Image.asset(
+                        imgs.elementAt(index),
+                      ),
+//                      child: Image.asset(gSceneModel.b64_images[index]),
+                    ),
                   ),
                   Positioned(
-                      left: locX.elementAt(index),
-                      top: locY.elementAt(index),
-                      child: Container(
-                        child: Image.memory(images[1]),
-                      )),
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      height: 1000,
+                      width: 1000,
+                      child: Transform.scale(
+                        scale: 0.8,
+                        child: Transform.rotate(
+                          angle: 3.141592 * (3 / 2),
+                          child: PoseDetectorView(images: images),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Camera(),
+                  )
                 ],
               ),
             ),
@@ -111,7 +134,8 @@ class _StoryState extends State<Story> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        gSceneModel.scriptModelList[index].scene_contents,
+                        texts.elementAt(index),
+//                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),
