@@ -174,7 +174,7 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
-  int max = 2;
+  int max = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -190,11 +190,12 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Image.memory(
-                      base64Decode(gSceneModel!.b64_images.elementAt(index)),
-                      height: 500,
-                      width: 500,
-                    ),
+                    child: Container(),
+                    // child: Image.memory(
+                    //   base64Decode(gSceneModel!.b64_images.elementAt(index)),
+                    //   height: 500,
+                    //   width: 500,
+                    //),
                   ),
                   Positioned(
                     left: locX.elementAt(index),

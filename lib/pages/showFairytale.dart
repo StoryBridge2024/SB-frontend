@@ -7,7 +7,7 @@ import 'package:frontend/models/scene_model.dart';
 //import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
 
-late final SceneModel gSceneModel;
+import 'package:frontend/pages/makingFairytale.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images});
@@ -84,10 +84,11 @@ class _StoryState extends State<Story> {
                         child: Container(
                           width: 500,
                           height: 500,
-                          child: Image.memory(
-                            gSceneModel.b64_images as Uint8List,
-                            //imgs.elementAt(value),
-                          ),
+                          child: Container(),
+                          // child: Image.memory(
+                          //   gSceneModel!.b64_images as Uint8List,
+                          //   //imgs.elementAt(value),
+                          // ),
                           //child: Image.asset(gSceneModel.b64_images[index]),
                         ),
                       ),
@@ -129,7 +130,7 @@ class _StoryState extends State<Story> {
                           alignment: Alignment.center,
                           child: Text(
                             //texts.elementAt(value),
-                            gSceneModel.scriptModelList[clr_index.value]
+                            gSceneModel!.scriptModelList[clr_index.value]
                                 .scene_contents,
                             style: TextStyle(fontSize: 40),
                           ),

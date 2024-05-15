@@ -15,6 +15,8 @@ import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/models/scene_model.dart';
 
+import 'package:frontend/pages/makingFairytale.dart';
+
 import 'camera_view.dart';
 
 class Camera extends StatelessWidget {
@@ -126,11 +128,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
-      print(gSceneModel.scriptModelList[clr_index.value]);
+      print(gSceneModel!
+          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
 //      print(missions[clr_index.value]);
       print(clr_index.value);
 
-      if (_kindOfPose == gSceneModel.scriptModelList[clr_index.value]) {
+      if (_kindOfPose ==
+          gSceneModel!.scriptModelList[clr_index.value]
+              .actions_used_in_action_list[0]) {
         clr_index.value++;
       }
       // if (_kindOfPose == missions[clr_index.value]) {
