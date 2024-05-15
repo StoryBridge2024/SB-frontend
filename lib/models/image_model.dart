@@ -4,5 +4,5 @@ class ImageResponse {
 
   ImageResponse.fromJson(Map<String, dynamic> json)
       : created = json['created'],
-        data = json['data'];
+        data = json['data']?? (throw ArgumentError('data cannot be null'));
 }

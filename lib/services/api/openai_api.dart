@@ -49,7 +49,6 @@ class OpenAI {
         ScriptResponse.fromJson(json.decode(responseBody));
     Map<String, dynamic> content =
         json.decode(scriptResponse.choices[0]["message"]["content"]);
-    print("createCompletion: $content");
     return content;
   }
 
@@ -58,7 +57,6 @@ class OpenAI {
     String prompt = "$MUTABLE_IMAGE_PROMPT$theme.";
     var imagePromptWithTheme = deepCopy(IMAGE_PROMPT);
     imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
-    print("createImage: $imagePromptWithTheme");
 
     //post request
     final response = await post(
@@ -69,10 +67,16 @@ class OpenAI {
       },
       body: json.encode(imagePromptWithTheme),
     );
-    print("createImage: ${response.body}");
-    ImageResponse imageResponse =
-        ImageResponse.fromJson(json.decode(response.body));
-    print("createImage");
+    bool success = false;
+    late ImageResponse imageResponse;
+    do {
+      try {
+        imageResponse = ImageResponse.fromJson(json.decode(response.body));
+        success = true;
+      } catch (e) {
+        print("createImage: $e");
+      }
+    } while (!success);
     return imageResponse.data[0]["b64_json"];
   }
 
@@ -96,10 +100,9 @@ class OpenAI {
           .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
     List<String> images = await Future.wait(imageFutures);
-    print("createScene: $content, $images");
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
-    print("createScene: ${d.inSeconds}초 걸림");
+    print("createScene: $d초 걸림");
     return SceneModel(content: content, images: images);
   }
 }
