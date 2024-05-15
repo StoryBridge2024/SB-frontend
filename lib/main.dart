@@ -4,10 +4,12 @@ import 'package:frontend/pages/makeCharacterBody.dart';
 import 'pages/homePage.dart';
 import 'package:camera/camera.dart';
 import 'pages/makeCharacterBody.dart';
+import 'package:frontend/constants/dummy_data.dart';
 
 List<CameraDescription> cameras = [];
 
 void main() async {
+  clr_index.value = 0;
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
