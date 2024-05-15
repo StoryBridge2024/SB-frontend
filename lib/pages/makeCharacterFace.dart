@@ -19,10 +19,18 @@ class MyClipper extends CustomClipper<Path> {
   MyClipper();
   @override
   Path getClip(Size size) {
+    // 클리핑 경로가 이미지의 중앙에 위치하도록 조정
+    final center = Offset(size.width / 2, size.height / 2);
+    final width = size.width * 0.9; // 이미지 너비의 90%를 타원의 너비로 사용
+    final height = size.height * 0.9; // 이미지 높이의 90%를 타원의 높이로 사용
+
     Path path = Path()
-      ..addOval(Rect.fromCenter(center: Offset(50, 60), width: 40, height: 70))
-      ..addOval(Rect.fromPoints(Offset(150, 150), Offset(200, 200)))
+      ..addOval(Rect.fromCenter(center: center, width: width, height: height))
       ..close();
+    // Path path = Path()
+    //   ..addOval(Rect.fromCenter(center: Offset(50, 60), width: 40, height: 70))
+    //   ..addOval(Rect.fromPoints(Offset(150, 150), Offset(200, 200)))
+    //   ..close();
     return path;
   }
 
@@ -71,11 +79,11 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                       left: locX,
                       top: locY,
                       child: GestureDetector(
-                        child: Image.file(
-                          File(file!.path),
-                          fit: BoxFit.cover,
-                          scale: 1 / scaleFactor,
-                        ),
+                        // child: Image.file(
+                        //   File(file!.path),
+                        //   fit: BoxFit.cover,
+                        //   scale: 1 / scaleFactor,
+                        // ),
                         onScaleStart: (touch) {
                           baseScaleFactor = scaleFactor;
                         },
@@ -103,7 +111,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                             File(file!.path),
                             fit: BoxFit.cover,
                           )
-                              : Container(),
+                              : Container()
                         ),
                         // child: Image.asset(
                         //   'assets/image/face.png',
@@ -130,7 +138,15 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MakeCharacterBody(),
+                                builder: (context) => MakeCharacterBody(file:ClipPath(
+                                    clipper: MyClipper(),
+                                    child: (file != null)
+                                        ? Image.file(
+                                      File(file!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                        : Container()
+                                ),),
                               ),
                             );
                           },

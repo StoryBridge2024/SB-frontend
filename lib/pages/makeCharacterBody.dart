@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
 import 'package:value_notifier_tools/value_notifier_tools.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class ShowImage extends StatefulWidget {
   var image;
@@ -24,7 +26,10 @@ class _ShowImageState extends State<ShowImage> {
 }
 
 class MakeCharacterBody extends StatelessWidget {
-  const MakeCharacterBody({super.key});
+  const MakeCharacterBody({super.key, required this.file});
+
+  final Widget file;
+//  File? get file => null;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +77,25 @@ class MakeCharacterBody extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            Container(
+                              alignment: Alignment.topCenter,
+                                child: SizedBox(
+                                  // width: 100,
+                                  height: 130,
+                                  child: file,
+                                )
+                            ),
+                            // Positioned( // 주영이 태블릿에 맞게 재설정
+                            //
+                            //   top: 50.0,
+                            //   left: 400,
+                            //   // right: 0,
+                            //   child: SizedBox(
+                            //     // width: 100,
+                            //     height: 150,
+                            //     child: file,
+                            //   ),
+                            // ),
                           ],
                         )),
                     Flexible(
