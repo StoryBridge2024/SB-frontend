@@ -1,9 +1,15 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/mediapipe/pose_detector_view.dart';
+import '../models/scene_model.dart';
+
+late final SceneModel gSceneModel;
 
 class ShowFairytale extends StatelessWidget {
-  ShowFairytale({super.key, required this.image});
-  var image;
+  ShowFairytale({super.key, required this.images});
+
+  List<Uint8List> images;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(image: image),
+                child: Story(images: images),
               ),
             ),
           ],
@@ -40,9 +46,9 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  Story({super.key, required this.image});
+  Story({super.key, required this.images});
 
-  var image;
+  var images;
 
   @override
   State<Story> createState() => _StoryState();
@@ -50,29 +56,15 @@ class Story extends StatefulWidget {
 
 class _StoryState extends State<Story> {
   int index = 0;
-  List<String> l = [
-    '첫번째 장면에 대한 이야기입니다.',
-    '두번째 장면에 대한 이야기입니다.',
-    '세번째 장면에 대한 이야기입니다.'
-  ];
-  List<String> img = [
-    'assets/image/img_1.png',
-    'assets/image/img_2.png',
-    'assets/image/img_3.png'
-  ];
-
-  //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
-  List<double> locX = [-100, -100, -100];
-  List<double> locY = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
-    var image = widget.image;
+    var images = widget.images;
 
     Future.delayed(
       const Duration(milliseconds: 2000),
       () {
-        if (index < 2) {
+        if (index < 7) {
           setState(
             () {
               index += 1;
@@ -99,26 +91,9 @@ class _StoryState extends State<Story> {
                   Positioned(
                       left: locX.elementAt(index),
                       top: locY.elementAt(index),
-                      child: image),
-                  Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
-                    child: Container(
-                      width: 300,
-                      height: 300,
-                      color: Color(0x00FFFFFF),
-                      child: GestureDetector(
-                        onScaleUpdate: (touch) {
-                          setState(
-                            () {
-                              locX[index] += touch.focalPointDelta.dx;
-                              locY[index] += touch.focalPointDelta.dy;
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                      child: Container(
+                        child: Image.memory(images[1]),
+                      )),
                 ],
               ),
             ),
@@ -136,7 +111,7 @@ class _StoryState extends State<Story> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        l.elementAt(index),
+                        gSceneModel.scriptModelList[index].scene_contents,
                         style: TextStyle(fontSize: 40),
                       ),
                     ),

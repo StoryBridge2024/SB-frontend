@@ -13,7 +13,8 @@ class ScriptModel {
 }
 
 class ScriptResponse {
-  final String id, model, system_fingerprint, object;
+  final String id, model, object;
+  final String? system_fingerprint;
   final int created;
   final List<dynamic> choices;
   final usage;
