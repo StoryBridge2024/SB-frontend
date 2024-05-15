@@ -27,8 +27,8 @@ class OpenAI {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
     var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[1]['content'] =
-        prompt + textPromptWithTheme['messages']?[1]['content'];
+    textPromptWithTheme['messages']?[5]['content'] =
+        prompt + textPromptWithTheme['messages']?[5]['content'];
 
     //post request
     final response = await post(
@@ -49,7 +49,6 @@ class OpenAI {
         ScriptResponse.fromJson(json.decode(responseBody));
     Map<String, dynamic> content =
         json.decode(scriptResponse.choices[0]["message"]["content"]);
-    print("createCompletion: $content");
     return content;
   }
 
@@ -58,7 +57,6 @@ class OpenAI {
     String prompt = "$MUTABLE_IMAGE_PROMPT$theme.";
     var imagePromptWithTheme = deepCopy(IMAGE_PROMPT);
     imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
-    print("createImage: $imagePromptWithTheme");
 
     //post request
     final response = await post(
@@ -69,27 +67,44 @@ class OpenAI {
       },
       body: json.encode(imagePromptWithTheme),
     );
-    print("createImage: ${response.body}");
-    ImageResponse imageResponse =
-        ImageResponse.fromJson(json.decode(response.body));
-    print("createImage");
+    bool success = false;
+    late ImageResponse imageResponse;
+    do {
+      try {
+        imageResponse = ImageResponse.fromJson(json.decode(response.body));
+        success = true;
+      } catch (e) {
+        print("createImage: $e");
+        print("createImage: ${json.decode(response.body)}");
+      }
+    } while (!success);
     return imageResponse.data[0]["b64_json"];
   }
 
   //i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
-    Map<String, dynamic> content = await createCompletion(theme);
+    late Map<String, dynamic> content;
+    bool success = false;
+    do {
+      try {
+        content = await createCompletion(theme);
+        (content["scene"] as List).map((e) => ScriptModel.fromJson(e));
+        success = true;
+      } catch (e) {
+        print("createScene: $e");
+      }
+    } while (!success);
+
     List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
       imageFutures
           .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
     List<String> images = await Future.wait(imageFutures);
-    print("createScene: $content, $images");
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
-    print("createScene: ${d.inSeconds}초 걸림");
+    print("createScene: $d초 걸림");
     return SceneModel(content: content, images: images);
   }
 }

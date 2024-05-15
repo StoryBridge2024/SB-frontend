@@ -3,6 +3,7 @@ class ImageResponse {
   List<dynamic> data;
 
   ImageResponse.fromJson(Map<String, dynamic> json)
-      : created = json['created'],
-        data = json['data'];
+      : created =
+            json['created'] ?? (throw ArgumentError('created cannot be null')),
+        data = json['data'] ?? (throw ArgumentError('data cannot be null'));
 }
