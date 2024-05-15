@@ -20,11 +20,14 @@ class ScriptResponse {
   final usage;
 
   ScriptResponse.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        created = json['created'],
-        model = json['model'],
+      : id = json['id'] ?? (throw ArgumentError('id cannot be null')),
+        created =
+            json['created'] ?? (throw ArgumentError('created cannot be null')),
+        model = json['model'] ?? (throw ArgumentError('model cannot be null')),
         system_fingerprint = json['system_fingerprint'],
-        object = json['object'],
-        choices = json['choices'],
-        usage = json['usage'];
+        object =
+            json['object'] ?? (throw ArgumentError('object cannot be null')),
+        choices =
+            json['choices'] ?? (throw ArgumentError('choices cannot be null')),
+        usage = json['usage'] ?? (throw ArgumentError('usage cannot be null'));
 }
