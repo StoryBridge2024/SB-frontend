@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/models/script_model.dart';
 import 'package:http/http.dart';
 import '../../constants/prompt.dart';
@@ -67,17 +68,17 @@ class OpenAI {
       },
       body: json.encode(imagePromptWithTheme),
     );
-    bool success = false;
+    int count = 0;
     late ImageResponse imageResponse;
     do {
       try {
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
-        success = true;
+        count = -1;
       } catch (e) {
         print("createImage: $e");
         print("createImage: ${json.decode(response.body)}");
       }
-    } while (!success);
+    } while (count!=-1&&count++ < 3);
     return imageResponse.data[0]["b64_json"];
   }
 
@@ -85,16 +86,20 @@ class OpenAI {
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
     late Map<String, dynamic> content;
-    bool success = false;
+    int count = 0;
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).map((e) => ScriptModel.fromJson(e));
-        success = true;
+        (content["scene"] as List).map((e) => ScriptModel.fromJson(e).actions_used_in_action_list.map((e){
+          if(!ACTION_LIST.contains(e)){
+            throw Exception("Invalid action: $e");
+          }
+        }));
+        count = -1;
       } catch (e) {
         print("createScene: $e");
       }
-    } while (!success);
+    } while (count!=-1&&count++ < 3);
 
     List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
