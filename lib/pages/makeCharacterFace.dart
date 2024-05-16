@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 import 'makeCharacterBody.dart';
 
 class MakeCharacterFace extends StatefulWidget {
-  final XFile? file;
+  final CroppedFile? file;
 
   const MakeCharacterFace({super.key, required this.file});
 
@@ -14,16 +15,44 @@ class MakeCharacterFace extends StatefulWidget {
   State<MakeCharacterFace> createState() => _MakeCharacterFaceState();
 }
 
+class MyClipper extends CustomClipper<Path> {
+  MyClipper();
+  @override
+  Path getClip(Size size) {
+    // 클리핑 경로가 이미지의 중앙에 위치하도록 조정
+    final center = Offset(size.width / 2, size.height / 2);
+    final width = size.width * 0.9; // 이미지 너비의 90%를 타원의 너비로 사용
+    final height = size.height * 0.9; // 이미지 높이의 90%를 타원의 높이로 사용
+
+    Path path = Path()
+      ..addOval(Rect.fromCenter(center: center, width: width, height: height))
+      ..close();
+    // Path path = Path()
+    //   ..addOval(Rect.fromCenter(center: Offset(50, 60), width: 40, height: 70))
+    //   ..addOval(Rect.fromPoints(Offset(150, 150), Offset(200, 200)))
+    //   ..close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
 class _MakeCharacterFaceState extends State<MakeCharacterFace> {
   double locX = 0;
   double locY = 0;
+  double scaleFactor = 1.0;
+  double baseScaleFactor = 1.0;
 
   @override
   Widget build(BuildContext context) {
-    XFile? file = widget.file;
+    CroppedFile? file = widget.file;
 
     return Scaffold(
-      body: Container(
+      body:
+      Container(
         color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
         child: Column(
           children: [
@@ -49,37 +78,45 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                     Positioned(
                       left: locX,
                       top: locY,
-                      child: Image.file(
-                        File(file!.path),
-                        fit: BoxFit.cover,
-                        scale: 2,
+                      child: GestureDetector(
+                        // child: Image.file(
+                        //   File(file!.path),
+                        //   fit: BoxFit.cover,
+                        //   scale: 1 / scaleFactor,
+                        // ),
+                        onScaleStart: (touch) {
+                          baseScaleFactor = scaleFactor;
+                        },
+                        onScaleUpdate: (touch) {
+                          setState(
+                            () {
+                              locX += touch.focalPointDelta.dx;
+                              locY += touch.focalPointDelta.dy;
+                              if (touch.scale != 1) {
+                                scaleFactor = baseScaleFactor * touch.scale;
+                              }
+                              print(scaleFactor);
+                            },
+                          );
+                        },
                       ),
                     ),
                     Center(
-                      child: Container(
-                        color: Colors.red,
-                        width: 100,
-                        height: 100,
-                        child: Text('여기에 얼굴 틀 넣어야됨'),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 2000,
-                        height: 2000,
-                        color: Color(0x0000000),
-                        child: GestureDetector(
-                          onScaleUpdate: (touch) {
-                            setState(
-                              () {
-                                locX += touch.focalPointDelta.dx;
-                                locY += touch.focalPointDelta.dy;
-                              },
-                            );
-                          },
+                      child: IgnorePointer(
+                        ignoring: true,
+                        child: ClipPath(
+                          clipper: MyClipper(),
+                          child: (file != null)
+                              ? Image.file(
+                            File(file!.path),
+                            fit: BoxFit.cover,
+                          )
+                              : Container()
                         ),
+                        // child: Image.asset(
+                        //   'assets/image/face.png',
+                        //   color: Colors.red,
+                        // ),
                       ),
                     ),
                     Container(
@@ -101,7 +138,15 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MakeCharacterBody(),
+                                builder: (context) => MakeCharacterBody(file:ClipPath(
+                                    clipper: MyClipper(),
+                                    child: (file != null)
+                                        ? Image.file(
+                                      File(file!.path),
+                                      fit: BoxFit.cover,
+                                    )
+                                        : Container()
+                                ),),
                               ),
                             );
                           },
@@ -118,3 +163,4 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     );
   }
 }
+

@@ -1,7 +1,19 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/makingFairytale.dart';
+import 'package:frontend/services/mediapipe/pose_detector_view.dart';
+import 'package:frontend/models/scene_model.dart';
+
+//import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/action_list.dart';
+
+import 'package:frontend/pages/makingFairytale.dart';
 
 class ShowFairytale extends StatelessWidget {
-  const ShowFairytale({super.key});
+  ShowFairytale({super.key, required this.images});
+
+  List<Uint8List> images;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +39,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(),
+                child: Story(images: images),
               ),
             ),
           ],
@@ -38,118 +50,101 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  const Story({super.key});
+  Story({super.key, required this.images});
+
+  var images;
 
   @override
   State<Story> createState() => _StoryState();
 }
 
 class _StoryState extends State<Story> {
-  int index = 0;
-  List<String> l = [
-    '첫번째 장면에 대한 이야기입니다.',
-    '두번째 장면에 대한 이야기입니다.',
-    '세번째 장면에 대한 이야기입니다.'
-  ];
-  List<String> img = [
-    'assets/image/img_1.png',
-    'assets/image/img_2.png',
-    'assets/image/img_3.png'
-  ];
-
-  //이 값을 어떻게 저장해서 어떻게 나중에 쓸지 잘 모르겠음
-  List<double> locX = [100, 100, 100];
-  List<double> locY = [100, 100, 100];
+  //int index = 0;
+  int max = 8;
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-      const Duration(milliseconds: 2000),
-      () {
-        if (index < 2) {
-          setState(
-            () {
-              index += 1;
-            },
-          );
-        }
-      },
-    );
+    var images = widget.images;
 
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(
-            child: Container(
-              color: Colors.white,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    child: Image.asset(
-                      img.elementAt(index),
-                      height: 500,
-                      width: 500,
-                    ),
-                  ),
-                  Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
-                    child: Image.asset(
-                      'assets/image/img.png',
-                      height: 300,
-                      width: 300,
-                    ),
-                  ),
-                  Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
-                    child: Container(
-                      width: 300,
-                      height: 300,
-                      color: Color(0x00FFFFFF),
-                      child: GestureDetector(
-                        onScaleUpdate: (touch) {
-                          setState(
-                            () {
-                              locX[index] += touch.focalPointDelta.dx;
-                              locY[index] += touch.focalPointDelta.dy;
-                            },
-                          );
-                        },
+    ValueNotifier(clr_index);
+    return ValueListenableBuilder<int>(
+      valueListenable: clr_index,
+      builder: (context, value, _) {
+        return Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Container(
+                  color: Colors.white,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: locX.elementAt(value) - 100,
+                        right: locY.elementAt(value) - 100,
+                        child: Container(
+                          width: 500,
+                          height: 500,
+                          child: Image.memory(
+                            base64Decode(gSceneModel!.b64_images.elementAt(clr_index.value)),
+                            height: 500,
+                            width: 500,
+                          ),
+                          //child: Image.asset(gSceneModel.b64_images[index]),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Flexible(
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  Flexible(
-                    flex: 3,
-                    child: Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        l.elementAt(index),
-                        style: TextStyle(fontSize: 40),
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        child: Container(
+                          height: 1000,
+                          width: 1000,
+                          child: Transform.scale(
+                            scale: 0.8,
+                            child: Transform.rotate(
+                              angle: 3.141592 * (3 / 2),
+                              child: PoseDetectorView(images: images),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: Camera(),
+                      )
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    children: [
+                      Flexible(
+                        flex: 3,
+                        child: Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            //texts.elementAt(value),
+                            gSceneModel!.scriptModelList[clr_index.value]
+                                .scene_contents,
+                            style: TextStyle(fontSize: 40),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
