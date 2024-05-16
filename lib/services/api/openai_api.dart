@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/models/script_model.dart';
 import 'package:http/http.dart';
 import '../../constants/prompt.dart';
@@ -89,7 +90,11 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).map((e) => ScriptModel.fromJson(e));
+        (content["scene"] as List).map((e) => ScriptModel.fromJson(e).actions_used_in_action_list.map((e){
+          if(!ACTION_LIST.contains(e)){
+            throw Exception("Invalid action: $e");
+          }
+        }));
         success = true;
       } catch (e) {
         print("createScene: $e");
