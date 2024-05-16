@@ -68,17 +68,17 @@ class OpenAI {
       },
       body: json.encode(imagePromptWithTheme),
     );
-    bool success = false;
+    int count = 0;
     late ImageResponse imageResponse;
     do {
       try {
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
-        success = true;
+        count = -1;
       } catch (e) {
         print("createImage: $e");
         print("createImage: ${json.decode(response.body)}");
       }
-    } while (!success);
+    } while (count!=-1&&count++ < 3);
     return imageResponse.data[0]["b64_json"];
   }
 
@@ -86,7 +86,7 @@ class OpenAI {
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
     late Map<String, dynamic> content;
-    bool success = false;
+    int count = 0;
     do {
       try {
         content = await createCompletion(theme);
@@ -95,11 +95,11 @@ class OpenAI {
             throw Exception("Invalid action: $e");
           }
         }));
-        success = true;
+        count = -1;
       } catch (e) {
         print("createScene: $e");
       }
-    } while (!success);
+    } while (count!=-1&&count++ < 3);
 
     List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
