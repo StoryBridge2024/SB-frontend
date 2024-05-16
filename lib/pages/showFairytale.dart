@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/makingFairytale.dart';
@@ -84,11 +85,11 @@ class _StoryState extends State<Story> {
                         child: Container(
                           width: 500,
                           height: 500,
-                          child: Container(),
-                          // child: Image.memory(
-                          //   gSceneModel!.b64_images as Uint8List,
-                          //   //imgs.elementAt(value),
-                          // ),
+                          child: Image.memory(
+                            base64Decode(gSceneModel!.b64_images.elementAt(clr_index.value)),
+                            height: 500,
+                            width: 500,
+                          ),
                           //child: Image.asset(gSceneModel.b64_images[index]),
                         ),
                       ),

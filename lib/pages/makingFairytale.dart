@@ -190,12 +190,11 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Container(),
-                    // child: Image.memory(
-                    //   base64Decode(gSceneModel!.b64_images.elementAt(index)),
-                    //   height: 500,
-                    //   width: 500,
-                    //),
+                    child: Image.memory(
+                      base64Decode(gSceneModel!.b64_images.elementAt(index)),
+                      height: 500,
+                      width: 500,
+                    ),
                   ),
                   Positioned(
                     left: locX.elementAt(index),

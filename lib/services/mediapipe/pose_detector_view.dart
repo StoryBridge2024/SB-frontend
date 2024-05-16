@@ -135,7 +135,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
       if (_kindOfPose ==
           gSceneModel!.scriptModelList[clr_index.value]
-              .actions_used_in_action_list[0]) {
+              .actions_used_in_action_list[0] && clr_index.value < 3) {
         clr_index.value++;
       }
       // if (_kindOfPose == missions[clr_index.value]) {
