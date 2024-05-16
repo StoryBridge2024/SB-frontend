@@ -7,10 +7,11 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'dart:math';
 
 class MovementFollow extends StatefulWidget {
-  const MovementFollow({super.key, required this.poses, required this.images});
+  const MovementFollow({super.key, required this.poses, required this.images, required this.face});
 
   final List<Uint8List> images;
   final List<Pose> poses;
+  final Widget face;
 
   @override
   State<MovementFollow> createState() => _MovementFollowState();
@@ -119,16 +120,16 @@ class _MovementFollowState extends State<MovementFollow> {
     );
   }
 
-  Widget face(var p1, var p2, String image) {
+  Widget head(var p1, var p2, Widget image) {
     return Positioned(
       right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) * 0.23,
       top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.23,
       child: Transform.rotate(
         angle: angle(p1, p2),
-        child: Image.asset(
-          image,
+        child: Container(
+          child: image,
           width: length(p1, p2) * 0.5,
-        ),
+        )
       ),
     );
   }
@@ -137,6 +138,7 @@ class _MovementFollowState extends State<MovementFollow> {
   Widget build(BuildContext context) {
     List<Uint8List> images = widget.images;
     List<Pose> poses = widget.poses;
+    var face = widget.face;
     var ret;
 
     for (final pose in poses) {
@@ -154,7 +156,7 @@ class _MovementFollowState extends State<MovementFollow> {
                 pose.landmarks[PoseLandmarkType.rightHip],
                 pose.landmarks[PoseLandmarkType.leftHip],
                 images[0],
-              ), //머리
+              ), //몸통
               leg(
                 pose.landmarks[PoseLandmarkType.leftHip],
                 pose.landmarks[PoseLandmarkType.leftKnee],
@@ -195,16 +197,16 @@ class _MovementFollowState extends State<MovementFollow> {
                 pose.landmarks[PoseLandmarkType.rightElbow],
                 images[4],
               ), //오른쪽 팔 1
-              face(
+              head(
                 pose.landmarks[PoseLandmarkType.rightEar],
                 pose.landmarks[PoseLandmarkType.leftEar],
-                "assets/character/face.jpg",
+                face
               )
             ],
           ),
         ),
       );
     }
-    return ret;
+    return ret!;
   }
 }

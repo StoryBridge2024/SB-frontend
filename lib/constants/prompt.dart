@@ -1,6 +1,6 @@
 //6 sentences를 1로 바꿈, 수정하자
 const Map<String, dynamic> SCRIPT_PROMPT = {
-  "model": "gpt-4-turbo-preview",
+  "model": "gpt-4o",
   "response_format": {"type": "json_object"},
   "messages": [
     {

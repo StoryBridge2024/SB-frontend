@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'getMessage.dart';
 
@@ -7,40 +8,61 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFC),
+      body: Stack(
         children: [
-          Center(
-            child: Text(
-              '스토리 브릿지',
-              style: TextStyle(
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
-                  fontSize: 200,
-                  fontFamily: 'BMKIRANGHAERANG'),
+          Positioned(
+            right: 150,
+            bottom: 50,
+            child: Image.asset(
+              'assets/image/img.png',
+              scale: 5,
             ),
           ),
-          TextButton(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.all(40)),
-              backgroundColor: MaterialStateProperty.all(
-                Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-              ),
+          Positioned(
+            right: 75,
+            bottom: 280,
+            child: Image.asset(
+              'assets/image/img_4.png',
+              scale: 6,
             ),
-            child: Text(
-              '동화 제작하기',
-              style: TextStyle(
-                fontSize: 50,
-              ),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const GetMessage(),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  '스토리 브릿지',
+                  style: TextStyle(
+                      color: Color.fromARGB(0xFF, 0x22, 0x1A, 0x7E),
+                      fontSize: 200,
+                      fontFamily: 'JJI'),
                 ),
-              );
-            },
+              ),
+              TextButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(40)),
+                  backgroundColor: MaterialStateProperty.all(
+                    Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
+                  ),
+                ),
+                child: Text(
+                  '동화 제작하기',
+                  style: TextStyle(
+                    fontSize: 35,
+                    color: Color.fromARGB(0xFF, 0x4B, 0x4A, 0x53),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const GetMessage(),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ],
       ),
