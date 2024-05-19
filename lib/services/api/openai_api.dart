@@ -90,11 +90,13 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).map((e) => ScriptModel.fromJson(e).actions_used_in_action_list.map((e){
-          if(!ACTION_LIST.contains(e)){
-            throw Exception("Invalid action: $e");
-          }
-        }));
+        (content["scene"] as List).forEach((e) {
+          ScriptModel.fromJson(e).actions_used_in_action_list.forEach((action) {
+            if (!ACTION_LIST.contains(action)) {
+              throw Exception("Invalid action: $action");
+            }
+          });
+        });
         count = -1;
       } catch (e) {
         print("createScene: $e");
