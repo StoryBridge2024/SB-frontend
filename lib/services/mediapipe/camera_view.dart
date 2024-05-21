@@ -15,7 +15,7 @@ class CameraView extends StatefulWidget {
       {Key? key,
       required this.customPaint,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.front})
+      this.initialDirection = CameraLensDirection.back})
       : super(key: key);
 
   // 스켈레톤을 그려주는 객체

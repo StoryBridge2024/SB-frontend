@@ -74,6 +74,12 @@ flutter:
     - family: BMKIRANGHAERANG
       fonts:
         - asset: assets/font/BMKIRANGHAERANG-TTF.ttf
+        - asset: assets/font/UhBee JJIBBABBA.ttf
+
+    - family: JJI
+      fonts:
+        - asset: assets/font/UhBee JJIBBABBA.ttf
+        - asset: assets/font/UhBee JJIBBABBA Bold.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

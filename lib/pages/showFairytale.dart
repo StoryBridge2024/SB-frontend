@@ -11,15 +11,16 @@ import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 
 class ShowFairytale extends StatelessWidget {
-  ShowFairytale({super.key, required this.images});
+  ShowFairytale({super.key, required this.images, required this.face});
 
+  var face;
   List<Uint8List> images;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
         child: Column(
           children: [
             Container(
@@ -29,7 +30,8 @@ class ShowFairytale extends StatelessWidget {
                 '동화 만들기',
                 style: TextStyle(
                   fontSize: 60,
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                 ),
               ),
             ),
@@ -39,7 +41,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(images: images),
+                child: Story(images: images, face: face,),
               ),
             ),
           ],
@@ -50,8 +52,9 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  Story({super.key, required this.images});
+  Story({super.key, required this.images, required this.face});
 
+  var face;
   var images;
 
   @override
@@ -65,6 +68,7 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) {
     var images = widget.images;
+    var face = widget.face;
 
     ValueNotifier(clr_index);
     return ValueListenableBuilder<int>(
@@ -103,7 +107,7 @@ class _StoryState extends State<Story> {
                             scale: 0.8,
                             child: Transform.rotate(
                               angle: 3.141592 * (3 / 2),
-                              child: PoseDetectorView(images: images),
+                              child: PoseDetectorView(images: images, face:face),
                             ),
                           ),
                         ),

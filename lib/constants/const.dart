@@ -1,0 +1,2 @@
+const NUMBER_OF_SCENE=3;
+const NUMBER_OF_SENTENCE=3;
