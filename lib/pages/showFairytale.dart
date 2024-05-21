@@ -1,25 +1,18 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
-import 'package:frontend/models/scene_model.dart';
-
-//import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
 
-import 'package:frontend/pages/makingFairytale.dart';
-
 class ShowFairytale extends StatelessWidget {
-  ShowFairytale({super.key, required this.images});
-
-  List<Uint8List> images;
+  ShowFairytale({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
         child: Column(
           children: [
             Container(
@@ -29,7 +22,8 @@ class ShowFairytale extends StatelessWidget {
                 '동화 만들기',
                 style: TextStyle(
                   fontSize: 60,
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                 ),
               ),
             ),
@@ -39,8 +33,14 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(images: images),
+                child: Story(),
               ),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                turn += 1;
+                if (turn == 4) turn = 0;
+              },
             ),
           ],
         ),
@@ -50,9 +50,7 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  Story({super.key, required this.images});
-
-  var images;
+  Story({super.key});
 
   @override
   State<Story> createState() => _StoryState();
@@ -64,8 +62,6 @@ class _StoryState extends State<Story> {
 
   @override
   Widget build(BuildContext context) {
-    var images = widget.images;
-
     ValueNotifier(clr_index);
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
@@ -80,39 +76,33 @@ class _StoryState extends State<Story> {
                   child: Stack(
                     children: [
                       Positioned(
-                        left: locX.elementAt(value) - 100,
-                        right: locY.elementAt(value) - 100,
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Image.memory(
-                            base64Decode(gSceneModel!.b64_images.elementAt(clr_index.value)),
-                            height: 500,
-                            width: 500,
-                          ),
-                          //child: Image.asset(gSceneModel.b64_images[index]),
-                        ),
-                      ),
-                      Positioned(
                         left: 0,
                         top: 0,
                         child: Container(
-                          height: 1000,
-                          width: 1000,
-                          child: Transform.scale(
-                            scale: 0.8,
-                            child: Transform.rotate(
-                              angle: 3.141592 * (3 / 2),
-                              child: PoseDetectorView(images: images),
-                            ),
-                          ),
+                          width: 500,
+                          height: 500,
+                          // child: Image.memory(
+                          //   base64Decode(gSceneModel!.b64_images
+                          //       .elementAt(clr_index.value)),
+                          //   height: 500,
+                          //   width: 500,
+                          // ),
+                          child: Image.asset(imgs.elementAt(clr_index.value)),
                         ),
                       ),
                       Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: Camera(),
-                      )
+                        left: -170,
+                        top: -350,
+                        child: Transform.scale(
+                          scale: 1,
+                          child: PoseDetectorView(),
+                        ),
+                      ),
+                      // Positioned(
+                      //   bottom: 0,
+                      //   left: 0,
+                      //   child: Camera(),
+                      // )
                     ],
                   ),
                 ),
@@ -129,12 +119,7 @@ class _StoryState extends State<Story> {
                           height: double.infinity,
                           width: double.infinity,
                           alignment: Alignment.center,
-                          child: Text(
-                            //texts.elementAt(value),
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .scene_contents,
-                            style: TextStyle(fontSize: 40),
-                          ),
+                          child: Container(),
                         ),
                       ),
                     ],

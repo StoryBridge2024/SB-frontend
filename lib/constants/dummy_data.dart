@@ -29,3 +29,5 @@ List<String> missions = [
   "박수치기",
   "박수치기",
 ];
+
+int turn  = 0;

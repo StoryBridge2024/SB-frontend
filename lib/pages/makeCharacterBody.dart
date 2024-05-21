@@ -235,7 +235,7 @@ class _DrawBoxState extends State<DrawBox> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ShowFairytale(images: images),
+                  builder: (context) => ShowFairytale(),//images: images),
                 ),
               );
               return temp;

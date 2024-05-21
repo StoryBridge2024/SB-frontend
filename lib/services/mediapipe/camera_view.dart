@@ -13,17 +13,14 @@ CameraController? controller;
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
-      required this.customPaint,
-      required this.onImage,
-      this.initialDirection = CameraLensDirection.front})
+        required this.customPaint,
+        required this.onImage,
+        this.initialDirection = CameraLensDirection.back})
       : super(key: key);
-
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
-
   // 이미지 받을 때마다 실행하는 함수
   final Function(InputImage inputImage) onImage;
-
   // 카메라 렌즈 방향 변수
   final CameraLensDirection initialDirection;
 
@@ -33,13 +30,8 @@ class CameraView extends StatefulWidget {
 
 class _CameraViewState extends State<CameraView> {
   // 카메라를 다루기 위한 변수
-
   // 카메라 인덱스
   int _cameraIndex = -1;
-
-  // 확대 축소 레벨
-  double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
-
   // 카메라 렌즈 변경 변수
   bool _changingCameraLens = false;
 
@@ -49,13 +41,13 @@ class _CameraViewState extends State<CameraView> {
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
     if (cameras.any(
-      (element) =>
-          element.lensDirection == widget.initialDirection &&
+          (element) =>
+      element.lensDirection == widget.initialDirection &&
           element.sensorOrientation == 90,
     )) {
       _cameraIndex = cameras.indexOf(
         cameras.firstWhere((element) =>
-            element.lensDirection == widget.initialDirection &&
+        element.lensDirection == widget.initialDirection &&
             element.sensorOrientation == 90),
       );
     } else {
@@ -81,24 +73,7 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(alignment: Alignment.bottomLeft, child: _liveFeedBody());
-  }
-
-  // 전면<->후면 카메라 변경 버튼
-  Widget? _floatingActionButton() {
-    if (cameras.length == 1) return null;
-    return SizedBox(
-        height: 30.0,
-        width: 30.0,
-        child: FloatingActionButton(
-          onPressed: _switchLiveCamera,
-          child: Icon(
-            Platform.isIOS
-                ? Icons.flip_camera_ios_outlined
-                : Icons.flip_camera_android_outlined,
-            size: 20,
-          ),
-        ));
+    return _liveFeedBody();
   }
 
   // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
@@ -124,22 +99,17 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           // 전면 후면 변경 시 화면 변경 처리
           Transform.scale(
-            scale: scale,
+            scale: scale - 1.2,
             child: Center(
               child: _changingCameraLens
                   ? const Center(
-                      child: Text('Changing camera lens'),
-                    )
-                  : Container(),
+                child: Text('Changing camera lens'),
+              )
+                  : Container(), //CameraPreview(controller!),
             ),
           ),
           // 추출된 스켈레톤 그리기
-          if (widget.customPaint != null) widget.customPaint!,
-
-          // if (_byteImage != null)
-          //   Image.memory(_byteImage!, width: 100, height: 100),
-          // if (_byteImage != null)
-          //   Image(image: MemoryImage(_byteImage!), width: 100, height: 100),
+          //if (widget.customPaint != null) widget.customPaint!,
         ],
       ),
     );
@@ -150,20 +120,13 @@ class _CameraViewState extends State<CameraView> {
     final camera = cameras[_cameraIndex];
     controller = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.low,
       enableAudio: false,
     );
     controller?.initialize().then((_) {
       if (!mounted) {
         return;
       }
-      controller?.getMinZoomLevel().then((value) {
-        zoomLevel = value;
-        minZoomLevel = value;
-      });
-      controller?.getMaxZoomLevel().then((value) {
-        maxZoomLevel = value;
-      });
       // 이미지 받은 것을 _processCameraImage 함수로 처리
       controller?.startImageStream(_processCameraImage);
       setState(() {});
@@ -195,19 +158,19 @@ class _CameraViewState extends State<CameraView> {
     final bytes = allBytes.done().buffer.asUint8List();
 
     final Size imageSize =
-        Size(image.width.toDouble(), image.height.toDouble());
+    Size(image.width.toDouble(), image.height.toDouble());
 
     final camera = cameras[_cameraIndex];
     final imageRotation =
-        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+    InputImageRotationValue.fromRawValue(camera.sensorOrientation);
     if (imageRotation == null) return;
 
     final inputImageFormat =
-        InputImageFormatValue.fromRawValue(image.format.raw);
+    InputImageFormatValue.fromRawValue(image.format.raw);
     if (inputImageFormat == null) return;
 
     final planeData = image.planes.map(
-      (Plane plane) {
+          (Plane plane) {
         return InputImagePlaneMetadata(
           bytesPerRow: plane.bytesPerRow,
           height: plane.height,
@@ -224,7 +187,7 @@ class _CameraViewState extends State<CameraView> {
     );
 
     final inputImage =
-        InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+    InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
     // PoseDetectorView에서 받아온 함수인 onImage(이미지에 포즈가 추출되었으면 스켈레톤 그려주는 함수) 실행
     widget.onImage(inputImage);
