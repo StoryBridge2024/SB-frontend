@@ -8,12 +8,15 @@ import 'dart:math';
 import 'package:frontend/constants/dummy_data.dart';
 
 class MovementFollow extends StatefulWidget {
-  const MovementFollow({super.key, required this.poses});
+  const MovementFollow(
+      {super.key,
+      required this.poses,
+      required this.images,
+      required this.face});
 
-//  final List<Uint8List> images;
   final List<Pose> poses;
-
-//  final Widget face;
+  final List<Uint8List> images;
+  final Widget face;
 
   @override
   State<MovementFollow> createState() => _MovementFollowState();
@@ -105,7 +108,7 @@ class _MovementFollowState extends State<MovementFollow> {
   Widget body(var p1, var p2, var p3, var p4, Uint8List image) {
     return Positioned(
       right:
-      (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p1, p2) / 2) * 0.25,
+          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p1, p2) / 2) * 0.25,
       top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p2, p3) / 2) * 0.25,
       child: Transform.rotate(
         angle: angle(p1, p2),
@@ -127,15 +130,16 @@ class _MovementFollowState extends State<MovementFollow> {
       right: (((p1!.x + p2!.x) / 2) - length(p1, p2) / 2) * 0.23,
       top: (((p1!.y + p2!.y) / 2) - length(p1, p2) / 2) * 0.23,
       child: Transform.rotate(
-          angle: angle(p1, p2),
-          child: Container(
-            child: image,
-            width: length(p1, p2) * 0.5,
-          )),
+        angle: angle(p1, p2),
+        child: Container(
+          child: image,
+          width: length(p1, p2) * 0.5,
+        ),
+      ),
     );
   }
 
-  Widget temp(var p1, var p2, String image) {
+  Widget temp(var p1, var p2, var image) {
     return Positioned(
       right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) + 300,
       top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) + 50,
@@ -146,32 +150,33 @@ class _MovementFollowState extends State<MovementFollow> {
           angle: angle(p1, p2),
           child: Container(
             width: double.infinity,
-            child: Image.asset(image),
+            child: Image.memory(image),
           ),
         ),
       ),
     );
   }
 
-  Widget tempBody(var p1, var p2, var p3, var p4, String image) {
+  Widget tempBody(var p1, var p2, var p3, var p4, var image) {
     return Positioned(
-      right: (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + 300,
+      right:
+          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + 300,
       top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + 50,
       child: Container(
         width: length(p4, p1) * 1,
         height: length(p4, p1) * 1,
         child: Transform.rotate(
-          angle: angle(p1, p2),
+          angle: angle(p2, p1),
           child: Container(
             width: double.infinity,
-            child: Image.asset(image),
+            child: Image.memory(image),
           ),
         ),
       ),
     );
   }
 
-  Widget tempFace(var p1, var p2, String image) {
+  Widget tempFace(var p1, var p2, var image) {
     return Positioned(
       right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.25) + 300,
       top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.25) + 50,
@@ -182,7 +187,7 @@ class _MovementFollowState extends State<MovementFollow> {
           angle: angle(p1, p2),
           child: Container(
             width: double.infinity,
-            child: Image.asset(image),
+            child: image,
           ),
         ),
       ),
@@ -191,9 +196,9 @@ class _MovementFollowState extends State<MovementFollow> {
 
   @override
   Widget build(BuildContext context) {
-//    List<Uint8List> images = widget.images;
+    List<Uint8List> images = widget.images;
     List<Pose> poses = widget.poses;
-//    var face = widget.face;
+    var face = widget.face;
     var ret;
 
     if (poses.length == 0) ret = Container();
@@ -212,52 +217,53 @@ class _MovementFollowState extends State<MovementFollow> {
                   pose.landmarks[PoseLandmarkType.rightShoulder],
                   pose.landmarks[PoseLandmarkType.leftHip],
                   pose.landmarks[PoseLandmarkType.rightHip],
-                  "assets/character/body.png",
+                  images[0],
                 ),
-                temp(
-                  pose.landmarks[PoseLandmarkType.leftHip],
-                  pose.landmarks[PoseLandmarkType.leftKnee],
-                  "assets/character/real.png",
-                ), //왼쪽 다리 1
-                temp(
-                  pose.landmarks[PoseLandmarkType.leftKnee],
-                  pose.landmarks[PoseLandmarkType.leftAnkle],
-                  "assets/character/real.png",
-                ), //왼쪽 다리 2
-                temp(
-                  pose.landmarks[PoseLandmarkType.rightHip],
-                  pose.landmarks[PoseLandmarkType.rightKnee],
-                  "assets/character/real.png",
-                ), //오른쪽 다리 1
-                temp(
-                  pose.landmarks[PoseLandmarkType.rightKnee],
-                  pose.landmarks[PoseLandmarkType.rightAnkle],
-                  "assets/character/real.png",
-                ), //오른쪽 다리 2
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.leftHip],
+                //   pose.landmarks[PoseLandmarkType.leftKnee],
+                //   "assets/character/real.png",
+                // ), //왼쪽 다리 1
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.leftKnee],
+                //   pose.landmarks[PoseLandmarkType.leftAnkle],
+                //   "assets/character/real.png",
+                // ), //왼쪽 다리 2
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.rightHip],
+                //   pose.landmarks[PoseLandmarkType.rightKnee],
+                //   "assets/character/real.png",
+                // ), //오른쪽 다리 1
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.rightKnee],
+                //   pose.landmarks[PoseLandmarkType.rightAnkle],
+                //   "assets/character/real.png",
+                // ), //오른쪽 다리 2
                 temp(
                   pose.landmarks[PoseLandmarkType.leftShoulder],
                   pose.landmarks[PoseLandmarkType.leftElbow],
-                  "assets/character/real.png",
+                  images[1],
                 ), //왼쪽 팔 1
                 temp(
                   pose.landmarks[PoseLandmarkType.leftElbow],
                   pose.landmarks[PoseLandmarkType.leftThumb],
-                  "assets/character/real.png",
+                  images[2],
                 ), //왼쪽 팔 2
                 temp(
                   pose.landmarks[PoseLandmarkType.rightElbow],
                   pose.landmarks[PoseLandmarkType.rightShoulder],
-                  "assets/character/real.png",
+                  images[3],
                 ), //오른쪽 팔 1
                 temp(
                   pose.landmarks[PoseLandmarkType.rightThumb],
                   pose.landmarks[PoseLandmarkType.rightElbow],
-                  "assets/character/real.png",
+                  images[4],
                 ), //오른쪽 팔 1
                 tempFace(
-                    pose.landmarks[PoseLandmarkType.rightEar],
-                    pose.landmarks[PoseLandmarkType.leftEar],
-                    "assets/character/face.jpg")
+                  pose.landmarks[PoseLandmarkType.rightEar],
+                  pose.landmarks[PoseLandmarkType.leftEar],
+                  face,
+                )
               ],
             ),
           ),

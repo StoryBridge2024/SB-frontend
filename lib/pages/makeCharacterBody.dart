@@ -67,7 +67,7 @@ class MakeCharacterBody extends StatelessWidget {
                         flex: 11,
                         child: Stack(
                           children: [
-                            DrawBox(),
+                            DrawBox(face: file),
                             Center(
                               child: IgnorePointer(
                                 ignoring: true,
@@ -115,7 +115,9 @@ class MakeCharacterBody extends StatelessWidget {
 }
 
 class DrawBox extends StatefulWidget {
-  const DrawBox({super.key});
+  DrawBox({super.key, required this.face});
+
+  var face;
 
   @override
   State<DrawBox> createState() => _DrawBoxState();
@@ -210,6 +212,7 @@ class _DrawBoxState extends State<DrawBox> {
   }
 
   void _nextPage(BuildContext context, List<Uint8List> images) async {
+    var face = widget.face;
     final image = notifier.renderImage();
     showDialog(
       context: context,
@@ -235,7 +238,7 @@ class _DrawBoxState extends State<DrawBox> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ShowFairytale(),//images: images),
+                  builder: (context) => ShowFairytale(images: images, face: face),
                 ),
               );
               return temp;

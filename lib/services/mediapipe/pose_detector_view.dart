@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,7 +12,10 @@ import 'camera_view.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({super.key});
+  PoseDetectorView({super.key, required this.images, required this.face});
+
+  List<Uint8List> images;
+  var face;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -19,9 +24,10 @@ class PoseDetectorView extends StatefulWidget {
 class _PoseDetectorViewState extends State<PoseDetectorView> {
   // 스켈레톤 추출 변수 선언(google_mlkit_pose_detection 라이브러리)
   final PoseDetector _poseDetector =
-  PoseDetector(options: PoseDetectorOptions());
+      PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
+
   // 스켈레톤 모양을 그려주는 변수
   CustomPaint? _customPaint;
 
@@ -68,23 +74,16 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             height: 1000,
             child: _movementFollow,
           ),
-        )
-        // ValueListenableBuilder(
-        //   valueListenable: _movementFollow,
-        //   builder: (context, value, _) {
-        //     return Container(
-        //       child: Transform.scale(
-        //         child: _movementFollow,
-        //       ),
-        //     );
-        //   },
-        // ),
+        ),
       ],
     );
   }
 
   // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
   Future<void> processImage(InputImage inputImage) async {
+    var images = widget.images;
+    var face = widget.face;
+
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
@@ -98,9 +97,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           inputImage.inputImageData!.imageRotation);
       _customPaint = CustomPaint(painter: painter);
       final kindOfPose =
-      PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
+          PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();
-      final movementFollow = MovementFollow(poses: poses);
+      final movementFollow =
+          MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
     } else {
       // 추출된 포즈 없음

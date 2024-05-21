@@ -6,7 +6,10 @@ import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
 
 class ShowFairytale extends StatelessWidget {
-  ShowFairytale({super.key});
+  ShowFairytale({super.key, required this.images, required this.face});
+
+  List<Uint8List> images;
+  Widget face;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(),
+                child: Story(images: images, face: face),
               ),
             ),
             FloatingActionButton(
@@ -50,7 +53,10 @@ class ShowFairytale extends StatelessWidget {
 }
 
 class Story extends StatefulWidget {
-  Story({super.key});
+  Story({super.key, required this.images, required this.face});
+
+  List<Uint8List> images;
+  Widget face;
 
   @override
   State<Story> createState() => _StoryState();
@@ -62,6 +68,10 @@ class _StoryState extends State<Story> {
 
   @override
   Widget build(BuildContext context) {
+
+    var images = widget.images;
+    var face = widget.face;
+
     ValueNotifier(clr_index);
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
@@ -95,7 +105,7 @@ class _StoryState extends State<Story> {
                         top: -350,
                         child: Transform.scale(
                           scale: 1,
-                          child: PoseDetectorView(),
+                          child: PoseDetectorView(images: images, face: face),
                         ),
                       ),
                       // Positioned(
