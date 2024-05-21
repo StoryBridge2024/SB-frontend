@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
@@ -13,6 +14,7 @@ class ShowFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    clr_index.value = 0;
     return Scaffold(
       body: Container(
         color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
@@ -68,7 +70,6 @@ class _StoryState extends State<Story> {
 
   @override
   Widget build(BuildContext context) {
-
     var images = widget.images;
     var face = widget.face;
 
@@ -124,12 +125,57 @@ class _StoryState extends State<Story> {
                   child: Column(
                     children: [
                       Flexible(
-                        flex: 3,
+                        flex: 1,
+                        child: Container(),
+                      ),
+                      Flexible(
+                        flex: 10,
                         child: Container(
                           height: double.infinity,
                           width: double.infinity,
                           alignment: Alignment.center,
-                          child: Container(),
+                          child: Text(
+                            texts.elementAt(clr_index.value),
+                          ),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: (clr_index.value == 0)
+                                  ? Container()
+                                  : Container(
+                                      alignment: Alignment.bottomLeft,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_back,
+                                        ),
+                                        onPressed: () {
+                                          if (clr_index.value != 0)
+                                            clr_index.value -= 1;
+                                        },
+                                      ),
+                                    ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                alignment: Alignment.bottomRight,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_forward,
+                                  ),
+                                  onPressed: () {
+                                    if (clr_index.value < 8)
+                                      clr_index.value += 1;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -181,12 +181,10 @@ class _MovementFollowState extends State<MovementFollow> {
       right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.25) + 300,
       top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.25) + 50,
       child: Container(
-        width: length(p2, p1) * 2.5,
-        // height: length(p2, p1) * 2.5,
+        height: length(p2, p1) * 2.5,
         child: Transform.rotate(
           angle: angle(p1, p2),
           child: Container(
-            width: double.infinity,
             child: image,
           ),
         ),
