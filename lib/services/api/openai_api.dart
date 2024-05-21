@@ -9,8 +9,6 @@ import '../../models/scene_model.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
-  final String baseScriptUrl = 'https://api.openai.com/v1/';
-  final String baseImageUrl = 'https://api.openai.com/v1/';
 
   OpenAI._privateConstructor();
 
@@ -33,7 +31,7 @@ class OpenAI {
 
     //post request
     final response = await post(
-      Uri.parse('${baseScriptUrl}chat/completions'),
+      Uri.parse(baseScriptUrl),
       headers: {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
@@ -61,7 +59,7 @@ class OpenAI {
 
     //post request
     final response = await post(
-      Uri.parse('${baseImageUrl}images/generations'),
+      Uri.parse(baseImageUrl),
       headers: {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
@@ -78,11 +76,28 @@ class OpenAI {
         print("createImage: $e");
         print("createImage: ${json.decode(response.body)}");
       }
-    } while (count!=-1&&count++ < 3);
+    } while (count != -1 && count++ < 3);
     return imageResponse.data[0]["b64_json"];
   }
 
-  //i: 0-8을 1로 바꿈, 수정하자
+  void checkValidation(String b64_json) async {
+    //compose prompt with url
+    var visionPromptWithImage = deepCopy(VISION_PROMPT);
+    visionPromptWithImage['messages']?[0]['content'][1]['image_url']['url'] =
+        "data:image/jpeg;base64, $b64_json";
+
+    //post request
+    final response = await post(
+        Uri.parse(baseVisionUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(visionPromptWithImage));
+    print("checkValidation: ${response.body}");
+  }
+
+//i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
     late Map<String, dynamic> content;
@@ -90,16 +105,17 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).map((e) => ScriptModel.fromJson(e).actions_used_in_action_list.map((e){
-          if(!ACTION_LIST.contains(e)){
-            throw Exception("Invalid action: $e");
-          }
-        }));
+        (content["scene"] as List).map(
+            (e) => ScriptModel.fromJson(e).actions_used_in_action_list.map((e) {
+                  if (!ACTION_LIST.contains(e)) {
+                    throw Exception("Invalid action: $e");
+                  }
+                }));
         count = -1;
       } catch (e) {
         print("createScene: $e");
       }
-    } while (count!=-1&&count++ < 3);
+    } while (count != -1 && count++ < 3);
 
     List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
@@ -108,6 +124,7 @@ class OpenAI {
     }
     List<String> images = await Future.wait(imageFutures);
     DateTime et = DateTime.now();
+    checkValidation(images[0]);
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
     return SceneModel(content: content, images: images);
