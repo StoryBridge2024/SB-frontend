@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import 'makeCharacterFace.dart';
+import 'makeCharacterBody.dart';
 
 class GetImageFromGallery extends StatefulWidget {
   const GetImageFromGallery({super.key});
@@ -49,8 +50,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
               // 타이틀바 배경색
               toolbarWidgetColor: Colors.white,
               // 타이틀바 단추색
-              initAspectRatio:
-              CropAspectRatioPreset.original,
+              initAspectRatio: CropAspectRatioPreset.original,
               // 이미지 크로퍼 시작 시 원하는 가로 세로 비율
               lockAspectRatio: false), // 고정 값으로 자르기 (기본값 : 사용안함)
           // iOS UI 설정
@@ -64,12 +64,12 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
             presentStyle: CropperPresentStyle.dialog,
             // 대화 상자 스타일
             boundary: // 크로퍼의 외부 컨테이너 (기본값 : 폭 500, 높이 500)
-            const CroppieBoundary(
+                const CroppieBoundary(
               width: 520,
               height: 520,
             ),
             viewPort: // 이미지가 보이는 부분 (기본값 : 폭 400, 높이 400, 유형 사각형)
-            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
             enableExif: true,
             // 디지털 카메라 이미지 파일 확장자 사용
             enableZoom: true,
@@ -92,16 +92,23 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
   Widget build(BuildContext context) {
     final length = MediaQuery.of(context).size.width;
 
-    if (file != null) {
-      Future.delayed(
-        const Duration(milliseconds: 2000),
-        () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MakeCharacterFace(file: _croppedFile)),
-          );
-        },
+    Widget temp = ClipPath(
+      clipper: MyClipper(),
+      child: (_croppedFile != null)
+          ? Image.file(
+              File(_croppedFile!.path),
+              fit: BoxFit.cover,
+            )
+          : Container(),
+    );
+    if (file != null && _croppedFile != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MakeCharacterBody(
+            file: temp,
+          ),
+        ),
       );
     }
 
@@ -160,7 +167,6 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     );
   }
 
-
   // 이미지를 자르거나 회전하는 함수
   Future<void> cropImage() async {
     if (file != null) {
@@ -173,12 +179,11 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
           AndroidUiSettings(
               toolbarTitle: '이미지 자르기/회전하기',
               // 타이틀바 제목
-              toolbarColor: Colors.deepOrange,
+              toolbarColor: Colors.lightBlueAccent,
               // 타이틀바 배경색
               toolbarWidgetColor: Colors.white,
               // 타이틀바 단추색
-              initAspectRatio:
-              CropAspectRatioPreset.original,
+              initAspectRatio: CropAspectRatioPreset.original,
               // 이미지 크로퍼 시작 시 원하는 가로 세로 비율
               lockAspectRatio: false), // 고정 값으로 자르기 (기본값 : 사용안함)
           // iOS UI 설정
@@ -192,12 +197,12 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
             presentStyle: CropperPresentStyle.dialog,
             // 대화 상자 스타일
             boundary: // 크로퍼의 외부 컨테이너 (기본값 : 폭 500, 높이 500)
-            const CroppieBoundary(
+                const CroppieBoundary(
               width: 520,
               height: 520,
             ),
             viewPort: // 이미지가 보이는 부분 (기본값 : 폭 400, 높이 400, 유형 사각형)
-            const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
             enableExif: true,
             // 디지털 카메라 이미지 파일 확장자 사용
             enableZoom: true,
@@ -220,16 +225,24 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
   Widget build(BuildContext context) {
     final length = MediaQuery.of(context).size.width;
 
-    if (file != null) {
-      Future.delayed(
-        const Duration(milliseconds: 2000),
-        () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MakeCharacterFace(file: _croppedFile)),
-          );
-        },
+    Widget temp = ClipPath(
+      clipper: MyClipper(),
+      child: (_croppedFile != null)
+          ? Image.file(
+        File(_croppedFile!.path),
+        fit: BoxFit.cover,
+      )
+          : Container(),
+    );
+    if (file != null && _croppedFile != null) {
+      
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MakeCharacterBody(
+            file: temp,
+          ),
+        ),
       );
     }
 
@@ -260,4 +273,3 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     );
   }
 }
-
