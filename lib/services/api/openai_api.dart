@@ -22,6 +22,34 @@ class OpenAI {
     return json.decode(json.encode(source));
   }
 
+  Future<bool> checkValidation(String b64_json) async {
+    //compose prompt with url
+    var visionPromptWithImage = deepCopy(VISION_PROMPT);
+    visionPromptWithImage['messages']?[0]['content'][1]['image_url']['url'] =
+        "data:image/jpeg;base64, $b64_json";
+
+    //post request
+    final response = await post(Uri.parse(baseVisionUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(visionPromptWithImage));
+    print("checkValidation: ${response.body}");
+
+    //parse response
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load response');
+    }
+    var content =
+        json.decode(response.body)["choices"][0]["message"]["content"];
+    content = jsonDecode(content);
+    if (content["human"] == "yes" || content["text"] == "yes") {
+      return false;
+    }
+    return true;
+  }
+
   Future<Map<String, dynamic>> createCompletion(String theme) async {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
@@ -80,24 +108,7 @@ class OpenAI {
     return imageResponse.data[0]["b64_json"];
   }
 
-  void checkValidation(String b64_json) async {
-    //compose prompt with url
-    var visionPromptWithImage = deepCopy(VISION_PROMPT);
-    visionPromptWithImage['messages']?[0]['content'][1]['image_url']['url'] =
-        "data:image/jpeg;base64, $b64_json";
-
-    //post request
-    final response = await post(
-        Uri.parse(baseVisionUrl),
-        headers: {
-          'Authorization': 'Bearer $apiKey',
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(visionPromptWithImage));
-    print("checkValidation: ${response.body}");
-  }
-
-//i: 0-8을 1로 바꿈, 수정하자
+  //i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
     late Map<String, dynamic> content;

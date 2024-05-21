@@ -60,7 +60,7 @@ const Map<String, dynamic> VISION_PROMPT = {
       "content": [
         {
           "type": "text",
-          "text": "Output should be in JSON format. Is there any human or text?"
+          "text": "Output should be in JSON format. Is there any human or text? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\"}"
         },
         {
           "type": "image_url",
