@@ -117,7 +117,7 @@ class MakeCharacterBody extends StatelessWidget {
 class DrawBox extends StatefulWidget {
   DrawBox({super.key, required this.face});
 
-  var face;
+  final Widget face;
 
   @override
   State<DrawBox> createState() => _DrawBoxState();

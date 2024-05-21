@@ -15,7 +15,7 @@ class PoseDetectorView extends StatefulWidget {
   PoseDetectorView({super.key, required this.images, required this.face});
 
   List<Uint8List> images;
-  var face;
+  final Widget face;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
