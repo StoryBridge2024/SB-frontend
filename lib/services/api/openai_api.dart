@@ -102,7 +102,7 @@ class OpenAI {
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
         count = -1;
       } catch (e) {
-        print("createImage: $e");
+        print("createImage: $e $count");
         print("createImage: ${json.decode(response.body)}");
       }
     } while (count != -1 && count++ < 3);
@@ -125,7 +125,7 @@ class OpenAI {
                 }));
         count = -1;
       } catch (e) {
-        print("createScene: $e");
+        print("createScene: $e $count");
       }
     } while (count != -1 && count++ < 3);
 
