@@ -15,17 +15,18 @@ class _GetMessageState extends State<GetMessage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '교훈 입력',
+                '메세지 입력',
                 style: TextStyle(
                   fontSize: 60,
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                 ),
               ),
             ),
@@ -63,7 +64,7 @@ class _GetMessageState extends State<GetMessage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                                Color.fromARGB(0x75, 0x22, 0x1A, 0x7E),
                             shape: StadiumBorder(),
                             padding: EdgeInsets.all(30),
                           ),

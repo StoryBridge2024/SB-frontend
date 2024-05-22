@@ -1,0 +1,4 @@
+import 'package:flutter/material.dart';
+import 'getMessage.dart';
+
+Color backgroundColor = Color(OxFFFFFFFF);

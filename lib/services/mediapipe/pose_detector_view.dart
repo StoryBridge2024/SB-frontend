@@ -37,9 +37,10 @@ class Camera extends StatelessWidget {
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({super.key, required this.images});
+  const PoseDetectorView({super.key, required this.images, required this.face});
 
   final List<Uint8List> images;
+  final Widget face;
 
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -113,6 +114,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     _isBusy = true;
     // poseDetector에서 추출된 포즈 가져오기
     List<Uint8List> images = widget.images;
+    var face = widget.face;
     List<Pose> poses = await _poseDetector.processImage(inputImage);
 
     // 이미지가 정상적이면 포즈에 스켈레톤 그려주기
@@ -124,7 +126,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final kindOfPose =
           PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();
-      final movementFollow = MovementFollow(poses: poses, images: images);
+      final movementFollow = MovementFollow(poses: poses, images: images, face:face);
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
