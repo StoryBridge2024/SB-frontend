@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import './pose_painter.dart';
 import './pose_arrange.dart';
 import './movement_follow.dart';
-
+import 'package:camera/camera.dart';
 import 'camera_view.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
@@ -93,9 +93,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     // 이미지가 정상적이면 포즈에 스켈레톤 그려주기
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      final painter = PosePainter(poses, inputImage.inputImageData!.size,
-          inputImage.inputImageData!.imageRotation);
-      _customPaint = CustomPaint(painter: painter);
       final kindOfPose =
           PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();

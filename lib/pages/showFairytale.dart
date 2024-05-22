@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
@@ -102,18 +103,22 @@ class _StoryState extends State<Story> {
                         ),
                       ),
                       Positioned(
-                        left: -170,
-                        top: -350,
-                        child: Transform.scale(
-                          scale: 1,
-                          child: PoseDetectorView(images: images, face: face),
+                        top: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: 500,
+                          height: 500,
+                          child: Transform.scale(
+                            scale: 1,
+                            child: PoseDetectorView(images: images, face: face),
+                          ),
                         ),
                       ),
-                      // Positioned(
-                      //   bottom: 0,
-                      //   left: 0,
-                      //   child: Camera(),
-                      // )
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        child: Camera(),
+                      )
                     ],
                   ),
                 ),

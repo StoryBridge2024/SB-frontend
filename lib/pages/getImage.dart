@@ -102,13 +102,18 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
           : Container(),
     );
     if (file != null && _croppedFile != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MakeCharacterBody(
-            file: temp,
-          ),
-        ),
+      Future.delayed(
+        const Duration(milliseconds: 1000),
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MakeCharacterBody(
+                file: temp,
+              ),
+            ),
+          );
+        },
       );
     }
 
@@ -229,20 +234,24 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
       clipper: MyClipper(),
       child: (_croppedFile != null)
           ? Image.file(
-        File(_croppedFile!.path),
-        fit: BoxFit.cover,
-      )
+              File(_croppedFile!.path),
+              fit: BoxFit.cover,
+            )
           : Container(),
     );
     if (file != null && _croppedFile != null) {
-      
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MakeCharacterBody(
-            file: temp,
-          ),
-        ),
+      Future.delayed(
+        const Duration(milliseconds: 2000),
+        () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MakeCharacterBody(
+                file: temp,
+              ),
+            ),
+          );
+        },
       );
     }
 

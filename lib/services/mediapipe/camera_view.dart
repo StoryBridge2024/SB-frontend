@@ -1,21 +1,22 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
 
-CameraController? controller;
+ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
 // 카메라 화면
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
-        required this.customPaint,
-        required this.onImage,
-        this.initialDirection = CameraLensDirection.back})
+      required this.customPaint,
+      required this.onImage,
+      this.initialDirection = CameraLensDirection.back})
       : super(key: key);
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
@@ -41,13 +42,13 @@ class _CameraViewState extends State<CameraView> {
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
     if (cameras.any(
-          (element) =>
-      element.lensDirection == widget.initialDirection &&
+      (element) =>
+          element.lensDirection == widget.initialDirection &&
           element.sensorOrientation == 90,
     )) {
       _cameraIndex = cameras.indexOf(
         cameras.firstWhere((element) =>
-        element.lensDirection == widget.initialDirection &&
+            element.lensDirection == widget.initialDirection &&
             element.sensorOrientation == 90),
       );
     } else {
@@ -73,12 +74,32 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
-    return _liveFeedBody();
+    return Transform.scale(
+      scale: 1,
+      child: Container(
+        color: Colors.red,
+        height: 500,
+        width: 500,
+        child: Stack(
+          children: [
+            _liveFeedBody(),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: 100,
+                child: RotatedBox(
+                    quarterTurns: 1, child: CameraPreview(controller.value!)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
   Widget _liveFeedBody() {
-    if (controller?.value.isInitialized == false) {
+    if (controller.value?.value.isInitialized == false) {
       return Container();
     }
 
@@ -88,7 +109,7 @@ class _CameraViewState extends State<CameraView> {
     // this is actually size.aspectRatio / (1 / camera.aspectRatio)
     // because camera preview size is received as landscape
     // but we're calculating for portrait orientation
-    var scale = size.aspectRatio * controller!.value.aspectRatio;
+    var scale = size.aspectRatio * controller.value!.value.aspectRatio;
 
     // to prevent scaling down, invert the value
     if (scale < 1) scale = 1 / scale;
@@ -103,8 +124,8 @@ class _CameraViewState extends State<CameraView> {
             child: Center(
               child: _changingCameraLens
                   ? const Center(
-                child: Text('Changing camera lens'),
-              )
+                      child: Text('Changing camera lens'),
+                    )
                   : Container(), //CameraPreview(controller!),
             ),
           ),
@@ -118,25 +139,25 @@ class _CameraViewState extends State<CameraView> {
   // 실시간으로 카메라에서 이미지 받기(비동기적)
   Future _startLiveFeed() async {
     final camera = cameras[_cameraIndex];
-    controller = CameraController(
+    controller.value = CameraController(
       camera,
       ResolutionPreset.low,
       enableAudio: false,
     );
-    controller?.initialize().then((_) {
+    controller.value?.initialize().then((_) {
       if (!mounted) {
         return;
       }
       // 이미지 받은 것을 _processCameraImage 함수로 처리
-      controller?.startImageStream(_processCameraImage);
+      controller.value?.startImageStream(_processCameraImage);
       setState(() {});
     });
   }
 
   Future _stopLiveFeed() async {
-    await controller?.stopImageStream();
-    await controller?.dispose();
-    controller = null;
+    await controller.value?.stopImageStream();
+    await controller.value?.dispose();
+    controller.value = null;
   }
 
   // 전면<->후면 카메라 변경 함수
@@ -158,19 +179,19 @@ class _CameraViewState extends State<CameraView> {
     final bytes = allBytes.done().buffer.asUint8List();
 
     final Size imageSize =
-    Size(image.width.toDouble(), image.height.toDouble());
+        Size(image.width.toDouble(), image.height.toDouble());
 
     final camera = cameras[_cameraIndex];
     final imageRotation =
-    InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
     if (imageRotation == null) return;
 
     final inputImageFormat =
-    InputImageFormatValue.fromRawValue(image.format.raw);
+        InputImageFormatValue.fromRawValue(image.format.raw);
     if (inputImageFormat == null) return;
 
     final planeData = image.planes.map(
-          (Plane plane) {
+      (Plane plane) {
         return InputImagePlaneMetadata(
           bytesPerRow: plane.bytesPerRow,
           height: plane.height,
@@ -187,7 +208,7 @@ class _CameraViewState extends State<CameraView> {
     );
 
     final inputImage =
-    InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
+        InputImage.fromBytes(bytes: bytes, inputImageData: inputImageData);
 
     // PoseDetectorView에서 받아온 함수인 onImage(이미지에 포즈가 추출되었으면 스켈레톤 그려주는 함수) 실행
     widget.onImage(inputImage);
