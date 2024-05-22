@@ -86,18 +86,19 @@ class OpenAI {
     imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
 
     //post request
-    final response = await post(
-      Uri.parse(baseImageUrl),
-      headers: {
-        'Authorization': 'Bearer $apiKey',
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(imagePromptWithTheme),
-    );
     int count = 0;
     late ImageResponse imageResponse;
+    late Response response;
     do {
       try {
+        response = await post(
+          Uri.parse(baseImageUrl),
+          headers: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(imagePromptWithTheme),
+        );
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
         count = -1;
       } catch (e) {
