@@ -1,3 +1,7 @@
+const String baseScriptUrl = 'https://api.openai.com/v1/chat/completions';
+const String baseImageUrl = 'https://api.openai.com/v1/images/generations';
+const String baseVisionUrl = 'https://api.openai.com/v1/chat/completions';
+
 //6 sentences를 1로 바꿈, 수정하자
 import 'package:frontend/constants/const.dart';
 
@@ -49,3 +53,24 @@ const Map<String, dynamic> IMAGE_PROMPT = {
   "response_format": "b64_json"
 };
 const MUTABLE_IMAGE_PROMPT = "Please draw ";
+
+const Map<String, dynamic> VISION_PROMPT = {
+  "model": "gpt-4o",
+  "response_format": {"type": "json_object"},
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Output should be in JSON format. Is there any human or text? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\"}"
+        },
+        {
+          "type": "image_url",
+          "image_url": {"url": ""}
+        }
+      ]
+    }
+  ],
+  "max_tokens": 300
+};
