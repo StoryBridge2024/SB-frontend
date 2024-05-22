@@ -1,9 +1,9 @@
+//6 sentences를 1로 바꿈, 수정하자
+import 'package:frontend/constants/const.dart';
+
 const String baseScriptUrl = 'https://api.openai.com/v1/chat/completions';
 const String baseImageUrl = 'https://api.openai.com/v1/images/generations';
 const String baseVisionUrl = 'https://api.openai.com/v1/chat/completions';
-
-//6 sentences를 1로 바꿈, 수정하자
-import 'package:frontend/constants/const.dart';
 
 const Map<String, dynamic> SCRIPT_PROMPT = {
   "model": "gpt-4o",
