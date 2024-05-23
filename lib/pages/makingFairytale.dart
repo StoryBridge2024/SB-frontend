@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
-
+import 'package:frontend/constants/animal_list.dart';
+import '../constants/action_list.dart';
+import '../constants/fairytaleConstants.dart';
+import 'makingCharacter.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
-
 import 'makingCharacter.dart';
 
 class MakeFairytale extends StatelessWidget {
@@ -25,6 +27,7 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
+              print(gSceneModel!.scriptModelList);
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -155,6 +158,50 @@ class TmpFairytale extends StatefulWidget {
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
 
+  Widget createPositionedAnimal({
+    required String animalName,
+    required String assetPath,
+    required List<double> locX,
+    required List<double> locY,
+    required int index,
+    required Function setStateCallback,
+  }) {
+    return Stack(
+      children: [
+        Positioned(
+          left: locX.elementAt(index),
+          top: locY.elementAt(index),
+          child: animalName ==
+              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+              ? Image.asset(
+            assetPath,
+            height: 150,
+            width: 150,
+          )
+              : Container(),
+        ),
+        Positioned(
+          left: locX.elementAt(index),
+          top: locY.elementAt(index),
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Color(0x00FFFFFF),
+            child: GestureDetector(
+              onScaleUpdate: (touch) {
+                setStateCallback(() {
+                  locX[index] += touch.focalPointDelta.dx;
+                  locY[index] += touch.focalPointDelta.dy;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -176,8 +223,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
+                    left: locX1.elementAt(index),
+                    top: locY1.elementAt(index),
                     child: Image.asset(
                       'assets/image/img.png',
                       height: 300,
@@ -185,8 +232,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
+                    left: locX1.elementAt(index),
+                    top: locY1.elementAt(index),
                     child: Container(
                       width: 300,
                       height: 300,
@@ -195,13 +242,53 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                         onScaleUpdate: (touch) {
                           setState(
                             () {
-                              locX[index] += touch.focalPointDelta.dx;
-                              locY[index] += touch.focalPointDelta.dy;
+                              locX1[index] += touch.focalPointDelta.dx;
+                              locY1[index] += touch.focalPointDelta.dy;
                             },
                           );
                         },
                       ),
                     ),
+                  ),
+                  createPositionedAnimal(
+                    animalName: "호랑이",
+                    assetPath: 'assets/animal/tiger.png',
+                    locX: locX2,
+                    locY: locY2,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "원숭이",
+                    assetPath: 'assets/animal/monkey.png',
+                    locX: locX3,
+                    locY: locY3,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "기린",
+                    assetPath: 'assets/animal/giraffe.png',
+                    locX: locX4,
+                    locY: locY4,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "코알라",
+                    assetPath: 'assets/animal/coala.png',
+                    locX: locX5,
+                    locY: locY5,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "코끼리",
+                    assetPath: 'assets/animal/elephant.png',
+                    locX: locX6,
+                    locY: locY6,
+                    index: index,
+                    setStateCallback: setState,
                   ),
                 ],
               ),

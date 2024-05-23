@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 List<String> ANIMAL_LIST = [
   "호랑이",
   "원숭이",
@@ -5,3 +7,5 @@ List<String> ANIMAL_LIST = [
   "기린",
   "코알라",
 ];
+
+var ani_index = ValueNotifier<int>(0);

@@ -9,6 +9,8 @@ import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 
+import '../constants/fairytaleConstants.dart';
+
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
 
@@ -56,6 +58,7 @@ class Story extends StatefulWidget {
 
   List<Uint8List> images;
   Widget face;
+
 
   @override
   State<Story> createState() => _StoryState();

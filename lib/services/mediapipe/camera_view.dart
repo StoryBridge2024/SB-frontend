@@ -6,6 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+
+import 'package:frontend/main.dart';
+import 'package:frontend/pages/makingFairytale.dart';
+
+import '../../constants/action_list.dart';
+import '../../constants/animal_list.dart';
+import '../../constants/fairytaleConstants.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
@@ -22,7 +30,7 @@ class CameraView extends StatefulWidget {
       {Key? key,
       required this.customPaint,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.back})
+      this.initialDirection = CameraLensDirection.front})
       : super(key: key);
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
@@ -44,6 +52,14 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   void initState() {
+    // print("제발제대로좀되길바랍니다");
+    // print(locX1.elementAt(0));
+    // print(locY1.elementAt(0));
+    // print(locX1.elementAt(1));
+    // print(locY1.elementAt(1));
+    // print(locX1.elementAt(2));
+    // print(locY1.elementAt(2));
+    // print(clr_index.value);
     super.initState();
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
@@ -78,8 +94,30 @@ class _CameraViewState extends State<CameraView> {
     super.dispose();
   }
 
+  Widget createPositionedAnimal({
+    required double left,
+    required double top,
+    required String animalName,
+    required String assetPath,
+    required int index,
+  }) {
+    return Positioned(
+      left: left,
+      top: top,
+      child: animalName == gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+          ? Image.asset(
+        assetPath,
+        height: 150,
+        width: 150,
+      )
+          : Container(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print(gSceneModel!.scriptModelList[clr_index.value]
+    //     .animals_from_animal_list[0]);
     return Transform.scale(
       scale: 1,
       child: Container(
@@ -87,15 +125,42 @@ class _CameraViewState extends State<CameraView> {
         width: 500,
         child: Stack(
           children: [
-            Positioned(
-              left: locX[clr_index.value],
-              top: locY[clr_index.value],
-              child: Container(
-                color: Colors.amberAccent,
-                width: 100,
-                child: _liveFeedBody(),
-              ),
+            createPositionedAnimal(
+              left: locX2.elementAt(clr_index.value),
+              top: locY2.elementAt(clr_index.value),
+              animalName: "호랑이",
+              assetPath: 'assets/animal/tiger.png',
+              index: clr_index.value,
             ),
+            createPositionedAnimal(
+              left: locX3.elementAt(clr_index.value),
+              top: locY3.elementAt(clr_index.value),
+              animalName: "원숭이",
+              assetPath: 'assets/animal/monkey.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX4.elementAt(clr_index.value),
+              top: locY4.elementAt(clr_index.value),
+              animalName: "기린",
+              assetPath: 'assets/animal/giraffe.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX5.elementAt(clr_index.value),
+              top: locY5.elementAt(clr_index.value),
+              animalName: "코알라",
+              assetPath: 'assets/animal/coala.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX6.elementAt(clr_index.value),
+              top: locY6.elementAt(clr_index.value),
+              animalName: "코끼리",
+              assetPath: 'assets/animal/elephant.png',
+              index: clr_index.value,
+            ),
+            _liveFeedBody(),
             Positioned(
               bottom: 0,
               child: Container(

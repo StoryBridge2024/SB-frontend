@@ -9,6 +9,7 @@ import 'package:camera/camera.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import '../../constants/fairytaleConstants.dart';
 import './pose_arrange.dart';
 import './movement_follow.dart';
 import 'camera_view.dart';
@@ -70,13 +71,23 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             },
           ),
         ),
-        Transform.scale(
-          scale: 0.5,
+        Positioned(
+          left: locX1.elementAt(clr_index.value)-150,
+          top: locY1.elementAt(clr_index.value)-200,
           child: Container(
-            alignment: Alignment.center,
-            width: 1000,
-            height: 2000,
-            child: _movementFollow,
+            width: 500,
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: Transform.scale(
+                scale: 0.5,
+                child: Container(
+                alignment: Alignment.center,
+                width: 500,
+                height: 1000,
+                child: _movementFollow,
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -104,7 +115,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      print(_kindOfPose);
+      //print(_kindOfPose);
       print(gSceneModel!
           .scriptModelList[clr_index.value].action_used_in_action_list);
 //      print(missions[clr_index.value]);
