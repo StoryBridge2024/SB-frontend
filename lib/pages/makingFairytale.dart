@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
@@ -45,50 +46,46 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
-              return ListView(
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          '이야기가 완성되었어요!',
-                          style: TextStyle(
-                            color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
-                            fontSize: 80,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                  Center(
+                    child: Text(
+                      '이야기가 완성되었어요!',
+                      style: TextStyle(
+                        color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
+                        fontSize: 80,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
-                        style: TextStyle(fontSize: 50),
+                    ),
+                  ),
+                  Text(
+                    '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
+                    style: TextStyle(fontSize: 50),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.all(40),
                       ),
-                      TextButton(
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                            EdgeInsets.all(40),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                          ),
-                        ),
-                        child: Text(
-                          '배치하기',
-                          style: TextStyle(
-                            fontSize: 50,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PlacingCharacter(),
-                            ),
-                          );
-                        },
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
                       ),
-                    ],
+                    ),
+                    child: Text(
+                      '배치하기',
+                      style: TextStyle(
+                        fontSize: 50,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlacingCharacter(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
@@ -104,14 +101,14 @@ class MakeFairytale extends StatelessWidget {
                       style: TextStyle(
                         color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
                         fontSize: 80,
-
                       ),
                     ),
                     Text(
                       '동화 주제: $text',
                       style: TextStyle(
                         fontSize: 50,
-                        fontWeight: FontWeight.w600,),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     CircularProgressIndicator(
                       color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
@@ -178,7 +175,6 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
-  int max = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +242,10 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       alignment: Alignment.center,
                       child: Text(
                         gSceneModel!.scriptModelList[index].scene_contents,
-                        style: TextStyle(fontSize: 40),
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'DDO',
+                        ),
                       ),
                     ),
                   ),
@@ -296,13 +295,13 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (index < max - 1) {
+                                  if (index < NUMBER_OF_SCENE - 1) {
                                     setState(
                                       () {
                                         index += 1;
                                       },
                                     );
-                                  } else if (index == max - 1) {
+                                  } else if (index == NUMBER_OF_SCENE - 1) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

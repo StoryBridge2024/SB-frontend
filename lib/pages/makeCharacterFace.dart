@@ -7,9 +7,9 @@ import 'package:image_cropper/image_cropper.dart';
 import 'makeCharacterBody.dart';
 
 class MakeCharacterFace extends StatefulWidget {
-  final CroppedFile? file;
-
   const MakeCharacterFace({super.key, required this.file});
+
+  final CroppedFile? file;
 
   @override
   State<MakeCharacterFace> createState() => _MakeCharacterFaceState();
@@ -17,6 +17,7 @@ class MakeCharacterFace extends StatefulWidget {
 
 class MyClipper extends CustomClipper<Path> {
   MyClipper();
+
   @override
   Path getClip(Size size) {
     // 클리핑 경로가 이미지의 중앙에 위치하도록 조정
@@ -51,8 +52,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     CroppedFile? file = widget.file;
 
     return Scaffold(
-      body:
-      Container(
+      body: Container(
         color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
         child: Column(
           children: [
@@ -106,14 +106,13 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                       child: IgnorePointer(
                         ignoring: true,
                         child: ClipPath(
-                          clipper: MyClipper(),
-                          child: (file != null)
-                              ? Image.file(
-                            File(file!.path),
-                            fit: BoxFit.cover,
-                          )
-                              : Container()
-                        ),
+                            clipper: MyClipper(),
+                            child: (file != null)
+                                ? Image.file(
+                                    File(file!.path),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container()),
                         // child: Image.asset(
                         //   'assets/image/face.png',
                         //   color: Colors.red,
@@ -137,17 +136,19 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                              context,
+                              (context),
                               MaterialPageRoute(
-                                builder: (context) => MakeCharacterBody(file:ClipPath(
+                                builder: (context) => MakeCharacterBody(
+                                  file: ClipPath(
                                     clipper: MyClipper(),
                                     child: (file != null)
                                         ? Image.file(
-                                      File(file!.path),
-                                      fit: BoxFit.cover,
-                                    )
-                                        : Container()
-                                ),),
+                                            File(file!.path),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Container(),
+                                  ),
+                                ),
                               ),
                             );
                           },
@@ -164,4 +165,3 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     );
   }
 }
-
