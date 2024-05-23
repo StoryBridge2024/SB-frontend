@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/pages/showFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 class SettingCam extends StatelessWidget {
   SettingCam({super.key, required this.face, required this.body});

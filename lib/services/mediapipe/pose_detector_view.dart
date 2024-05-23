@@ -9,7 +9,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import './pose_arrange.dart';
 import './movement_follow.dart';
 import 'camera_view.dart';
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
