@@ -4,30 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
+import '../constants/action_list.dart';
 import 'makingCharacter.dart';
+import 'package:frontend/constants/animal_list.dart';
 
 SceneModel? gSceneModel;
 
-List<double> locX = [
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-];
-List<double> locY = [
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-];
+List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
 
 class MakeFairytale extends StatelessWidget {
   final String text;
@@ -197,8 +183,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
+                    left: locX1.elementAt(index),
+                    top: locY1.elementAt(index),
                     child: Image.asset(
                       'assets/image/img.png',
                       height: 300,
@@ -206,8 +192,20 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                    left: locX.elementAt(index),
-                    top: locY.elementAt(index),
+                      left: locX2.elementAt(index),
+                      top: locY2.elementAt(index),
+                      child: "호랑이" ==
+                                  gSceneModel!.scriptModelList[clr_index.value]
+                                      .animals_from_animal_list[0]
+                          ? Image.asset(
+                              'assets/animal/tiger.png',
+                              height: 300,
+                              width: 300,
+                            )
+                          : Container()),
+                  Positioned(
+                    left: locX1.elementAt(index),
+                    top: locY1.elementAt(index),
                     child: Container(
                       width: 300,
                       height: 300,
@@ -216,8 +214,27 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                         onScaleUpdate: (touch) {
                           setState(
                             () {
-                              locX[index] += touch.focalPointDelta.dx;
-                              locY[index] += touch.focalPointDelta.dy;
+                              locX1[index] += touch.focalPointDelta.dx;
+                              locY1[index] += touch.focalPointDelta.dy;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: locX2.elementAt(index),
+                    top: locY2.elementAt(index),
+                    child: Container(
+                      width: 300,
+                      height: 300,
+                      color: Color(0x00FFFFFF),
+                      child: GestureDetector(
+                        onScaleUpdate: (touch) {
+                          setState(
+                                () {
+                              locX2[index] += touch.focalPointDelta.dx;
+                              locY2[index] += touch.focalPointDelta.dy;
                             },
                           );
                         },

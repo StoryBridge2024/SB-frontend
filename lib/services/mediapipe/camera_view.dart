@@ -4,9 +4,14 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
+import 'package:frontend/pages/makingFairytale.dart';
+
+import '../../constants/action_list.dart';
+import '../../constants/animal_list.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
@@ -38,6 +43,14 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   void initState() {
+    print("제발제대로좀되길바랍니다");
+    print(locX1.elementAt(0));
+    print(locY1.elementAt(0));
+    print(locX1.elementAt(1));
+    print(locY1.elementAt(1));
+    print(locX1.elementAt(2));
+    print(locY1.elementAt(2));
+    print(clr_index.value);
     super.initState();
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
@@ -74,6 +87,8 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
+    print(gSceneModel!.scriptModelList[clr_index.value]
+        .animals_from_animal_list[0]);
     return Transform.scale(
       scale: 1,
       child: Container(
@@ -81,6 +96,18 @@ class _CameraViewState extends State<CameraView> {
         width: 500,
         child: Stack(
           children: [
+            Positioned(
+                left: locX2.elementAt(clr_index.value),
+                top: locY2.elementAt(clr_index.value),
+                child: "호랑이" ==
+                    gSceneModel!.scriptModelList[clr_index.value]
+                        .animals_from_animal_list[0]
+                    ? Image.asset(
+                  'assets/animal/tiger.png',
+                  height: 150,
+                  width: 150,
+                )
+                    : Container()),
             _liveFeedBody(),
             Positioned(
               bottom: 0,

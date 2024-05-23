@@ -67,15 +67,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             },
           ),
         ),
-        Transform.scale(
-          scale: 0.5,
-          child: Container(
-            alignment: Alignment.center,
-            width: 500,
-            height: 1000,
-            child: _movementFollow,
-          ),
-        ),
+        Positioned(
+          left: locX1.elementAt(clr_index.value),
+          top: locY1.elementAt(clr_index.value),
+          child: Transform.scale(
+            scale: 0.5,
+            child: Container(
+              alignment: Alignment.center,
+              width: 500,
+              height: 1000,
+              color: Colors.amberAccent,
+              child: _movementFollow,
+            ),
+          ),),
+
       ],
     );
   }
@@ -101,9 +106,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      print(_kindOfPose);
-      print(gSceneModel!
-          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+      // print(_kindOfPose);
+      // print(gSceneModel!
+      //     .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
       //print(missions[clr_index.value]);
       print(clr_index.value);
 
