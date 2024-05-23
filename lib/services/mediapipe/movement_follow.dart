@@ -23,6 +23,10 @@ class MovementFollow extends StatefulWidget {
 }
 
 class _MovementFollowState extends State<MovementFollow> {
+
+  int x = 200;
+  int y = 50;
+
   double lengthX(var p1, var p2) {
     double x1 = p1!.x;
     double x2 = p2!.x;
@@ -141,8 +145,8 @@ class _MovementFollowState extends State<MovementFollow> {
 
   Widget temp(var p1, var p2, var image) {
     return Positioned(
-      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) + 300,
-      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) + 50,
+      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) + x,
+      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) + y,
       child: Container(
         width: length(p2, p1) * 1.2,
         height: length(p2, p1) * 1.2,
@@ -160,8 +164,8 @@ class _MovementFollowState extends State<MovementFollow> {
   Widget tempBody(var p1, var p2, var p3, var p4, var image) {
     return Positioned(
       right:
-          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + 300,
-      top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + 50,
+          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + x,
+      top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + y,
       child: Container(
         width: length(p4, p1) * 1,
         height: length(p4, p1) * 1,
@@ -178,8 +182,8 @@ class _MovementFollowState extends State<MovementFollow> {
 
   Widget tempFace(var p1, var p2, var image) {
     return Positioned(
-      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.25) + 300,
-      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.25) + 50,
+      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.25) + x,
+      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.25) + y,
       child: Container(
         height: length(p2, p1) * 2.5,
         child: Transform.rotate(

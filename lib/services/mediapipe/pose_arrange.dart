@@ -43,35 +43,35 @@ class PoseArrange extends Object {
       // print(ppp[0]); // Debugging line, consider removing or replacing with a logger if needed
       //frameIdx += 1;
 
-      final leftWristY = pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0;
-      final rightWristY = pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0;
-      final leftWristX = pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0;
-      final rightWristX = pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0;
-      final noseY = pose.landmarks[PoseLandmarkType.nose]?.x ?? 0;
+      final leftWristY = pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0;
+      final rightWristY = pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0;
+      final leftWristX = pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0;
+      final rightWristX = pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0;
+      final noseY = pose.landmarks[PoseLandmarkType.nose]?.y ?? 0;
       final leftShoulderY =
-          pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0;
-      final rightShoulderY =
-          pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0;
-      final leftShoulderX =
           pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0;
-      final rightShoulderX =
+      final rightShoulderY =
           pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0;
-      final leftElbowY = pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0;
-      final rightElbowY = pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0;
-      final leftElbowX = pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0;
-      final rightElbowX = pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0;
-      final leftHipY = pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0;
-      final rightHipY = pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0;
-      final leftHipX = pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0;
-      final rightHipX = pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0;
+      final leftShoulderX =
+          pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0;
+      final rightShoulderX =
+          pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0;
+      final leftElbowY = pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0;
+      final rightElbowY = pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0;
+      final leftElbowX = pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0;
+      final rightElbowX = pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0;
+      final leftHipY = pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0;
+      final rightHipY = pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0;
+      final leftHipX = pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0;
+      final rightHipX = pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0;
       final leftIndexFingerTipX =
-          pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0;
-      final leftIndexFingerTipY =
           pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0;
+      final leftIndexFingerTipY =
+          pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0;
       final rightIndexFingerTipX =
-          pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0;
-      final rightIndexFingerTipY =
           pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0;
+      final rightIndexFingerTipY =
+          pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0;
 
       final leftPalmCenterX = (leftWristX + leftIndexFingerTipX) / 2;
       final leftPalmCenterY = (leftWristY + leftIndexFingerTipY) / 2;

@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:typed_data';
-
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import './pose_arrange.dart';
 import './movement_follow.dart';
-import 'package:camera/camera.dart';
 import 'camera_view.dart';
+import 'package:frontend/pages/makingFairytale.dart';
+import 'package:frontend/constants/action_list.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
@@ -99,6 +100,22 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final movementFollow =
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
+
+      print(_kindOfPose);
+      // print(gSceneModel!
+      //     .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+      print(missions[clr_index.value]);
+      print(clr_index.value);
+      //
+      // if (_kindOfPose ==
+      //     gSceneModel!.scriptModelList[clr_index.value]
+      //         .actions_used_in_action_list[0] && clr_index.value < 3) {
+      //   clr_index.value++;
+      // }
+      if (_kindOfPose == missions[clr_index.value]) {
+        clr_index.value++;
+      }
+
     } else {
       // 추출된 포즈 없음
       _customPaint = null;
