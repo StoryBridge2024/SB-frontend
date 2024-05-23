@@ -25,7 +25,10 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
-              print(gSceneModel!.scriptModelList);
+              for (int i = 0; i < NUMBER_OF_SCENE; i++) {
+                print(
+                    gSceneModel!.scriptModelList[i].action_used_in_action_list);
+              }
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -301,6 +304,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Flexible(
                     flex: 3,
                     child: Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
