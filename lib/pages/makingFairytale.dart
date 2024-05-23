@@ -5,23 +5,9 @@ import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
 import '../constants/action_list.dart';
+import '../constants/fairytaleConstants.dart';
 import 'makingCharacter.dart';
 import 'package:frontend/constants/animal_list.dart';
-
-SceneModel? gSceneModel;
-
-List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX3 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY3 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX4 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY4 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX5 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY5 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX6 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
 
 class MakeFairytale extends StatelessWidget {
   final String text;

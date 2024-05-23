@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import '../../constants/fairytaleConstants.dart';
 import './pose_arrange.dart';
 import './movement_follow.dart';
 import 'camera_view.dart';

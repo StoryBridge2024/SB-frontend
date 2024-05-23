@@ -12,6 +12,7 @@ import 'package:frontend/pages/makingFairytale.dart';
 
 import '../../constants/action_list.dart';
 import '../../constants/animal_list.dart';
+import '../../constants/fairytaleConstants.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
