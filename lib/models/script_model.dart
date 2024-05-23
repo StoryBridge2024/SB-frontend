@@ -1,7 +1,7 @@
 class ScriptModel {
   final int number_of_character;
   final String character, scene_contents, description_of_illustration;
-  final List<String> actions_used_in_action_list;
+  final List<String> actions_used_in_action_list, animals_from_animal_list;
 
   ScriptModel.fromJson(Map<String, dynamic> json)
       : number_of_character = json['number_of_character'] ??
@@ -16,7 +16,10 @@ class ScriptModel {
             (json['actions_used_in_action_list'] != null)
                 ? List<String>.from(json['actions_used_in_action_list'])
                 : (throw ArgumentError(
-                    'actions_used_in_action_list cannot be null'));
+                    'actions_used_in_action_list cannot be null')),
+        animals_from_animal_list = (json['animals_from_animal_list'] != null)
+            ? List<String>.from(json['animals_from_animal_list'])
+            : (throw ArgumentError('animals_from_animal_list cannot be null'));
 }
 
 class ScriptResponse {
