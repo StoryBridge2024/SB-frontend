@@ -125,8 +125,7 @@ class OpenAI {
         (content["scene"] as List).forEach((e) {
           ScriptModel scriptModel = ScriptModel.fromJson(e);
           if (scriptModel.action_used_in_action_list != null) {
-            if (scriptModel.action_used_in_action_list != null &&
-                !ACTION_LIST.contains(scriptModel.action_used_in_action_list)) {
+            if (!ACTION_LIST.contains(scriptModel.action_used_in_action_list)) {
               throw Exception(
                   "Invalid action: ${scriptModel.action_used_in_action_list}");
             }
@@ -143,7 +142,7 @@ class OpenAI {
       }
     } while (count != -1 && count++ < 3);
 
-    List<Future<String>> imageFutures = [];
+    final List<Future<String>> imageFutures = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
       imageFutures
           .add(createImage(content["scene"][i]["description_of_illustration"]));

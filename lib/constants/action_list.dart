@@ -8,5 +8,3 @@ List<String> ACTION_LIST = [
   "오른손 흔들기",
   "박수치기"
 ];
-
-var clr_index = ValueNotifier<int>(0);

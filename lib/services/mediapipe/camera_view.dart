@@ -1,16 +1,16 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:frontend/constants/action_list.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
-
-import '../../pages/makingFairytale.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
+import '../../constants/fairytaleConstants.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
@@ -18,14 +18,13 @@ ValueNotifier<CameraController?> controller = ValueNotifier(null);
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
-      required this.customPaint,
       required this.onImage,
       this.initialDirection = CameraLensDirection.back})
       : super(key: key);
-  // 스켈레톤을 그려주는 객체
-  final CustomPaint? customPaint;
+
   // 이미지 받을 때마다 실행하는 함수
   final Function(InputImage inputImage) onImage;
+
   // 카메라 렌즈 방향 변수
   final CameraLensDirection initialDirection;
 
@@ -37,6 +36,7 @@ class _CameraViewState extends State<CameraView> {
   // 카메라를 다루기 위한 변수
   // 카메라 인덱스
   int _cameraIndex = -1;
+
   // 카메라 렌즈 변경 변수
   bool _changingCameraLens = false;
 
@@ -76,8 +76,60 @@ class _CameraViewState extends State<CameraView> {
     super.dispose();
   }
 
+  Widget createPositionedAnimal({
+    required double left,
+    required double top,
+    required String animalName,
+    required String assetPath,
+    required int index,
+  }) {
+    return Positioned(
+      left: left,
+      top: top,
+      child: animalName ==
+              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+          ? Image.asset(
+              assetPath,
+              height: 150,
+              width: 150,
+            )
+          : Container(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print(gSceneModel!.scriptModelList[clr_index.value]
+    //     .animals_from_animal_list[0]);
+
+    if (clr_index.value == 8) {
+      return Transform.scale(
+        scale: 1,
+        child: Container(
+          height: 500,
+          width: 500,
+          child: Stack(
+            children: [
+              _liveFeedBody(),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: 100,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(pi * cameraInverse),
+                    child: RotatedBox(
+                      quarterTurns: cameraTurn,
+                      child: CameraPreview(controller.value!),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Transform.scale(
       scale: 1,
       child: Container(
@@ -85,22 +137,53 @@ class _CameraViewState extends State<CameraView> {
         width: 500,
         child: Stack(
           children: [
-            Positioned(
-              left: locX[clr_index.value],
-              top: locY[clr_index.value],
-              child: Container(
-                color: Colors.amberAccent,
-                width: 100,
-                child: _liveFeedBody(),
-              ),
+            createPositionedAnimal(
+              left: locX2.elementAt(clr_index.value),
+              top: locY2.elementAt(clr_index.value),
+              animalName: "호랑이",
+              assetPath: 'assets/animal/tiger.png',
+              index: clr_index.value,
             ),
+            createPositionedAnimal(
+              left: locX3.elementAt(clr_index.value),
+              top: locY3.elementAt(clr_index.value),
+              animalName: "원숭이",
+              assetPath: 'assets/animal/monkey.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX4.elementAt(clr_index.value),
+              top: locY4.elementAt(clr_index.value),
+              animalName: "기린",
+              assetPath: 'assets/animal/giraffe.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX5.elementAt(clr_index.value),
+              top: locY5.elementAt(clr_index.value),
+              animalName: "코알라",
+              assetPath: 'assets/animal/coala.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX6.elementAt(clr_index.value),
+              top: locY6.elementAt(clr_index.value),
+              animalName: "코끼리",
+              assetPath: 'assets/animal/elephant.png',
+              index: clr_index.value,
+            ),
+            _liveFeedBody(),
             Positioned(
               bottom: 0,
               child: Container(
                 width: 100,
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: CameraPreview(controller.value!),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(pi * cameraInverse),
+                  child: RotatedBox(
+                    quarterTurns: cameraTurn,
+                    child: CameraPreview(controller.value!),
+                  ),
                 ),
               ),
             ),
@@ -142,8 +225,6 @@ class _CameraViewState extends State<CameraView> {
                   : Container(), //CameraPreview(controller!),
             ),
           ),
-          // 추출된 스켈레톤 그리기
-          //if (widget.customPaint != null) widget.customPaint!,
         ],
       ),
     );

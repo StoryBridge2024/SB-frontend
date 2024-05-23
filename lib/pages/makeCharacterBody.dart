@@ -5,6 +5,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/pages/settingCamera.dart';
 
 import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
@@ -236,11 +238,11 @@ class _DrawBoxState extends State<DrawBox> {
                 _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
                 _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
+              clr_index.value = 8;
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      ShowFairytale(images: images, face: face),
+                  builder: (context) => SettingCam(body: images, face: face),
                 ),
               );
               return temp;
