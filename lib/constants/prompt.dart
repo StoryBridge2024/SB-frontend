@@ -45,7 +45,7 @@ const Map<String, dynamic> SCRIPT_PROMPT = {
 const MUTABLE_SCRIPT_PROMPT = "The theme is ";
 
 const Map<String, dynamic> IMAGE_PROMPT = {
-  "model": "dall-e-3",
+  "model": TYPE_OF_DALLE,
   "prompt":
       "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS: Except for people, just draw the background. Just draw a picture that looks like a 7-year-old drew it with crayons! ",
   "quality": "hd",
