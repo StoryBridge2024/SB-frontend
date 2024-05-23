@@ -1,4 +1,4 @@
 const NUMBER_OF_SCENE = 3;
 const NUMBER_OF_SENTENCE = 3;
 const NUMBER_OF_EXAMPLE_PROMPT = 0;
-const TYPE_OF_DALLE = "dall-e-2";
+const TYPE_OF_DALLE = "dall-e-3";

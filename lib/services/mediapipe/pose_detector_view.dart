@@ -4,6 +4,9 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'pose_painter.dart';
+import 'package:camera/camera.dart';
+import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import './pose_arrange.dart';
@@ -103,13 +106,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
       print(_kindOfPose);
       print(gSceneModel!
-          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
-      //print(missions[clr_index.value]);
+          .scriptModelList[clr_index.value].action_used_in_action_list);
+//      print(missions[clr_index.value]);
       print(clr_index.value);
 
       if (_kindOfPose ==
               gSceneModel!.scriptModelList[clr_index.value]
-                  .actions_used_in_action_list[0] &&
+                  .action_used_in_action_list &&
           clr_index.value < NUMBER_OF_SCENE - 1) {
         clr_index.value++;
       }
