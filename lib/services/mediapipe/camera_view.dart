@@ -19,7 +19,7 @@ class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.back})
+      this.initialDirection = CameraLensDirection.front})
       : super(key: key);
 
   // 이미지 받을 때마다 실행하는 함수

@@ -29,7 +29,7 @@ class ShowFairytale extends StatelessWidget {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '동화 만들기',
+                '동화 보기',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,
