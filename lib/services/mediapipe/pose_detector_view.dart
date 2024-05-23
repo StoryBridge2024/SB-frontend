@@ -127,6 +127,16 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           clr_index.value++;
           doPrint = true;
         }
+
+        if (_kindOfPose == "박수 치기") {
+          if ("박수치기" ==
+                  gSceneModel!.scriptModelList[clr_index.value]
+                      .action_used_in_action_list &&
+              clr_index.value < NUMBER_OF_SCENE - 1) {
+            clr_index.value++;
+            doPrint = true;
+          }
+        }
       }
       // if (_kindOfPose == missions[clr_index.value]) {
       //   clr_index.value++;
