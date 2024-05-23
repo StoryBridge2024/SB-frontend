@@ -10,7 +10,7 @@ import 'package:frontend/constants/action_list.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 import '../../pages/makingFairytale.dart';
 

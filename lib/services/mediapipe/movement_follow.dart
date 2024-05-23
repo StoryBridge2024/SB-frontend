@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'dart:math';
 import 'package:frontend/constants/dummy_data.dart';
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 class MovementFollow extends StatefulWidget {
   const MovementFollow(

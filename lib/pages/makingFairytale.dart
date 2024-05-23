@@ -5,7 +5,7 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 import 'makingCharacter.dart';
 

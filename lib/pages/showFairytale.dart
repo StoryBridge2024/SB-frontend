@@ -7,7 +7,7 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
-import 'package:frontend/constants/fairytaleConstacts.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
