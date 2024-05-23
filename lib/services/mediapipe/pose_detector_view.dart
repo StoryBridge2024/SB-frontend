@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +72,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           scale: 0.5,
           child: Container(
             alignment: Alignment.center,
-            width: 500,
-            height: 1000,
+            width: 1000,
+            height: 2000,
             child: _movementFollow,
           ),
         ),
@@ -110,7 +111,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       if (_kindOfPose ==
               gSceneModel!.scriptModelList[clr_index.value]
                   .actions_used_in_action_list[0] &&
-          clr_index.value < 3) {
+          clr_index.value < NUMBER_OF_SCENE - 1) {
         clr_index.value++;
       }
       // if (_kindOfPose == missions[clr_index.value]) {

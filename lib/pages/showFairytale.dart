@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
@@ -67,9 +68,6 @@ class Story extends StatefulWidget {
 }
 
 class _StoryState extends State<Story> {
-  //int index = 0;
-  int max = 8;
-
   @override
   Widget build(BuildContext context) {
     var images = widget.images;
@@ -138,7 +136,10 @@ class _StoryState extends State<Story> {
                           child: Text(
                             gSceneModel!.scriptModelList[clr_index.value]
                                 .scene_contents,
-                            style: TextStyle(fontSize: 40),
+                            style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: 'DDO',
+                            ),
 //                            texts.elementAt(clr_index.value),
                           ),
                         ),
@@ -166,18 +167,21 @@ class _StoryState extends State<Story> {
                             ),
                             Flexible(
                               flex: 1,
-                              child: Container(
-                                alignment: Alignment.bottomRight,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_forward,
-                                  ),
-                                  onPressed: () {
-                                    if (clr_index.value < 8)
-                                      clr_index.value += 1;
-                                  },
-                                ),
-                              ),
+                              child: (clr_index.value == NUMBER_OF_SCENE - 1)
+                                  ? Container()
+                                  : Container(
+                                      alignment: Alignment.bottomRight,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_forward,
+                                        ),
+                                        onPressed: () {
+                                          if (clr_index.value <
+                                              NUMBER_OF_SCENE - 1)
+                                            clr_index.value += 1;
+                                        },
+                                      ),
+                                    ),
                             ),
                           ],
                         ),

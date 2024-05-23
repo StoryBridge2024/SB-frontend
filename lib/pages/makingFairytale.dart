@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
@@ -174,7 +175,6 @@ class TmpFairytale extends StatefulWidget {
 
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
-  int max = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +242,10 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       alignment: Alignment.center,
                       child: Text(
                         gSceneModel!.scriptModelList[index].scene_contents,
-                        style: TextStyle(fontSize: 40),
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'DDO',
+                        ),
                       ),
                     ),
                   ),
@@ -292,13 +295,13 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  if (index < max - 1) {
+                                  if (index < NUMBER_OF_SCENE - 1) {
                                     setState(
                                       () {
                                         index += 1;
                                       },
                                     );
-                                  } else if (index == max - 1) {
+                                  } else if (index == NUMBER_OF_SCENE - 1) {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

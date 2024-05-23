@@ -4,9 +4,13 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:frontend/constants/action_list.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
+
+import '../../pages/makingFairytale.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
@@ -81,13 +85,23 @@ class _CameraViewState extends State<CameraView> {
         width: 500,
         child: Stack(
           children: [
-            _liveFeedBody(),
+            Positioned(
+              left: locX[clr_index.value],
+              top: locY[clr_index.value],
+              child: Container(
+                color: Colors.amberAccent,
+                width: 100,
+                child: _liveFeedBody(),
+              ),
+            ),
             Positioned(
               bottom: 0,
               child: Container(
                 width: 100,
                 child: RotatedBox(
-                    quarterTurns: 1, child: CameraPreview(controller.value!)),
+                  quarterTurns: 1,
+                  child: CameraPreview(controller.value!),
+                ),
               ),
             ),
           ],
