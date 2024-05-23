@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/script_model.dart';
 import 'package:http/http.dart';
+import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
@@ -54,8 +56,8 @@ class OpenAI {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
     var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[5]['content'] =
-        prompt + textPromptWithTheme['messages']?[5]['content'];
+    textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPR*2+1]['content'] =
+        prompt + textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPR*2+1]['content'];
 
     //post request
     final response = await post(
@@ -123,6 +125,11 @@ class OpenAI {
               throw Exception("Invalid action: $action");
             }
           });
+          ScriptModel.fromJson(e).animals_from_animal_list.forEach((animal) {
+            if (!ANIMAL_LIST.contains(animal)) {
+              throw Exception("Invalid animal: $animal");
+            }
+          });
         });
         count = -1;
       } catch (e) {
@@ -131,7 +138,7 @@ class OpenAI {
     } while (count != -1 && count++ < 3);
 
     List<Future<String>> imageFutures = [];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < NUMBER_OF_SCENE; i++) {
       imageFutures
           .add(createImage(content["scene"][i]["description_of_illustration"]));
     }
