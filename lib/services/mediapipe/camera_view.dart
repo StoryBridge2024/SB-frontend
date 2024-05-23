@@ -12,6 +12,8 @@ import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/constants/fairytaleConstacts.dart';
 
+import '../../pages/makingFairytale.dart';
+
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
 // 카메라 화면
