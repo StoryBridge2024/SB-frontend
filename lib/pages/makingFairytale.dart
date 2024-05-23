@@ -312,6 +312,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Flexible(
                     flex: 3,
                     child: Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
