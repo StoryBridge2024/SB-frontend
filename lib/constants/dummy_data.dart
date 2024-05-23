@@ -29,5 +29,3 @@ List<String> missions = [
   "박수 치기",
   "손 허리에",
 ];
-
-int turn  = 0;
