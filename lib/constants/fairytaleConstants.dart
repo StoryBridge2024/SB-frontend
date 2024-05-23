@@ -1,4 +1,5 @@
-import '../models/scene_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:frontend/models/scene_model.dart';
 
 SceneModel? gSceneModel;
 
@@ -14,3 +15,8 @@ List<double> locX5 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY5 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX6 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
+
+int characterTurn = 0;
+int cameraTurn = 0;
+
+var clr_index = ValueNotifier<int>(0);

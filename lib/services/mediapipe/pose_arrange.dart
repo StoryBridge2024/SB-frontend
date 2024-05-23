@@ -104,7 +104,7 @@ class PoseArrange extends Object {
       // Clapping
       if ((leftIndexFingerTipX - rightIndexFingerTipX).abs() < 100 &&
           (leftIndexFingerTipY - rightIndexFingerTipY).abs() < 100) {
-        kindOfPose = updatePoseCount(count, 3, "박수 치기", kindOfPose);
+        kindOfPose = updatePoseCount(count, 3, "박수치기", kindOfPose);
       }
       // Head down
       if (noseY > leftShoulderY && noseY > rightShoulderY) {

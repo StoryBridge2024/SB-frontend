@@ -12,7 +12,7 @@ const Map<String, dynamic> SCRIPT_PROMPT = {
     {
       "role": "system",
       "content":
-          "Output should be in JSON format. The story should have $NUMBER_OF_SCENE scenes. Some scene may include actions from the action list and animals from the animals list. Each scene must contain at least $NUMBER_OF_SENTENCE sentences. Action list is as follow, [\"왼손 번쩍\", \"오른손 번쩍\", \"양손 번쩍\", \"왼손 흔들기\", \"오른손 흔들기\", \"박수치기\"]. Animal list is as follow, [\"호랑이\", \"원숭이\", \"코끼리\", \"기린\", \"코알라\"]. Structure is as follow, {\"number_of_total_character\": 3, \"scene\": [{\"scene_number\": 1, \"number_of_character\": 2, \"character\": \"철수, 민희\"(in Korean), \"scene_contents\": \"철수와 민희가 만나 인사를 했어요\" (in Korean), \"description_of_illustration\": \"a playground in an apartment complex\" (in English, only the background, no characters), \"actions_used_in_action_list\": [\"양손 번쩍\"], \"animals_from_animal_list\": [\"코끼리\"]}, ...]}."
+          "Output should be in JSON format. The story should have $NUMBER_OF_SCENE scenes. Some scene may include an action from the action list and animals from the animals list. Each scene must contain at least $NUMBER_OF_SENTENCE sentences. Action list is as follow, [\"왼손 번쩍\", \"오른손 번쩍\", \"양손 번쩍\", \"왼손 흔들기\", \"오른손 흔들기\", \"박수치기\"]. Animal list is as follow, [\"호랑이\", \"원숭이\", \"코끼리\", \"기린\", \"코알라\"]. Structure is as follow, {\"number_of_total_character\": 3, \"scene\": [{\"scene_number\": 1, \"number_of_character\": 2, \"characters\": [\"철수\", \"민희\"](in Korean), \"scene_contents\": \"철수와 민희가 만나 인사를 했어요\" (in Korean), \"description_of_illustration\": \"a playground in an apartment complex\" (in English, only the background, no characters), \"action_used_in_action_list\": \"양손 번쩍\", \"animals_from_animal_list\": [\"코끼리\"]}, ...]}."
     },
     // //아래 예시들 챗지피티로 만들어달라 하기. 위의 system이랑 형식이 맞지 않음
     // {
@@ -45,7 +45,7 @@ const Map<String, dynamic> SCRIPT_PROMPT = {
 const MUTABLE_SCRIPT_PROMPT = "The theme is ";
 
 const Map<String, dynamic> IMAGE_PROMPT = {
-  "model": "dall-e-3",
+  "model": TYPE_OF_DALLE,
   "prompt":
       "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS: Except for people, just draw the background. Just draw a picture that looks like a 7-year-old drew it with crayons! ",
   "quality": "hd",
@@ -63,7 +63,8 @@ const Map<String, dynamic> VISION_PROMPT = {
       "content": [
         {
           "type": "text",
-          "text": "Output should be in JSON format. Is there any human or text? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\"}"
+          "text":
+              "Output should be in JSON format. Is there any human or text? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\"}"
         },
         {
           "type": "image_url",
