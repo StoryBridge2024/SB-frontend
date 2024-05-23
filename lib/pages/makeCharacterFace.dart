@@ -52,8 +52,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
     CroppedFile? file = widget.file;
 
     return Scaffold(
-      body:
-      Container(
+      body: Container(
         color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
         child: Column(
           children: [

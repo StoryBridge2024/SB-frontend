@@ -45,50 +45,46 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
-              return ListView(
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          '이야기가 완성되었어요!',
-                          style: TextStyle(
-                            color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
-                            fontSize: 80,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                  Center(
+                    child: Text(
+                      '이야기가 완성되었어요!',
+                      style: TextStyle(
+                        color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
+                        fontSize: 80,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
-                        style: TextStyle(fontSize: 50),
+                    ),
+                  ),
+                  Text(
+                    '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
+                    style: TextStyle(fontSize: 50),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.all(40),
                       ),
-                      TextButton(
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                            EdgeInsets.all(40),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                            Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                          ),
-                        ),
-                        child: Text(
-                          '배치하기',
-                          style: TextStyle(
-                            fontSize: 50,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PlacingCharacter(),
-                            ),
-                          );
-                        },
+                      backgroundColor: MaterialStateProperty.all(
+                        Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
                       ),
-                    ],
+                    ),
+                    child: Text(
+                      '배치하기',
+                      style: TextStyle(
+                        fontSize: 50,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlacingCharacter(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
@@ -104,14 +100,14 @@ class MakeFairytale extends StatelessWidget {
                       style: TextStyle(
                         color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
                         fontSize: 80,
-
                       ),
                     ),
                     Text(
                       '동화 주제: $text',
                       style: TextStyle(
                         fontSize: 50,
-                        fontWeight: FontWeight.w600,),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     CircularProgressIndicator(
                       color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),

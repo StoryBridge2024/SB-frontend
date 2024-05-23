@@ -23,7 +23,6 @@ class MovementFollow extends StatefulWidget {
 }
 
 class _MovementFollowState extends State<MovementFollow> {
-
   int x = 200;
   int y = 50;
 
@@ -138,7 +137,7 @@ class _MovementFollowState extends State<MovementFollow> {
         child: Container(
           child: image,
           width: length(p1, p2) * 0.5,
-        )
+        ),
       ),
     );
   }
@@ -163,8 +162,7 @@ class _MovementFollowState extends State<MovementFollow> {
 
   Widget tempBody(var p1, var p2, var p3, var p4, var image) {
     return Positioned(
-      right:
-          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + x,
+      right: (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + x,
       top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + y,
       child: Container(
         width: length(p4, p1) * 1,

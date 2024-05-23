@@ -102,20 +102,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
-      // print(gSceneModel!
-      //     .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
-      print(missions[clr_index.value]);
+      print(gSceneModel!
+          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+      //print(missions[clr_index.value]);
       print(clr_index.value);
-      //
-      // if (_kindOfPose ==
-      //     gSceneModel!.scriptModelList[clr_index.value]
-      //         .actions_used_in_action_list[0] && clr_index.value < 3) {
-      //   clr_index.value++;
-      // }
-      if (_kindOfPose == missions[clr_index.value]) {
+
+      if (_kindOfPose ==
+              gSceneModel!.scriptModelList[clr_index.value]
+                  .actions_used_in_action_list[0] &&
+          clr_index.value < 3) {
         clr_index.value++;
       }
-
+      // if (_kindOfPose == missions[clr_index.value]) {
+      //   clr_index.value++;
+      // }
     } else {
       // 추출된 포즈 없음
       _customPaint = null;

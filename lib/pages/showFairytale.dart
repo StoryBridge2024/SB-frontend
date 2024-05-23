@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
@@ -93,13 +94,13 @@ class _StoryState extends State<Story> {
                         child: Container(
                           width: 500,
                           height: 500,
-                          // child: Image.memory(
-                          //   base64Decode(gSceneModel!.b64_images
-                          //       .elementAt(clr_index.value)),
-                          //   height: 500,
-                          //   width: 500,
-                          // ),
-                          child: Image.asset(imgs.elementAt(clr_index.value)),
+                          child: Image.memory(
+                            base64Decode(gSceneModel!.b64_images
+                                .elementAt(clr_index.value)),
+                            height: 500,
+                            width: 500,
+                          ),
+                          //child: Image.asset(imgs.elementAt(clr_index.value)),
                         ),
                       ),
                       Positioned(
@@ -135,7 +136,10 @@ class _StoryState extends State<Story> {
                           width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            texts.elementAt(clr_index.value),
+                            gSceneModel!.scriptModelList[clr_index.value]
+                                .scene_contents,
+                            style: TextStyle(fontSize: 40),
+//                            texts.elementAt(clr_index.value),
                           ),
                         ),
                       ),
