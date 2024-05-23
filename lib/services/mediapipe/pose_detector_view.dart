@@ -1,19 +1,14 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/showFairytale.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'package:image_picker/image_picker.dart';
 import 'pose_painter.dart';
 import './pose_arrange.dart';
 import 'package:camera/camera.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
 
 import 'package:frontend/constants/action_list.dart';
-import 'package:frontend/constants/dummy_data.dart';
-import 'package:frontend/models/scene_model.dart';
 
 import 'package:frontend/pages/makingFairytale.dart';
 
@@ -126,18 +121,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final kindOfPose =
           PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();
-      final movementFollow = MovementFollow(poses: poses, images: images, face:face);
+      final movementFollow =
+          MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
       print(gSceneModel!
-          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+          .scriptModelList[clr_index.value].action_used_in_action_list);
 //      print(missions[clr_index.value]);
       print(clr_index.value);
 
       if (_kindOfPose ==
-          gSceneModel!.scriptModelList[clr_index.value]
-              .actions_used_in_action_list[0] && clr_index.value < 3) {
+              gSceneModel!.scriptModelList[clr_index.value]
+                  .action_used_in_action_list &&
+          clr_index.value < 3) {
         clr_index.value++;
       }
       // if (_kindOfPose == missions[clr_index.value]) {

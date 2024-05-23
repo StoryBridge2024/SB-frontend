@@ -123,12 +123,13 @@ class OpenAI {
       try {
         content = await createCompletion(theme);
         (content["scene"] as List).forEach((e) {
-          ScriptModel.fromJson(e).actions_used_in_action_list.forEach((action) {
-            if (!ACTION_LIST.contains(action)) {
-              throw Exception("Invalid action: $action");
+          ScriptModel scriptModel = ScriptModel.fromJson(e);
+          if(scriptModel.action_used_in_action_list != null){
+            if (!ACTION_LIST.contains(scriptModel.action_used_in_action_list)) {
+              throw Exception("Invalid action: ${scriptModel.action_used_in_action_list}");
             }
-          });
-          ScriptModel.fromJson(e).animals_from_animal_list.forEach((animal) {
+          }
+          scriptModel.animals_from_animal_list.forEach((animal) {
             if (!ANIMAL_LIST.contains(animal)) {
               throw Exception("Invalid animal: $animal");
             }
