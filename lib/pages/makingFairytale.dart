@@ -14,6 +14,14 @@ List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX3 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY3 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX4 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY4 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX5 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY5 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX6 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
 
 class MakeFairytale extends StatelessWidget {
   final String text;
@@ -163,6 +171,50 @@ class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
   int max = 3;
 
+  Widget createPositionedAnimal({
+    required String animalName,
+    required String assetPath,
+    required List<double> locX,
+    required List<double> locY,
+    required int index,
+    required Function setStateCallback,
+  }) {
+    return Stack(
+      children: [
+        Positioned(
+          left: locX.elementAt(index),
+          top: locY.elementAt(index),
+          child: animalName ==
+              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+              ? Image.asset(
+            assetPath,
+            height: 150,
+            width: 150,
+          )
+              : Container(),
+        ),
+        Positioned(
+          left: locX.elementAt(index),
+          top: locY.elementAt(index),
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Color(0x00FFFFFF),
+            child: GestureDetector(
+              onScaleUpdate: (touch) {
+                setStateCallback(() {
+                  locX[index] += touch.focalPointDelta.dx;
+                  locY[index] += touch.focalPointDelta.dy;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -193,18 +245,6 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                      left: locX2.elementAt(index),
-                      top: locY2.elementAt(index),
-                      child: "호랑이" ==
-                                  gSceneModel!.scriptModelList[clr_index.value]
-                                      .animals_from_animal_list[0]
-                          ? Image.asset(
-                              'assets/animal/tiger.png',
-                              height: 300,
-                              width: 300,
-                            )
-                          : Container()),
-                  Positioned(
                     left: locX1.elementAt(index),
                     top: locY1.elementAt(index),
                     child: Container(
@@ -223,24 +263,45 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: locX2.elementAt(index),
-                    top: locY2.elementAt(index),
-                    child: Container(
-                      width: 300,
-                      height: 300,
-                      color: Color(0x00FFFFFF),
-                      child: GestureDetector(
-                        onScaleUpdate: (touch) {
-                          setState(
-                                () {
-                              locX2[index] += touch.focalPointDelta.dx;
-                              locY2[index] += touch.focalPointDelta.dy;
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                  createPositionedAnimal(
+                    animalName: "호랑이",
+                    assetPath: 'assets/animal/tiger.png',
+                    locX: locX2,
+                    locY: locY2,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "원숭이",
+                    assetPath: 'assets/animal/monkey.png',
+                    locX: locX3,
+                    locY: locY3,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "기린",
+                    assetPath: 'assets/animal/giraffe.png',
+                    locX: locX4,
+                    locY: locY4,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "코알라",
+                    assetPath: 'assets/animal/coala.png',
+                    locX: locX5,
+                    locY: locY5,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "코끼리",
+                    assetPath: 'assets/animal/elephant.png',
+                    locX: locX6,
+                    locY: locY6,
+                    index: index,
+                    setStateCallback: setState,
                   ),
                 ],
               ),

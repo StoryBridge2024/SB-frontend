@@ -80,7 +80,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 alignment: Alignment.center,
                 width: 500,
                 height: 1000,
-                color: Colors.amberAccent,
                 child: _movementFollow,
                 ),
                 ),),
@@ -113,9 +112,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      // print(_kindOfPose);
-      // print(gSceneModel!
-      //     .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+      //print(_kindOfPose);
+      print(gSceneModel!
+          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
       //print(missions[clr_index.value]);
       print(clr_index.value);
 
