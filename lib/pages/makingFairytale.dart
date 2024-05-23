@@ -17,6 +17,7 @@ class MakeFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFC),
@@ -25,10 +26,17 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
-              for (int i = 0; i < NUMBER_OF_SCENE; i++) {
-                print(
-                    gSceneModel!.scriptModelList[i].action_used_in_action_list);
+              print("number of total character: ${gSceneModel!.number_of_total_character}");
+              for(int i=0;i<NUMBER_OF_SCENE;i++){
+                print("number of character: ${gSceneModel!.scriptModelList[i].number_of_character}");
+                print("scene contents: ${gSceneModel!.scriptModelList[i].scene_contents}");
+                print("description of illustration: ${gSceneModel!.scriptModelList[i].description_of_illustration}");
+                print("action used in action list: ${gSceneModel!.scriptModelList[i].action_used_in_action_list}");
+                print("animals from animal list: ${gSceneModel!.scriptModelList[i].animals_from_animal_list}");
+                print("characters: ${gSceneModel!.scriptModelList[i].characters}");
               }
+              print("b64 images: ${gSceneModel!.b64_images}");
+
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
