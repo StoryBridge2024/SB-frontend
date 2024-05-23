@@ -208,7 +208,7 @@ class _DrawBoxState extends State<DrawBox> {
           color: Colors.white,
           size: 50,
         ),
-        onPressed: () => _nextPage(context, images, face),
+        onPressed: () => _nextPage(context, images),
       ),
     ];
   }

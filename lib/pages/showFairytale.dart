@@ -10,7 +10,6 @@ import 'package:frontend/constants/action_list.dart';
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
 
-  var face;
   List<Uint8List> images;
   Widget face;
 
