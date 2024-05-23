@@ -31,13 +31,12 @@ class MakeCharacterBody extends StatelessWidget {
   const MakeCharacterBody({super.key, required this.file});
 
   final Widget file;
-//  File? get file => null;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
         child: Column(
           children: [
             Container(
@@ -47,7 +46,8 @@ class MakeCharacterBody extends StatelessWidget {
                 '캐릭터 제작하기',
                 style: TextStyle(
                   fontSize: 60,
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                 ),
               ),
             ),
@@ -67,7 +67,7 @@ class MakeCharacterBody extends StatelessWidget {
                         flex: 11,
                         child: Stack(
                           children: [
-                            DrawBox(face: file),
+                            DrawBox(face:file),
                             Center(
                               child: IgnorePointer(
                                 ignoring: true,
@@ -116,7 +116,6 @@ class MakeCharacterBody extends StatelessWidget {
 
 class DrawBox extends StatefulWidget {
   DrawBox({super.key, required this.face});
-
   final Widget face;
 
   @override
@@ -134,6 +133,9 @@ class _DrawBoxState extends State<DrawBox> {
 
   @override
   Widget build(BuildContext context) {
+
+    var face = widget.face;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
@@ -161,7 +163,7 @@ class _DrawBoxState extends State<DrawBox> {
                   _buildStrokeToolbar(context),
                   const Expanded(child: SizedBox()),
                   Row(
-                    children: _buildActions(context),
+                    children: _buildActions(context, face),
                   ),
                 ],
               ),
@@ -172,7 +174,7 @@ class _DrawBoxState extends State<DrawBox> {
     );
   }
 
-  List<Widget> _buildActions(context) {
+  List<Widget> _buildActions(context, var face) {
     List<Uint8List> images = [];
     return [
       ValueListenableBuilder(
@@ -206,7 +208,7 @@ class _DrawBoxState extends State<DrawBox> {
           color: Colors.white,
           size: 50,
         ),
-        onPressed: () => _nextPage(context, images),
+        onPressed: () => _nextPage(context, images, face),
       ),
     ];
   }

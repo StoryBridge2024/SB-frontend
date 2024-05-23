@@ -9,8 +9,6 @@ import '../../models/scene_model.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
-  final String baseScriptUrl = 'https://api.openai.com/v1/';
-  final String baseImageUrl = 'https://api.openai.com/v1/';
 
   OpenAI._privateConstructor();
 
@@ -24,6 +22,34 @@ class OpenAI {
     return json.decode(json.encode(source));
   }
 
+  Future<bool> checkValidation(String b64_json) async {
+    //compose prompt with url
+    var visionPromptWithImage = deepCopy(VISION_PROMPT);
+    visionPromptWithImage['messages']?[0]['content'][1]['image_url']['url'] =
+        "data:image/jpeg;base64, $b64_json";
+
+    //post request
+    final response = await post(Uri.parse(baseVisionUrl),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(visionPromptWithImage));
+    print("checkValidation: ${response.body}");
+
+    //parse response
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load response');
+    }
+    var content =
+        json.decode(response.body)["choices"][0]["message"]["content"];
+    content = jsonDecode(content);
+    if (content["human"] == "yes" || content["text"] == "yes") {
+      return false;
+    }
+    return true;
+  }
+
   Future<Map<String, dynamic>> createCompletion(String theme) async {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
@@ -33,7 +59,7 @@ class OpenAI {
 
     //post request
     final response = await post(
-      Uri.parse('${baseScriptUrl}chat/completions'),
+      Uri.parse(baseScriptUrl),
       headers: {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
@@ -60,25 +86,26 @@ class OpenAI {
     imagePromptWithTheme['prompt'] = "${imagePromptWithTheme['prompt']}$prompt";
 
     //post request
-    final response = await post(
-      Uri.parse('${baseImageUrl}images/generations'),
-      headers: {
-        'Authorization': 'Bearer $apiKey',
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(imagePromptWithTheme),
-    );
     int count = 0;
     late ImageResponse imageResponse;
+    late Response response;
     do {
       try {
+        response = await post(
+          Uri.parse(baseImageUrl),
+          headers: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json',
+          },
+          body: json.encode(imagePromptWithTheme),
+        );
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
         count = -1;
       } catch (e) {
-        print("createImage: $e");
+        print("createImage: $e $count");
         print("createImage: ${json.decode(response.body)}");
       }
-    } while (count!=-1&&count++ < 3);
+    } while (count != -1 && count++ < 3);
     return imageResponse.data[0]["b64_json"];
   }
 
@@ -99,9 +126,9 @@ class OpenAI {
         });
         count = -1;
       } catch (e) {
-        print("createScene: $e");
+        print("createScene: $e $count");
       }
-    } while (count!=-1&&count++ < 3);
+    } while (count != -1 && count++ < 3);
 
     List<Future<String>> imageFutures = [];
     for (int i = 0; i < 3; i++) {
@@ -110,6 +137,7 @@ class OpenAI {
     }
     List<String> images = await Future.wait(imageFutures);
     DateTime et = DateTime.now();
+    checkValidation(images[0]);
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
     return SceneModel(content: content, images: images);

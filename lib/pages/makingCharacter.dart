@@ -8,7 +8,7 @@ class MakeCharacter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
         child: Column(
           children: [
             Container(
@@ -18,7 +18,8 @@ class MakeCharacter extends StatelessWidget {
                 '캐릭터 제작하기',
                 style: TextStyle(
                   fontSize: 60,
-                  color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                 ),
               ),
             ),

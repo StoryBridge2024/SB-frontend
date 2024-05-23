@@ -39,7 +39,7 @@ class MakeFairytale extends StatelessWidget {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        backgroundColor: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFC),
         body: FutureBuilder(
           future: sceneModel,
           builder: (context, snapshot) {
@@ -54,8 +54,9 @@ class MakeFairytale extends StatelessWidget {
                         child: Text(
                           '이야기가 완성되었어요!',
                           style: TextStyle(
-                            color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                            color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
                             fontSize: 80,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -103,11 +104,14 @@ class MakeFairytale extends StatelessWidget {
                       style: TextStyle(
                         color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
                         fontSize: 80,
+
                       ),
                     ),
                     Text(
                       '동화 주제: $text',
-                      style: TextStyle(fontSize: 50),
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w600,),
                     ),
                     CircularProgressIndicator(
                       color: Color.fromARGB(0xFF, 0xFF, 0xFF, 0xFF),
@@ -146,7 +150,7 @@ class _PlacingCharacterState extends State<PlacingCharacter> {
                 '동화 만들기',
                 style: TextStyle(
                     fontSize: 60,
-                    color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA)),
+                    color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13)),
               ),
             ),
             Expanded(

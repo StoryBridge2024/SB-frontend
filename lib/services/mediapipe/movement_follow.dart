@@ -138,7 +138,7 @@ class _MovementFollowState extends State<MovementFollow> {
         child: Container(
           child: image,
           width: length(p1, p2) * 0.5,
-        ),
+        )
       ),
     );
   }

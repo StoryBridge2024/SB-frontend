@@ -46,7 +46,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
           AndroidUiSettings(
               toolbarTitle: '이미지 자르기/회전하기',
               // 타이틀바 제목
-              toolbarColor: Colors.deepOrange,
+              toolbarColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
               // 타이틀바 배경색
               toolbarWidgetColor: Colors.white,
               // 타이틀바 단추색
@@ -184,7 +184,7 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
           AndroidUiSettings(
               toolbarTitle: '이미지 자르기/회전하기',
               // 타이틀바 제목
-              toolbarColor: Colors.lightBlueAccent,
+              toolbarColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
               // 타이틀바 배경색
               toolbarWidgetColor: Colors.white,
               // 타이틀바 단추색
