@@ -114,11 +114,6 @@ class _StoryState extends State<Story> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        child: Camera(),
-                      )
                     ],
                   ),
                 ),

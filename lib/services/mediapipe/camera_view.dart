@@ -77,7 +77,6 @@ class _CameraViewState extends State<CameraView> {
     return Transform.scale(
       scale: 1,
       child: Container(
-        color: Colors.red,
         height: 500,
         width: 500,
         child: Stack(
