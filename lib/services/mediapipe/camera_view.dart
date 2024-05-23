@@ -9,18 +9,8 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
-import 'package:frontend/pages/makingFairytale.dart';
-
-import '../../constants/action_list.dart';
-import '../../constants/animal_list.dart';
-import '../../constants/fairytaleConstants.dart';
-import 'package:frontend/constants/action_list.dart';
-import 'package:google_mlkit_commons/google_mlkit_commons.dart';
-
-import 'package:frontend/main.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
-
-import '../../pages/makingFairytale.dart';
+import '../../constants/fairytaleConstants.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
@@ -28,14 +18,13 @@ ValueNotifier<CameraController?> controller = ValueNotifier(null);
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,
-      required this.customPaint,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.front})
+      this.initialDirection = CameraLensDirection.back})
       : super(key: key);
-  // 스켈레톤을 그려주는 객체
-  final CustomPaint? customPaint;
+
   // 이미지 받을 때마다 실행하는 함수
   final Function(InputImage inputImage) onImage;
+
   // 카메라 렌즈 방향 변수
   final CameraLensDirection initialDirection;
 
@@ -47,19 +36,12 @@ class _CameraViewState extends State<CameraView> {
   // 카메라를 다루기 위한 변수
   // 카메라 인덱스
   int _cameraIndex = -1;
+
   // 카메라 렌즈 변경 변수
   bool _changingCameraLens = false;
 
   @override
   void initState() {
-    // print("제발제대로좀되길바랍니다");
-    // print(locX1.elementAt(0));
-    // print(locY1.elementAt(0));
-    // print(locX1.elementAt(1));
-    // print(locY1.elementAt(1));
-    // print(locX1.elementAt(2));
-    // print(locY1.elementAt(2));
-    // print(clr_index.value);
     super.initState();
 
     // 카메라 설정. 기기에서 실행 가능한 카메라, 카메라 방향 설정...
@@ -104,12 +86,13 @@ class _CameraViewState extends State<CameraView> {
     return Positioned(
       left: left,
       top: top,
-      child: animalName == gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+      child: animalName ==
+              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
           ? Image.asset(
-        assetPath,
-        height: 150,
-        width: 150,
-      )
+              assetPath,
+              height: 150,
+              width: 150,
+            )
           : Container(),
     );
   }
@@ -118,6 +101,35 @@ class _CameraViewState extends State<CameraView> {
   Widget build(BuildContext context) {
     // print(gSceneModel!.scriptModelList[clr_index.value]
     //     .animals_from_animal_list[0]);
+
+    if (clr_index.value == 8) {
+      return Transform.scale(
+        scale: 1,
+        child: Container(
+          height: 500,
+          width: 500,
+          child: Stack(
+            children: [
+              _liveFeedBody(),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  width: 100,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(pi * cameraInverse),
+                    child: RotatedBox(
+                      quarterTurns: cameraTurn,
+                      child: CameraPreview(controller.value!),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Transform.scale(
       scale: 1,
       child: Container(
@@ -167,7 +179,7 @@ class _CameraViewState extends State<CameraView> {
                 width: 100,
                 child: Transform(
                   alignment: Alignment.center,
-                  transform: Matrix4.rotationY(pi),
+                  transform: Matrix4.rotationY(pi * cameraInverse),
                   child: RotatedBox(
                     quarterTurns: cameraTurn,
                     child: CameraPreview(controller.value!),
@@ -213,8 +225,6 @@ class _CameraViewState extends State<CameraView> {
                   : Container(), //CameraPreview(controller!),
             ),
           ),
-          // 추출된 스켈레톤 그리기
-          //if (widget.customPaint != null) widget.customPaint!,
         ],
       ),
     );

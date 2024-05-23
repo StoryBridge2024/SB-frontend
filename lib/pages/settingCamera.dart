@@ -136,7 +136,7 @@ class TurnButtons extends StatelessWidget {
                   Text(
                     "카메라 회전",
                     style: TextStyle(
-                      fontSize: 50,
+                      fontSize: 40,
                     ),
                   ),
                   FloatingActionButton.large(
@@ -166,7 +166,7 @@ class TurnButtons extends StatelessWidget {
                   Text(
                     "캐릭터 회전",
                     style: TextStyle(
-                      fontSize: 50,
+                      fontSize: 40,
                     ),
                   ),
                   FloatingActionButton.large(
@@ -179,6 +179,35 @@ class TurnButtons extends StatelessWidget {
                     onPressed: () {
                       characterTurn += 1;
                       if (characterTurn == 4) characterTurn = 0;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "카메라 반전",
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
+                  ),
+                  FloatingActionButton.large(
+                    backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
+                    child: Icon(
+                      Icons.flip,
+                      color: Colors.white,
+                      size: 95,
+                    ),
+                    onPressed: () {
+                      cameraInverse += 1;
                     },
                   ),
                 ],
