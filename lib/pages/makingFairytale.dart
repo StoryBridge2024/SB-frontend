@@ -8,8 +8,6 @@ import 'package:frontend/constants/animal_list.dart';
 import '../constants/action_list.dart';
 import '../constants/fairytaleConstants.dart';
 import 'makingCharacter.dart';
-import 'package:frontend/constants/fairytaleConstants.dart';
-import 'makingCharacter.dart';
 
 class MakeFairytale extends StatelessWidget {
   final String text;
@@ -172,12 +170,13 @@ class _TmpFairytaleState extends State<TmpFairytale> {
           left: locX.elementAt(index),
           top: locY.elementAt(index),
           child: animalName ==
-              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+                  gSceneModel!
+                      .scriptModelList[index].animals_from_animal_list[0]
               ? Image.asset(
-            assetPath,
-            height: 150,
-            width: 150,
-          )
+                  assetPath,
+                  height: 150,
+                  width: 150,
+                )
               : Container(),
         ),
         Positioned(
@@ -200,7 +199,6 @@ class _TmpFairytaleState extends State<TmpFairytale> {
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

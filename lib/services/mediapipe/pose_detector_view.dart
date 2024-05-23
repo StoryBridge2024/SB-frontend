@@ -4,16 +4,14 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'pose_painter.dart';
-import 'package:camera/camera.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import '../../constants/fairytaleConstants.dart';
-import './pose_arrange.dart';
-import './movement_follow.dart';
+import 'package:frontend/services/mediapipe/pose_arrange.dart';
 import 'camera_view.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+
+bool doPrint = true;
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
@@ -63,8 +61,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           height: 500,
           width: 500,
           child: CameraView(
-            // 스켈레톤 그려주는 객체 전달
-            customPaint: _customPaint,
             // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
             onImage: (inputImage) {
               processImage(inputImage);
@@ -72,8 +68,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value)-150,
-          top: locY1.elementAt(clr_index.value)-200,
+          left: locX1.elementAt(clr_index.value) - 150,
+          top: locY1.elementAt(clr_index.value) - 200,
           child: Container(
             width: 500,
             child: RotatedBox(
@@ -81,10 +77,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
               child: Transform.scale(
                 scale: 0.5,
                 child: Container(
-                alignment: Alignment.center,
-                width: 500,
-                height: 1000,
-                child: _movementFollow,
+                  alignment: Alignment.center,
+                  width: 500,
+                  height: 1000,
+                  child: _movementFollow,
                 ),
               ),
             ),
@@ -115,17 +111,32 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      //print(_kindOfPose);
-      print(gSceneModel!
-          .scriptModelList[clr_index.value].action_used_in_action_list);
-//      print(missions[clr_index.value]);
-      print(clr_index.value);
+      if (clr_index.value != 8) {
+        if (doPrint) {
+          print(_kindOfPose);
+          print(gSceneModel!
+              .scriptModelList[clr_index.value].action_used_in_action_list);
+          //print(missions[clr_index.value]);
+          print(clr_index.value);
+          doPrint = false;
+        }
+        if (_kindOfPose ==
+                gSceneModel!.scriptModelList[clr_index.value]
+                    .action_used_in_action_list &&
+            clr_index.value < NUMBER_OF_SCENE - 1) {
+          clr_index.value++;
+          doPrint = true;
+        }
 
-      if (_kindOfPose ==
-              gSceneModel!.scriptModelList[clr_index.value]
-                  .action_used_in_action_list &&
-          clr_index.value < NUMBER_OF_SCENE - 1) {
-        clr_index.value++;
+        if (_kindOfPose == "박수 치기") {
+          if ("박수치기" ==
+                  gSceneModel!.scriptModelList[clr_index.value]
+                      .action_used_in_action_list &&
+              clr_index.value < NUMBER_OF_SCENE - 1) {
+            clr_index.value++;
+            doPrint = true;
+          }
+        }
       }
       // if (_kindOfPose == missions[clr_index.value]) {
       //   clr_index.value++;

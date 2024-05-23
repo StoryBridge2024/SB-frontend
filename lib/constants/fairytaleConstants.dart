@@ -3,8 +3,8 @@ import 'package:frontend/models/scene_model.dart';
 
 SceneModel? gSceneModel;
 
-List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX3 = [100, 100, 100, 100, 100, 100, 100, 100];
@@ -18,5 +18,6 @@ List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
 
 int characterTurn = 0;
 int cameraTurn = 0;
+int cameraInverse = 0;
 
 var clr_index = ValueNotifier<int>(0);
