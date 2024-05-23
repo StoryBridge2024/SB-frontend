@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
 
-CameraController? controller;
+ValueNotifier<CameraController?> controller = ValueNotifier(null);
 
 // 카메라 화면
 class CameraView extends StatefulWidget {
@@ -17,13 +18,10 @@ class CameraView extends StatefulWidget {
       required this.onImage,
       this.initialDirection = CameraLensDirection.back})
       : super(key: key);
-
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
-
   // 이미지 받을 때마다 실행하는 함수
   final Function(InputImage inputImage) onImage;
-
   // 카메라 렌즈 방향 변수
   final CameraLensDirection initialDirection;
 
@@ -33,13 +31,8 @@ class CameraView extends StatefulWidget {
 
 class _CameraViewState extends State<CameraView> {
   // 카메라를 다루기 위한 변수
-
   // 카메라 인덱스
   int _cameraIndex = -1;
-
-  // 확대 축소 레벨
-  double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
-
   // 카메라 렌즈 변경 변수
   bool _changingCameraLens = false;
 
@@ -81,29 +74,31 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(alignment: Alignment.bottomLeft, child: _liveFeedBody());
-  }
-
-  // 전면<->후면 카메라 변경 버튼
-  Widget? _floatingActionButton() {
-    if (cameras.length == 1) return null;
-    return SizedBox(
-        height: 30.0,
-        width: 30.0,
-        child: FloatingActionButton(
-          onPressed: _switchLiveCamera,
-          child: Icon(
-            Platform.isIOS
-                ? Icons.flip_camera_ios_outlined
-                : Icons.flip_camera_android_outlined,
-            size: 20,
-          ),
-        ));
+    return Transform.scale(
+      scale: 1,
+      child: Container(
+        height: 500,
+        width: 500,
+        child: Stack(
+          children: [
+            _liveFeedBody(),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: 100,
+                child: RotatedBox(
+                    quarterTurns: 1, child: CameraPreview(controller.value!)),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // 카메라 화면 보여주기 + 화면에서 실시간으로 포즈 추출
   Widget _liveFeedBody() {
-    if (controller?.value.isInitialized == false) {
+    if (controller.value?.value.isInitialized == false) {
       return Container();
     }
 
@@ -113,7 +108,7 @@ class _CameraViewState extends State<CameraView> {
     // this is actually size.aspectRatio / (1 / camera.aspectRatio)
     // because camera preview size is received as landscape
     // but we're calculating for portrait orientation
-    var scale = size.aspectRatio * controller!.value.aspectRatio;
+    var scale = size.aspectRatio * controller.value!.value.aspectRatio;
 
     // to prevent scaling down, invert the value
     if (scale < 1) scale = 1 / scale;
@@ -124,22 +119,17 @@ class _CameraViewState extends State<CameraView> {
         children: <Widget>[
           // 전면 후면 변경 시 화면 변경 처리
           Transform.scale(
-            scale: scale,
+            scale: scale - 1.2,
             child: Center(
               child: _changingCameraLens
                   ? const Center(
                       child: Text('Changing camera lens'),
                     )
-                  : Container(),
+                  : Container(), //CameraPreview(controller!),
             ),
           ),
           // 추출된 스켈레톤 그리기
-          if (widget.customPaint != null) widget.customPaint!,
-
-          // if (_byteImage != null)
-          //   Image.memory(_byteImage!, width: 100, height: 100),
-          // if (_byteImage != null)
-          //   Image(image: MemoryImage(_byteImage!), width: 100, height: 100),
+          //if (widget.customPaint != null) widget.customPaint!,
         ],
       ),
     );
@@ -148,32 +138,25 @@ class _CameraViewState extends State<CameraView> {
   // 실시간으로 카메라에서 이미지 받기(비동기적)
   Future _startLiveFeed() async {
     final camera = cameras[_cameraIndex];
-    controller = CameraController(
+    controller.value = CameraController(
       camera,
-      ResolutionPreset.high,
+      ResolutionPreset.low,
       enableAudio: false,
     );
-    controller?.initialize().then((_) {
+    controller.value?.initialize().then((_) {
       if (!mounted) {
         return;
       }
-      controller?.getMinZoomLevel().then((value) {
-        zoomLevel = value;
-        minZoomLevel = value;
-      });
-      controller?.getMaxZoomLevel().then((value) {
-        maxZoomLevel = value;
-      });
       // 이미지 받은 것을 _processCameraImage 함수로 처리
-      controller?.startImageStream(_processCameraImage);
+      controller.value?.startImageStream(_processCameraImage);
       setState(() {});
     });
   }
 
   Future _stopLiveFeed() async {
-    await controller?.stopImageStream();
-    await controller?.dispose();
-    controller = null;
+    await controller.value?.stopImageStream();
+    await controller.value?.dispose();
+    controller.value = null;
   }
 
   // 전면<->후면 카메라 변경 함수

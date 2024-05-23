@@ -5,12 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'dart:math';
+import 'package:frontend/constants/dummy_data.dart';
 
 class MovementFollow extends StatefulWidget {
-  const MovementFollow({super.key, required this.poses, required this.images, required this.face});
+  const MovementFollow(
+      {super.key,
+      required this.poses,
+      required this.images,
+      required this.face});
 
-  final List<Uint8List> images;
   final List<Pose> poses;
+  final List<Uint8List> images;
   final Widget face;
 
   @override
@@ -18,6 +23,10 @@ class MovementFollow extends StatefulWidget {
 }
 
 class _MovementFollowState extends State<MovementFollow> {
+
+  int x = 200;
+  int y = 50;
+
   double lengthX(var p1, var p2) {
     double x1 = p1!.x;
     double x2 = p2!.x;
@@ -86,7 +95,7 @@ class _MovementFollowState extends State<MovementFollow> {
       right: (((p1!.x + p2!.x) / 2) - length(p2, p1) / 2) * 0.25,
       top: (((p1!.y + p2!.y) / 2) - length(p2, p1) / 2) * 0.25,
       child: Transform.rotate(
-        angle: angle(p1, p2) + 3.141592653579 * 0.5,
+        angle: angle(p1, p2) + pi * 0.5,
         child: Container(
           width: 100,
           height: 100,
@@ -134,6 +143,59 @@ class _MovementFollowState extends State<MovementFollow> {
     );
   }
 
+  Widget temp(var p1, var p2, var image) {
+    return Positioned(
+      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) + x,
+      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) + y,
+      child: Container(
+        width: length(p2, p1) * 1.2,
+        height: length(p2, p1) * 1.2,
+        child: Transform.rotate(
+          angle: angle(p1, p2),
+          child: Container(
+            width: double.infinity,
+            child: Image.memory(image),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget tempBody(var p1, var p2, var p3, var p4, var image) {
+    return Positioned(
+      right:
+          (((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + x,
+      top: (((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + y,
+      child: Container(
+        width: length(p4, p1) * 1,
+        height: length(p4, p1) * 1,
+        child: Transform.rotate(
+          angle: angle(p2, p1),
+          child: Container(
+            width: double.infinity,
+            child: Image.memory(image),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget tempFace(var p1, var p2, var image) {
+    return Positioned(
+      right: (((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.25) + x,
+      top: (((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.25) + y,
+      child: Container(
+        height: length(p2, p1) * 2.5,
+        child: Transform.rotate(
+          angle: angle(p1, p2),
+          child: Container(
+            child: image,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Uint8List> images = widget.images;
@@ -141,72 +203,76 @@ class _MovementFollowState extends State<MovementFollow> {
     var face = widget.face;
     var ret;
 
+    if (poses.length == 0) ret = Container();
     for (final pose in poses) {
-      ret = Container(
-        color: Colors.red,
-        height: 2000,
-        width: 2000,
-        child: Transform.scale(
-          scale: 2,
-          child: Stack(
-            children: [
-              body(
-                pose.landmarks[PoseLandmarkType.rightShoulder],
-                pose.landmarks[PoseLandmarkType.leftShoulder],
-                pose.landmarks[PoseLandmarkType.rightHip],
-                pose.landmarks[PoseLandmarkType.leftHip],
-                images[0],
-              ), //몸통
-              leg(
-                pose.landmarks[PoseLandmarkType.leftHip],
-                pose.landmarks[PoseLandmarkType.leftKnee],
-                images[5],
-              ), //왼쪽 다리 1
-              leg(
-                pose.landmarks[PoseLandmarkType.leftKnee],
-                pose.landmarks[PoseLandmarkType.leftAnkle],
-                images[6],
-              ), //왼쪽 다리 2
-              leg(
-                pose.landmarks[PoseLandmarkType.rightHip],
-                pose.landmarks[PoseLandmarkType.rightKnee],
-                images[7],
-              ), //오른쪽 다리 1
-              leg(
-                pose.landmarks[PoseLandmarkType.rightKnee],
-                pose.landmarks[PoseLandmarkType.rightAnkle],
-                images[8],
-              ), //오른쪽 다리 2
-              arm(
-                pose.landmarks[PoseLandmarkType.leftShoulder],
-                pose.landmarks[PoseLandmarkType.leftElbow],
-                images[1],
-              ), //왼쪽 팔 1
-              arm(
-                pose.landmarks[PoseLandmarkType.leftElbow],
-                pose.landmarks[PoseLandmarkType.leftThumb],
-                images[2],
-              ), //왼쪽 팔 2
-              arm(
-                pose.landmarks[PoseLandmarkType.rightElbow],
-                pose.landmarks[PoseLandmarkType.rightShoulder],
-                images[3],
-              ), //오른쪽 팔 1
-              arm(
-                pose.landmarks[PoseLandmarkType.rightThumb],
-                pose.landmarks[PoseLandmarkType.rightElbow],
-                images[4],
-              ), //오른쪽 팔 1
-              head(
-                pose.landmarks[PoseLandmarkType.rightEar],
-                pose.landmarks[PoseLandmarkType.leftEar],
-                face
-              )
-            ],
+      ret = RotatedBox(
+        quarterTurns: turn,
+        child: Container(
+          height: 500,
+          width: 500,
+          child: Transform.scale(
+            scale: 1,
+            child: Stack(
+              children: [
+                tempBody(
+                  pose.landmarks[PoseLandmarkType.leftShoulder],
+                  pose.landmarks[PoseLandmarkType.rightShoulder],
+                  pose.landmarks[PoseLandmarkType.leftHip],
+                  pose.landmarks[PoseLandmarkType.rightHip],
+                  images[0],
+                ),
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.leftHip],
+                //   pose.landmarks[PoseLandmarkType.leftKnee],
+                //   "assets/character/real.png",
+                // ), //왼쪽 다리 1
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.leftKnee],
+                //   pose.landmarks[PoseLandmarkType.leftAnkle],
+                //   "assets/character/real.png",
+                // ), //왼쪽 다리 2
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.rightHip],
+                //   pose.landmarks[PoseLandmarkType.rightKnee],
+                //   "assets/character/real.png",
+                // ), //오른쪽 다리 1
+                // temp(
+                //   pose.landmarks[PoseLandmarkType.rightKnee],
+                //   pose.landmarks[PoseLandmarkType.rightAnkle],
+                //   "assets/character/real.png",
+                // ), //오른쪽 다리 2
+                temp(
+                  pose.landmarks[PoseLandmarkType.leftShoulder],
+                  pose.landmarks[PoseLandmarkType.leftElbow],
+                  images[1],
+                ), //왼쪽 팔 1
+                temp(
+                  pose.landmarks[PoseLandmarkType.leftElbow],
+                  pose.landmarks[PoseLandmarkType.leftThumb],
+                  images[2],
+                ), //왼쪽 팔 2
+                temp(
+                  pose.landmarks[PoseLandmarkType.rightElbow],
+                  pose.landmarks[PoseLandmarkType.rightShoulder],
+                  images[3],
+                ), //오른쪽 팔 1
+                temp(
+                  pose.landmarks[PoseLandmarkType.rightThumb],
+                  pose.landmarks[PoseLandmarkType.rightElbow],
+                  images[4],
+                ), //오른쪽 팔 1
+                tempFace(
+                  pose.landmarks[PoseLandmarkType.rightEar],
+                  pose.landmarks[PoseLandmarkType.leftEar],
+                  face,
+                )
+              ],
+            ),
           ),
         ),
       );
     }
-    return ret!;
+
+    return ret;
   }
 }

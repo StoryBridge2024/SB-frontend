@@ -1,45 +1,21 @@
-import 'dart:ffi';
+import 'dart:async';
 import 'dart:typed_data';
-
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/showFairytale.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'package:image_picker/image_picker.dart';
-import 'pose_painter.dart';
 import './pose_arrange.dart';
-import 'package:camera/camera.dart';
-import 'package:frontend/services/mediapipe/movement_follow.dart';
-
-import 'package:frontend/constants/action_list.dart';
-import 'package:frontend/constants/dummy_data.dart';
-import 'package:frontend/models/scene_model.dart';
-
-import 'package:frontend/pages/makingFairytale.dart';
-
+import './movement_follow.dart';
 import 'camera_view.dart';
-
-class Camera extends StatelessWidget {
-  const Camera({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(height: 100, width: 100, child: temp());
-  }
-
-  Widget temp() {
-    if (controller == null) {
-      return Container();
-    } else
-      return CameraPreview(controller!);
-  }
-}
+import 'package:frontend/pages/makingFairytale.dart';
+import 'package:frontend/constants/action_list.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({super.key, required this.images, required this.face});
+  PoseDetectorView({super.key, required this.images, required this.face});
 
-  final List<Uint8List> images;
+  List<Uint8List> images;
   final Widget face;
 
   @override
@@ -57,7 +33,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   CustomPaint? _customPaint;
 
   String _kindOfPose = "";
-
   var _movementFollow;
 
   //동작 개수만큼 리스트 요소 개수 정하면 됨.
@@ -78,30 +53,28 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   Widget build(BuildContext context) {
     // 카메라뷰 보이기
-    return Column(
+    return Stack(
       children: [
-        Stack(
-          children: [
-            Container(
-              color: Colors.blue,
-              height: 150,
-              width: 150,
-              child: CameraView(
-                // 스켈레톤 그려주는 객체 전달
-                customPaint: _customPaint,
-                // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
-                onImage: (inputImage) {
-                  processImage(inputImage);
-                },
-              ),
-            ),
-            Container(
-              child: Transform.scale(
-                scale: 0.3,
-                child: _movementFollow,
-              ),
-            ),
-          ],
+        Container(
+          height: 500,
+          width: 500,
+          child: CameraView(
+            // 스켈레톤 그려주는 객체 전달
+            customPaint: _customPaint,
+            // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
+            onImage: (inputImage) {
+              processImage(inputImage);
+            },
+          ),
+        ),
+        Transform.scale(
+          scale: 0.5,
+          child: Container(
+            alignment: Alignment.center,
+            width: 500,
+            height: 1000,
+            child: _movementFollow,
+          ),
         ),
       ],
     );
@@ -109,43 +82,44 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
   Future<void> processImage(InputImage inputImage) async {
+    var images = widget.images;
+    var face = widget.face;
+
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     // poseDetector에서 추출된 포즈 가져오기
-    List<Uint8List> images = widget.images;
-    var face = widget.face;
     List<Pose> poses = await _poseDetector.processImage(inputImage);
 
     // 이미지가 정상적이면 포즈에 스켈레톤 그려주기
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
-      final painter = PosePainter(poses, inputImage.inputImageData!.size,
-          inputImage.inputImageData!.imageRotation);
-      _customPaint = CustomPaint(painter: painter);
       final kindOfPose =
           PoseArrange(poses, count, leftWristXChanges, rightWristXChanges);
       _kindOfPose = kindOfPose.getPose();
-      final movementFollow = MovementFollow(poses: poses, images: images, face:face);
+      final movementFollow =
+          MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
       print(_kindOfPose);
-      print(gSceneModel!
-          .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
-//      print(missions[clr_index.value]);
+      // print(gSceneModel!
+      //     .scriptModelList[clr_index.value].actions_used_in_action_list[0]);
+      print(missions[clr_index.value]);
       print(clr_index.value);
-
-      if (_kindOfPose ==
-          gSceneModel!.scriptModelList[clr_index.value]
-              .actions_used_in_action_list[0] && clr_index.value < 3) {
-        clr_index.value++;
-      }
-      // if (_kindOfPose == missions[clr_index.value]) {
+      //
+      // if (_kindOfPose ==
+      //     gSceneModel!.scriptModelList[clr_index.value]
+      //         .actions_used_in_action_list[0] && clr_index.value < 3) {
       //   clr_index.value++;
       // }
+      if (_kindOfPose == missions[clr_index.value]) {
+        clr_index.value++;
+      }
+
     } else {
       // 추출된 포즈 없음
       _customPaint = null;
+      _movementFollow = Container();
     }
     _isBusy = false;
     if (mounted) {

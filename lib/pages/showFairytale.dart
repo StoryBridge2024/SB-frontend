@@ -1,23 +1,22 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/makingFairytale.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
-import 'package:frontend/models/scene_model.dart';
-
-//import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
-
-import 'package:frontend/pages/makingFairytale.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
 
   var face;
   List<Uint8List> images;
+  Widget face;
 
   @override
   Widget build(BuildContext context) {
+    clr_index.value = 0;
     return Scaffold(
       body: Container(
         color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
@@ -41,8 +40,14 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Story(images: images, face: face,),
+                child: Story(images: images, face: face),
               ),
+            ),
+            FloatingActionButton(
+              onPressed: () {
+                turn += 1;
+                if (turn == 4) turn = 0;
+              },
             ),
           ],
         ),
@@ -54,8 +59,8 @@ class ShowFairytale extends StatelessWidget {
 class Story extends StatefulWidget {
   Story({super.key, required this.images, required this.face});
 
-  var face;
-  var images;
+  List<Uint8List> images;
+  Widget face;
 
   @override
   State<Story> createState() => _StoryState();
@@ -84,39 +89,32 @@ class _StoryState extends State<Story> {
                   child: Stack(
                     children: [
                       Positioned(
-                        left: locX.elementAt(value) - 100,
-                        right: locY.elementAt(value) - 100,
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Image.memory(
-                            base64Decode(gSceneModel!.b64_images.elementAt(clr_index.value)),
-                            height: 500,
-                            width: 500,
-                          ),
-                          //child: Image.asset(gSceneModel.b64_images[index]),
-                        ),
-                      ),
-                      Positioned(
                         left: 0,
                         top: 0,
                         child: Container(
-                          height: 1000,
-                          width: 1000,
-                          child: Transform.scale(
-                            scale: 0.8,
-                            child: Transform.rotate(
-                              angle: 3.141592 * (3 / 2),
-                              child: PoseDetectorView(images: images, face:face),
-                            ),
-                          ),
+                          width: 500,
+                          height: 500,
+                          // child: Image.memory(
+                          //   base64Decode(gSceneModel!.b64_images
+                          //       .elementAt(clr_index.value)),
+                          //   height: 500,
+                          //   width: 500,
+                          // ),
+                          child: Image.asset(imgs.elementAt(clr_index.value)),
                         ),
                       ),
                       Positioned(
+                        top: 0,
                         bottom: 0,
-                        left: 0,
-                        child: Camera(),
-                      )
+                        child: Container(
+                          width: 500,
+                          height: 500,
+                          child: Transform.scale(
+                            scale: 1,
+                            child: PoseDetectorView(images: images, face: face),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -128,17 +126,57 @@ class _StoryState extends State<Story> {
                   child: Column(
                     children: [
                       Flexible(
-                        flex: 3,
+                        flex: 1,
+                        child: Container(),
+                      ),
+                      Flexible(
+                        flex: 10,
                         child: Container(
                           height: double.infinity,
                           width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            //texts.elementAt(value),
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .scene_contents,
-                            style: TextStyle(fontSize: 40),
+                            texts.elementAt(clr_index.value),
                           ),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: (clr_index.value == 0)
+                                  ? Container()
+                                  : Container(
+                                      alignment: Alignment.bottomLeft,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.arrow_back,
+                                        ),
+                                        onPressed: () {
+                                          if (clr_index.value != 0)
+                                            clr_index.value -= 1;
+                                        },
+                                      ),
+                                    ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Container(
+                                alignment: Alignment.bottomRight,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_forward,
+                                  ),
+                                  onPressed: () {
+                                    if (clr_index.value < 8)
+                                      clr_index.value += 1;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
