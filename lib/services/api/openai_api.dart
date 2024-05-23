@@ -24,7 +24,7 @@ class OpenAI {
     return json.decode(json.encode(source));
   }
 
-  Future<bool> checkValidation(String b64_json) async {
+  Future<void> checkValidation(String b64_json) async {
     //compose prompt with url
     var visionPromptWithImage = deepCopy(VISION_PROMPT);
     visionPromptWithImage['messages']?[0]['content'][1]['image_url']['url'] =
@@ -37,7 +37,6 @@ class OpenAI {
           'Content-Type': 'application/json',
         },
         body: json.encode(visionPromptWithImage));
-    print("checkValidation: ${response.body}");
 
     //parse response
     if (response.statusCode != 200) {
@@ -47,17 +46,20 @@ class OpenAI {
         json.decode(response.body)["choices"][0]["message"]["content"];
     content = jsonDecode(content);
     if (content["human"] == "yes" || content["text"] == "yes") {
-      return false;
+      throw Exception('Invalid image');
     }
-    return true;
+    return;
   }
 
   Future<Map<String, dynamic>> createCompletion(String theme) async {
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
     var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT*2+1]['content'] =
-        prompt + textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT*2+1]['content'];
+    textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
+            ['content'] =
+        prompt +
+            textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
+                ['content'];
 
     //post request
     final response = await post(
@@ -89,6 +91,7 @@ class OpenAI {
 
     //post request
     int count = 0;
+    late String b64_json;
     late ImageResponse imageResponse;
     late Response response;
     do {
@@ -102,16 +105,16 @@ class OpenAI {
           body: json.encode(imagePromptWithTheme),
         );
         imageResponse = ImageResponse.fromJson(json.decode(response.body));
+        b64_json = imageResponse.data[0]["b64_json"];
+        await checkValidation(b64_json);
         count = -1;
       } catch (e) {
         print("createImage: $e $count");
-        print("createImage: ${json.decode(response.body)}");
       }
     } while (count != -1 && count++ < 3);
-    return imageResponse.data[0]["b64_json"];
+    return b64_json;
   }
 
-  //i: 0-8을 1로 바꿈, 수정하자
   Future<SceneModel> createScene(String theme) async {
     DateTime st = DateTime.now();
     late Map<String, dynamic> content;
@@ -144,7 +147,6 @@ class OpenAI {
     }
     List<String> images = await Future.wait(imageFutures);
     DateTime et = DateTime.now();
-    checkValidation(images[0]);
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
     return SceneModel(content: content, images: images);
