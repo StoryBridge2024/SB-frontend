@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/settingCamera.dart';
 
 import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
@@ -239,8 +240,7 @@ class _DrawBoxState extends State<DrawBox> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      ShowFairytale(images: images, face: face),
+                  builder: (context) => SettingCam(body: images, face: face),
                 ),
               );
               return temp;

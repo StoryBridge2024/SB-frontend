@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/const.dart';
-import 'package:frontend/pages/makingFairytale.dart';
 import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
+import 'package:frontend/constants/fairytaleConstacts.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
@@ -43,12 +43,6 @@ class ShowFairytale extends StatelessWidget {
                 margin: EdgeInsets.all(25),
                 child: Story(images: images, face: face),
               ),
-            ),
-            FloatingActionButton(
-              onPressed: () {
-                turn += 1;
-                if (turn == 4) turn = 0;
-              },
             ),
           ],
         ),

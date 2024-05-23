@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/constants/action_list.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
+import 'package:frontend/constants/fairytaleConstacts.dart';
 
 import '../../pages/makingFairytale.dart';
 
@@ -98,9 +100,13 @@ class _CameraViewState extends State<CameraView> {
               bottom: 0,
               child: Container(
                 width: 100,
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: CameraPreview(controller.value!),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationY(pi),
+                  child: RotatedBox(
+                    quarterTurns: cameraTurn,
+                    child: CameraPreview(controller.value!),
+                  ),
                 ),
               ),
             ),

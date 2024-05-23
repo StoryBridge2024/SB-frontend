@@ -5,30 +5,9 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 
+import 'package:frontend/constants/fairytaleConstacts.dart';
+
 import 'makingCharacter.dart';
-
-SceneModel? gSceneModel;
-
-List<double> locX = [
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-];
-List<double> locY = [
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-  100,
-];
 
 class MakeFairytale extends StatelessWidget {
   final String text;
