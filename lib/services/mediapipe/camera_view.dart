@@ -21,7 +21,7 @@ class CameraView extends StatefulWidget {
       {Key? key,
       required this.customPaint,
       required this.onImage,
-      this.initialDirection = CameraLensDirection.back})
+      this.initialDirection = CameraLensDirection.front})
       : super(key: key);
   // 스켈레톤을 그려주는 객체
   final CustomPaint? customPaint;
@@ -114,7 +114,7 @@ class _CameraViewState extends State<CameraView> {
               child: Container(
                 width: 100,
                 child: RotatedBox(
-                    quarterTurns: 1, child: CameraPreview(controller.value!)),
+                    quarterTurns: 0, child: CameraPreview(controller.value!)),
               ),
             ),
           ],

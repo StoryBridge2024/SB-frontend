@@ -31,6 +31,7 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
+              print(gSceneModel!.scriptModelList);
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

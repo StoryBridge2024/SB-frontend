@@ -68,18 +68,25 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value),
-          top: locY1.elementAt(clr_index.value),
-          child: Transform.scale(
-            scale: 0.5,
-            child: Container(
-              alignment: Alignment.center,
-              width: 500,
-              height: 1000,
-              color: Colors.amberAccent,
-              child: _movementFollow,
-            ),
-          ),),
+          left: locX1.elementAt(clr_index.value)-150,
+          top: locY1.elementAt(clr_index.value)-200,
+          child: Container(
+            width: 500,
+            child: RotatedBox(
+              quarterTurns: 3,
+              child: Transform.scale(
+                scale: 0.5,
+                child: Container(
+                alignment: Alignment.center,
+                width: 500,
+                height: 1000,
+                color: Colors.amberAccent,
+                child: _movementFollow,
+                ),
+                ),),
+          ),
+
+          ),
 
       ],
     );
