@@ -75,7 +75,7 @@ class MakeCharacterBody extends StatelessWidget {
                                 ignoring: true,
                                 child: Container(
                                   child: Image.asset(
-                                    "assets/image/human_shape.png",
+                                    "assets/image/human_shape_no_head.png",
                                     scale: 0.85,
                                   ),
                                 ),

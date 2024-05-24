@@ -68,7 +68,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value) - 150,
+          left: locX1.elementAt(clr_index.value) - 50,
           top: locY1.elementAt(clr_index.value) - 200,
           child: Container(
             width: 500,

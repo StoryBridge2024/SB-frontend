@@ -82,9 +82,7 @@ class _StoryState extends State<Story> {
                   color: Colors.white,
                   child: Stack(
                     children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
+                      Center(
                         child: Container(
                           width: 500,
                           height: 500,
