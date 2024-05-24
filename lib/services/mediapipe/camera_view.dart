@@ -83,6 +83,9 @@ class _CameraViewState extends State<CameraView> {
     required String assetPath,
     required int index,
   }) {
+    if (gSceneModel == null || gSceneModel!.scriptModelList.length <= index || gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
+      return Container(); // 조건에 맞지 않으면 빈 컨테이너 반환
+    }
     return Positioned(
       left: left,
       top: top,
@@ -162,7 +165,7 @@ class _CameraViewState extends State<CameraView> {
               left: locX5.elementAt(clr_index.value),
               top: locY5.elementAt(clr_index.value),
               animalName: "코알라",
-              assetPath: 'assets/animal/coala.png',
+              assetPath: 'assets/animal/koala.png',
               index: clr_index.value,
             ),
             createPositionedAnimal(
