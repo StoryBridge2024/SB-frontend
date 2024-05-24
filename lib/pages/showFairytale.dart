@@ -29,7 +29,7 @@ class ShowFairytale extends StatelessWidget {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '동화 만들기',
+                '동화 보기',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,
@@ -58,7 +58,6 @@ class Story extends StatefulWidget {
 
   List<Uint8List> images;
   Widget face;
-
 
   @override
   State<Story> createState() => _StoryState();
@@ -121,12 +120,23 @@ class _StoryState extends State<Story> {
                   child: Column(
                     children: [
                       Flexible(
-                        flex: 1,
-                        child: Container(),
+                        flex: 2,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            gSceneModel!.scriptModelList[clr_index.value]
+                                .action_used_in_action_list!,
+                            style: TextStyle(
+                              fontSize: 60,
+                              fontFamily: 'MOVE',
+                            ),
+                          ),
+                        ),
                       ),
                       Flexible(
-                        flex: 10,
+                        flex: 8,
                         child: Container(
+                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                           height: double.infinity,
                           width: double.infinity,
                           alignment: Alignment.center,
