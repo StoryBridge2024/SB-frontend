@@ -90,6 +90,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     );
   }
 
+  void init() {
+    count = List.filled(11, 0);
+    leftWristXChanges = [];
+    rightWristXChanges = [];
+  }
+
   // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
   Future<void> processImage(InputImage inputImage) async {
     var images = widget.images;
@@ -126,6 +132,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             clr_index.value < NUMBER_OF_SCENE - 1) {
           clr_index.value++;
           doPrint = true;
+
+          init();
         }
 
         if (_kindOfPose == "박수 치기") {
@@ -135,6 +143,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
               clr_index.value < NUMBER_OF_SCENE - 1) {
             clr_index.value++;
             doPrint = true;
+
+            init();
           }
         }
       }
