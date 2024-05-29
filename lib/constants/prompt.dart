@@ -4,6 +4,7 @@ import 'package:frontend/constants/const.dart';
 const String baseScriptUrl = 'https://api.openai.com/v1/chat/completions';
 const String baseImageUrl = 'https://api.openai.com/v1/images/generations';
 const String baseVisionUrl = 'https://api.openai.com/v1/chat/completions';
+const String baseTTSUrl = 'https://api.openai.com/v1/audio/speech';
 
 const Map<String, dynamic> SCRIPT_PROMPT = {
   "model": "gpt-4o",
@@ -74,4 +75,11 @@ const Map<String, dynamic> VISION_PROMPT = {
     }
   ],
   "max_tokens": 300
+};
+
+Map<String,dynamic> TTS_PROMPT={
+  "model": "tts-1-hd",
+  "input": "",
+  "voice": "shimmer",
+  "response_format": "aac"
 };
