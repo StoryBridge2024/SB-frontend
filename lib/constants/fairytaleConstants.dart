@@ -1,3 +1,4 @@
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/scene_model.dart';
 
@@ -21,3 +22,43 @@ int cameraTurn = 0;
 int cameraInverse = 0;
 
 var clr_index = ValueNotifier<int>(0);
+
+List<FlipCardController> controllerF =
+    List.generate(10, (_) => FlipCardController());
+
+List<FlipCardController> controllerB =
+    List.generate(10, (_) => FlipCardController());
+
+bool isTemp1Running = false;
+bool isTemp2Running = false;
+
+void toggle(bool toggle) {
+  print(isTemp1Running);
+  print(isTemp2Running);
+
+  if (toggle && clr_index.value != 9) {
+    if (!isTemp2Running && !isTemp1Running) {
+      isTemp1Running = true;
+      temp1(clr_index.value);
+      clr_index.value++;
+    }
+  } else if (!toggle && clr_index.value != 0) {
+    if (!isTemp1Running && !isTemp2Running) {
+      isTemp2Running = true;
+      clr_index.value--;
+      temp2(clr_index.value);
+    }
+  }
+
+  print(clr_index.value);
+}
+
+void temp1(int index) {
+  controllerF[index].toggleCard();
+  controllerB[index].toggleCard();
+}
+
+void temp2(int index) {
+  controllerF[index].toggleCard();
+  controllerB[index].toggleCard();
+}

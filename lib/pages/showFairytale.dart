@@ -10,6 +10,7 @@ import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 
 import '../constants/fairytaleConstants.dart';
+import 'package:frontend/pages/book.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
@@ -19,38 +20,43 @@ class ShowFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    clr_index.value = 0;
-    return Scaffold(
-      body: Container(
-        color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
-              child: Text(
-                '동화 보기',
-                style: TextStyle(
-                  fontSize: 60,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Color(0xFFFFFFFF),
-                margin: EdgeInsets.all(25),
-                child: Story(images: images, face: face),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return Book();
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   clr_index.value = 0;
+  //   return Scaffold(
+  //     body: Container(
+  //       color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
+  //       child: Column(
+  //         children: [
+  //           Container(
+  //             alignment: Alignment.topLeft,
+  //             margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
+  //             child: Text(
+  //               '동화 보기',
+  //               style: TextStyle(
+  //                 fontSize: 60,
+  //                 fontWeight: FontWeight.w600,
+  //                 color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
+  //               ),
+  //             ),
+  //           ),
+  //           Expanded(
+  //             child: Container(
+  //               width: double.infinity,
+  //               height: double.infinity,
+  //               color: Color(0xFFFFFFFF),
+  //               margin: EdgeInsets.all(25),
+  //               child: Story(images: images, face: face),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 class Story extends StatefulWidget {
@@ -82,19 +88,20 @@ class _StoryState extends State<Story> {
                   color: Colors.white,
                   child: Stack(
                     children: [
-                      Center(
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Image.memory(
-                            base64Decode(gSceneModel!.b64_images
-                                .elementAt(clr_index.value)),
-                            height: 500,
-                            width: 500,
-                          ),
-                          //child: Image.asset(imgs.elementAt(clr_index.value)),
-                        ),
-                      ),
+                      // Center(
+                      //   child: Container(
+                      //     width: 500,
+                      //     height: 500,
+                      //     child: Image.memory(
+                      //       base64Decode(gSceneModel!.b64_images
+                      //           .elementAt(clr_index.value)),
+                      //       height: 500,
+                      //       width: 500,
+                      //     ),
+                      //     //child: Image.asset(imgs.elementAt(clr_index.value)),
+                      //   ),
+                      // ),
+                      Book(),
                       Positioned(
                         top: 0,
                         bottom: 0,

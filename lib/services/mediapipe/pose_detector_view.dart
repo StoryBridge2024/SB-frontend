@@ -130,7 +130,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
-          clr_index.value++;
+          toggle(true);
           doPrint = true;
 
           init();
@@ -142,8 +142,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                       .action_used_in_action_list &&
               clr_index.value < NUMBER_OF_SCENE - 1) {
             clr_index.value++;
-            doPrint = true;
-
+            toggle(true);
             init();
           }
         }
