@@ -12,11 +12,7 @@ class Book extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FlipCard',
-      theme: ThemeData.dark(),
-      home: HomePage(),
-    );
+    return HomePage();
   }
 }
 
@@ -64,16 +60,7 @@ class HomePage extends StatelessWidget {
                 flex: 1,
                 child: Container(
                   color: color,
-                  child: (index != 0)
-                      ? Text(
-                          gSceneModel!.scriptModelList[index - 1]
-                              .action_used_in_action_list!,
-                          style: TextStyle(
-                            fontSize: 60,
-                            fontFamily: 'MOVE',
-                          ),
-                        )
-                      : Container(),
+                  child: (index != 0) ? pages[index - 1] : Container(),
                 ),
               ),
             ],

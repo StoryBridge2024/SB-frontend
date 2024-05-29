@@ -1,5 +1,6 @@
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 
 SceneModel? gSceneModel;
@@ -36,7 +37,7 @@ void toggle(bool toggle) {
   print(isTemp1Running);
   print(isTemp2Running);
 
-  if (toggle && clr_index.value != 9) {
+  if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
     if (!isTemp2Running && !isTemp1Running) {
       isTemp1Running = true;
       temp1(clr_index.value);
@@ -62,3 +63,5 @@ void temp2(int index) {
   controllerF[index].toggleCard();
   controllerB[index].toggleCard();
 }
+
+List<Widget> pages = List<Widget>.filled(8, Container());
