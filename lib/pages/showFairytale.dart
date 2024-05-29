@@ -8,6 +8,7 @@ import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'dart:async';
 
 import '../constants/fairytaleConstants.dart';
 
@@ -63,7 +64,45 @@ class Story extends StatefulWidget {
   State<Story> createState() => _StoryState();
 }
 
-class _StoryState extends State<Story> {
+class _StoryState extends State<Story> with SingleTickerProviderStateMixin{
+  bool _showStamp = false;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  //late Animation<double> _shakeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the animation controller
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+
+    // Define the scale animation
+    _scaleAnimation = Tween<double>(begin: 2.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.bounceOut));
+
+    // Define the shake animation
+    // _shakeAnimation = Tween<double>(begin: 0, end: 5).chain(
+    //   CurveTween(curve: Curves.elasticIn),
+    // ).animate(_controller);
+
+    // Listen to missionclear changes
+    missionclear.addListener(() {
+      if (missionclear.value) {
+        _showStampEffect();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var images = widget.images;
@@ -74,131 +113,172 @@ class _StoryState extends State<Story> {
       valueListenable: clr_index,
       builder: (context, value, _) {
         return Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
-              Flexible(
-                child: Container(
-                  color: Colors.white,
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Image.memory(
-                            base64Decode(gSceneModel!.b64_images
-                                .elementAt(clr_index.value)),
-                            height: 500,
-                            width: 500,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Container(
+                      color: Colors.white,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 500,
+                              height: 500,
+                              child: Image.memory(
+                                base64Decode(gSceneModel!.b64_images
+                                    .elementAt(clr_index.value)),
+                                height: 500,
+                                width: 500,
+                              ),
+                              //child: Image.asset(imgs.elementAt(clr_index.value)),
+                            ),
                           ),
-                          //child: Image.asset(imgs.elementAt(clr_index.value)),
-                        ),
-                      ),
-                      Positioned(
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Transform.scale(
-                            scale: 1,
-                            child: PoseDetectorView(images: images, face: face),
+                          Positioned(
+                            top: 0,
+                            bottom: 0,
+                            child: Container(
+                              width: 500,
+                              height: 500,
+                              child: Transform.scale(
+                                scale: 1,
+                                child: PoseDetectorView(images: images, face: face),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
+                  ),
+                  Flexible(
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Column(
+                        children: [
+                          Flexible(
+                            flex: 2,
+                            child: Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                gSceneModel!.scriptModelList[clr_index.value]
+                                    .action_used_in_action_list!,
+                                style: TextStyle(
+                                  fontSize: 60,
+                                  fontFamily: 'MOVE',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 8,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                              height: double.infinity,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              child: Text(
+                                gSceneModel!.scriptModelList[clr_index.value]
+                                    .scene_contents,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: 'DDO',
+                                ),
+              //                            texts.elementAt(clr_index.value),
+                              ),
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: (clr_index.value == 0)
+                                      ? Container()
+                                      : Container(
+                                          alignment: Alignment.bottomLeft,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.arrow_back,
+                                            ),
+                                            onPressed: () {
+                                              if (clr_index.value != 0)
+                                                clr_index.value -= 1;
+                                            },
+                                          ),
+                                        ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: (clr_index.value == NUMBER_OF_SCENE - 1)
+                                      ? Container()
+                                      : Container(
+                                          alignment: Alignment.bottomRight,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.arrow_forward,
+                                            ),
+                                            onPressed: () {
+                                              if (clr_index.value <
+                                                  NUMBER_OF_SCENE - 1)
+                                                clr_index.value += 1;
+                                            },
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (_showStamp)
+                Positioned(
+                  right:150,
+                  top:-90,
+                  child: AnimatedBuilder(
+                    animation: _controller,
+                    builder: (context, child) {
+                      // return Transform.translate(
+                      //   offset: Offset(_shakeAnimation.value, _shakeAnimation.value),
+                        return Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: child,
+                        // ),
+                      );
+                    },
+                    child: Container(
+                      width: 300,
+                      height: 300,
+                        child: Image.asset('assets/image/stamp.png')
+                    ),
                   ),
                 ),
-              ),
-              Flexible(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Column(
-                    children: [
-                      Flexible(
-                        flex: 2,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .action_used_in_action_list!,
-                            style: TextStyle(
-                              fontSize: 60,
-                              fontFamily: 'MOVE',
-                            ),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 8,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          height: double.infinity,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          child: Text(
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .scene_contents,
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: 'DDO',
-                            ),
-//                            texts.elementAt(clr_index.value),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Row(
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: (clr_index.value == 0)
-                                  ? Container()
-                                  : Container(
-                                      alignment: Alignment.bottomLeft,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.arrow_back,
-                                        ),
-                                        onPressed: () {
-                                          if (clr_index.value != 0)
-                                            clr_index.value -= 1;
-                                        },
-                                      ),
-                                    ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: (clr_index.value == NUMBER_OF_SCENE - 1)
-                                  ? Container()
-                                  : Container(
-                                      alignment: Alignment.bottomRight,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.arrow_forward,
-                                        ),
-                                        onPressed: () {
-                                          if (clr_index.value <
-                                              NUMBER_OF_SCENE - 1)
-                                            clr_index.value += 1;
-                                        },
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         );
       },
     );
+  }
+
+  void _showStampEffect() {
+    setState(() {
+      _showStamp = true;
+    });
+
+    _controller.forward(from: 0).then((_) {
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          _showStamp = false;
+        });
+        missionclear.value = false; // Reset missionclear to false
+      });
+    });
   }
 }

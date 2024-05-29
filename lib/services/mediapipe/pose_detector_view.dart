@@ -37,7 +37,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   String _kindOfPose = "";
   var _movementFollow;
-  bool _showStamp = false;
   final _audioPlayer = AudioPlayer();
 
   //동작 개수만큼 리스트 요소 개수 정하면 됨.
@@ -134,8 +133,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
-          _showStampEffect();
-          missionclear = true;
+          missionclear.value = true;
           await _playAudio();
           await Future.delayed(Duration(seconds: 2));
           clr_index.value++;
@@ -150,8 +148,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                   gSceneModel!.scriptModelList[clr_index.value]
                       .action_used_in_action_list &&
               clr_index.value < NUMBER_OF_SCENE - 1) {
-            _showStampEffect();
-            missionclear = true;
+            missionclear.value = true;
             await _playAudio();
             await Future.delayed(Duration(seconds: 2));
             clr_index.value++;
@@ -183,17 +180,5 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     } catch (e) {
       print('Error playing audio: $e');
     }
-  }
-
-  void _showStampEffect() {
-    setState(() {
-      _showStamp = true;
-    });
-
-    Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-        _showStamp = false;
-      });
-    });
   }
 }
