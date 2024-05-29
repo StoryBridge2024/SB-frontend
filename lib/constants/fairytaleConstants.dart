@@ -19,5 +19,6 @@ List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
 int characterTurn = 0;
 int cameraTurn = 0;
 int cameraInverse = 0;
+bool missionclear = false;
 
 var clr_index = ValueNotifier<int>(0);

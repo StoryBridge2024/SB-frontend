@@ -10,6 +10,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:frontend/services/mediapipe/pose_arrange.dart';
 import 'camera_view.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 bool doPrint = true;
 
@@ -36,6 +37,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   String _kindOfPose = "";
   var _movementFollow;
+  bool _showStamp = false;
+  final _audioPlayer = AudioPlayer();
 
   //동작 개수만큼 리스트 요소 개수 정하면 됨.
   List<int> count = List.filled(11, 0);
@@ -49,6 +52,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   void dispose() async {
     _canProcess = false;
     _poseDetector.close();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -130,10 +134,15 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
+          _showStampEffect();
+          missionclear = true;
+          await _playAudio();
+          await Future.delayed(Duration(seconds: 2));
           clr_index.value++;
           doPrint = true;
 
           init();
+
         }
 
         if (_kindOfPose == "박수 치기") {
@@ -141,6 +150,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                   gSceneModel!.scriptModelList[clr_index.value]
                       .action_used_in_action_list &&
               clr_index.value < NUMBER_OF_SCENE - 1) {
+            _showStampEffect();
+            missionclear = true;
+            await _playAudio();
+            await Future.delayed(Duration(seconds: 2));
             clr_index.value++;
             doPrint = true;
 
@@ -160,5 +173,27 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  Future<void> _playAudio() async {
+    try {
+      print('Attempting to play audio...');
+      await _audioPlayer.play(AssetSource('audio/whistle.mp3'));
+      print('Audio playing...');
+    } catch (e) {
+      print('Error playing audio: $e');
+    }
+  }
+
+  void _showStampEffect() {
+    setState(() {
+      _showStamp = true;
+    });
+
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _showStamp = false;
+      });
+    });
   }
 }
