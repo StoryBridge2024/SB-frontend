@@ -29,12 +29,12 @@ class ShowFairytale extends StatelessWidget {
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
-                        missions[clr_index.value],
+                        missions[i],
                         style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
                       )
                     : Text(
-                        gSceneModel!.scriptModelList[clr_index.value]
-                            .action_used_in_action_list!,
+                        gSceneModel!
+                            .scriptModelList[i].action_used_in_action_list!,
                         style: TextStyle(
                           fontSize: 60,
                           fontFamily: 'MOVE',
@@ -51,12 +51,11 @@ class ShowFairytale extends StatelessWidget {
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
-                        texts[clr_index.value],
+                        texts[i],
                         style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
                       )
                     : Text(
-                        gSceneModel!
-                            .scriptModelList[clr_index.value].scene_contents,
+                        gSceneModel!.scriptModelList[i].scene_contents,
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'DDO',

@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:frontend/constants/const.dart';
-import 'package:frontend/constants/dummy_data.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'package:frontend/services/mediapipe/pose_arrange.dart';
-import 'camera_view.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/services/mediapipe/movement_follow.dart';
+import 'package:frontend/services/mediapipe/pose_arrange.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+
+import 'camera_view.dart';
 
 bool doPrint = true;
 
@@ -68,8 +69,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value) - 50,
-          top: locY1.elementAt(clr_index.value) - 200,
+          left: locX1.elementAt(0) - 50,
+          top: locY1.elementAt(0) - 200,
           child: Container(
             width: 500,
             child: RotatedBox(
@@ -116,7 +117,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final movementFollow =
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
-
+      print(clr_index.value);
       if (clr_index.value != 8) {
         if (doPrint) {
           print(_kindOfPose);
