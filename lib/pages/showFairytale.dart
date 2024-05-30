@@ -1,14 +1,13 @@
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:frontend/constants/const.dart';
-import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
-import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/book.dart';
+import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
@@ -28,14 +27,19 @@ class ShowFairytale extends StatelessWidget {
               flex: 2,
               child: Container(
                 alignment: Alignment.center,
-                child: Text(
-                  gSceneModel!.scriptModelList[clr_index.value]
-                      .action_used_in_action_list!,
-                  style: TextStyle(
-                    fontSize: 60,
-                    fontFamily: 'MOVE',
-                  ),
-                ),
+                child: (useDummy)
+                    ? Text(
+                        missions[clr_index.value],
+                        style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
+                      )
+                    : Text(
+                        gSceneModel!.scriptModelList[clr_index.value]
+                            .action_used_in_action_list!,
+                        style: TextStyle(
+                          fontSize: 60,
+                          fontFamily: 'MOVE',
+                        ),
+                      ),
               ),
             ),
             Flexible(
@@ -45,14 +49,19 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 alignment: Alignment.center,
-                child: Text(
-                  gSceneModel!.scriptModelList[clr_index.value].scene_contents,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: 'DDO',
-                  ),
-//                  texts.elementAt(clr_index.value),
-                ),
+                child: (useDummy)
+                    ? Text(
+                        texts[clr_index.value],
+                        style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
+                      )
+                    : Text(
+                        gSceneModel!
+                            .scriptModelList[clr_index.value].scene_contents,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'DDO',
+                        ),
+                      ),
               ),
             ),
             Flexible(

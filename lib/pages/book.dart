@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flip_card/flip_card_controller.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter/widgets.dart';
 
+import 'package:flip_card/flip_card.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 
 class Book extends StatelessWidget {
@@ -95,13 +92,19 @@ class HomePage extends StatelessWidget {
                 child: Container(
                   color: color,
                   child: (index != 8)
-                      ? Image.memory(
-                          base64Decode(
-                            gSceneModel!.b64_images.elementAt(index),
-                          ),
-                          height: 500,
-                          width: 500,
-                        )
+                      ? (useDummy)
+                          ? Image.asset(
+                              imgs[clr_index.value],
+                              height: 500,
+                              width: 500,
+                            )
+                          : Image.memory(
+                              base64Decode(
+                                gSceneModel!.b64_images.elementAt(index),
+                              ),
+                              height: 500,
+                              width: 500,
+                            )
                       : Container(),
                 ),
               ),
