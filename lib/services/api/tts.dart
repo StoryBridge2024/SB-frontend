@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../constants/prompt.dart';
 import '../util.dart';
 
@@ -37,8 +38,17 @@ class TTS {
       print('Response Body: ${response.body}');
       throw Exception('Failed to load response');
     }
-    var file = File('$AUDIO_PATH/audio.aac');
+
+    // Get the directory for the app's temporary files.
+    Directory tempDirectory = await getTemporaryDirectory();
+
+    // Create a file path with timestamp so that multiple files do not overwrite each other.
+    String filePath = '${tempDirectory.path}/audio_${DateTime.now().millisecondsSinceEpoch}.mp3';
+
+    // Write the file.
+    var file = File(filePath);
     await file.writeAsBytes(response.bodyBytes);
+
     return file.path;
   }
 }
