@@ -55,6 +55,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
+    if (clr_index.value == 0) {
+      return Container();
+    }
     // 카메라뷰 보이기
     return Stack(
       children: [
@@ -69,8 +72,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value) - 50,
-          top: locY1.elementAt(clr_index.value) - 200,
+          left: locX1.elementAt(clr_index.value - 1) - 50,
+          top: locY1.elementAt(clr_index.value - 1) - 200,
           child: Container(
             width: 500,
             child: RotatedBox(
@@ -117,12 +120,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final movementFollow =
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
-      print(clr_index.value);
+      print(clr_index.value - 1);
+      if (clr_index.value != 0) {
+        print(gSceneModel!
+            .scriptModelList[clr_index.value - 1].action_used_in_action_list);
+      }
       if (clr_index.value != 8) {
         if (doPrint) {
           print(_kindOfPose);
-          print(gSceneModel!
-              .scriptModelList[clr_index.value].action_used_in_action_list);
           //print(missions[clr_index.value]);
           print(clr_index.value);
           doPrint = false;

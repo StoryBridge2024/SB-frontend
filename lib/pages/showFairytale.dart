@@ -116,6 +116,10 @@ class _StoryState extends State<Story> {
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
+        if (clr_index.value == 0) {
+          Container();
+        }
+
         return Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
