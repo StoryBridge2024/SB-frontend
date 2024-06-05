@@ -81,5 +81,5 @@ Map<String,dynamic> TTS_PROMPT={
   "model": "tts-1-hd",
   "input": "",
   "voice": "shimmer",
-  "response_format": "aac"
+  "response_format": "mp3"
 };

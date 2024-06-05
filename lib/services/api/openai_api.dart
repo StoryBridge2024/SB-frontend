@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/const.dart';
@@ -23,7 +21,6 @@ class OpenAI {
   factory OpenAI() {
     return _instance;
   }
-
 
   Future<void> checkValidation(String b64_json) async {
     //compose prompt with url
@@ -152,7 +149,8 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    String audioSource= await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
-    return SceneModel(content: content, images: images, audioSource:audioSource);
+    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
+    return SceneModel(
+        content: content, images: images, audioSource: audioSource);
   }
 }
