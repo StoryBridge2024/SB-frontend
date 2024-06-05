@@ -216,6 +216,12 @@ class _TmpFairytaleState extends State<TmpFairytale> {
 
   @override
   Widget build(BuildContext context) {
+    print("hehehehehehehehe");
+    print(locX1.elementAt(index));
+    print(locY1.elementAt(index));
+    print(index);
+    print(clr_index);
+    print("gegege");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

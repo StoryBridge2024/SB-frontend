@@ -83,8 +83,8 @@ class ShowFairytale extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 0,
-          right: 0,
+          left: locX1.elementAt(clr_index.value),
+          right: locY1.elementAt(clr_index.value),
           child: Container(
             width: 500,
             height: 500,
