@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/models/scene_model.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
 
 SceneModel? gSceneModel;
 
