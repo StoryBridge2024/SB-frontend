@@ -1,4 +1,4 @@
-bool useDummy = false;
+bool useDummy = true;
 
 List<String> texts = [
   "첫번째",

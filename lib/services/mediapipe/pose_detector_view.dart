@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/const.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:frontend/services/mediapipe/pose_arrange.dart';
@@ -120,34 +121,48 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final movementFollow =
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
-      print(clr_index.value - 1);
-      if (clr_index.value != 0 && clr_index.value != 9) {
-        print(gSceneModel!
-            .scriptModelList[clr_index.value - 1].action_used_in_action_list);
-      }
-      if (clr_index.value - 1 != 8) {
-        if (doPrint) {
-          print(_kindOfPose);
-          //print(missions[clr_index.value]);
-          print(clr_index.value - 1);
-          doPrint = false;
-        }
-        if (_kindOfPose ==
-                gSceneModel!.scriptModelList[clr_index.value - 1]
-                    .action_used_in_action_list &&
-            clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
-          toggle(true);
-          doPrint = true;
 
-          init();
+      if (!useDummy) {
+        print(clr_index.value - 1);
+        if (clr_index.value != 0 && clr_index.value != 9) {
+          print(gSceneModel!
+              .scriptModelList[clr_index.value - 1].action_used_in_action_list);
         }
-
-        if (_kindOfPose == "박수 치기") {
-          if ("박수치기" ==
+        if (clr_index.value - 1 != 8) {
+          if (doPrint) {
+            print(_kindOfPose);
+            //print(missions[clr_index.value]);
+            print(clr_index.value - 1);
+            doPrint = false;
+          }
+          if (_kindOfPose ==
                   gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
               clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
-            clr_index.value++;
+            toggle(true);
+            doPrint = true;
+
+            init();
+          }
+
+          if (_kindOfPose == "박수 치기") {
+            if ("박수치기" ==
+                    gSceneModel!.scriptModelList[clr_index.value - 1]
+                        .action_used_in_action_list &&
+                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
+              toggle(true);
+              init();
+            }
+          }
+        }
+      } else {
+        if (clr_index.value == 0 || clr_index.value == 9) {
+        } else {
+          print(_kindOfPose);
+          print(missions.elementAt(clr_index.value - 1));
+          print(clr_index.value - 1);
+
+          if (_kindOfPose == missions.elementAt(clr_index.value - 1)) {
             toggle(true);
             init();
           }

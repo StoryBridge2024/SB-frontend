@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
@@ -83,6 +84,8 @@ class _CameraViewState extends State<CameraView> {
     required String assetPath,
     required int index,
   }) {
+    if (useDummy) return Container();
+
     if (gSceneModel == null ||
         gSceneModel!.scriptModelList.length <= index ||
         gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {

@@ -44,7 +44,6 @@ class BookHomePage extends StatelessWidget {
         onFlipDone: (status) {
           isTemp1Running = false;
           isTemp2Running = false;
-          print(status);
         },
         front: Container(
           child: Row(
@@ -81,7 +80,6 @@ class BookHomePage extends StatelessWidget {
         onFlipDone: (status) {
           isTemp1Running = false;
           isTemp2Running = false;
-          print(status);
         },
         front: Container(),
         back: Container(
@@ -160,11 +158,11 @@ class BookHomePage extends StatelessWidget {
         fit: StackFit.expand,
         children: <Widget>[
           _renderBg(),
-          // FrontOnStack(context, 8, Colors.deepPurpleAccent), // 8th page right
-          // FrontOnStack(context, 7, Colors.indigo), // 7th page right
-          // FrontOnStack(context, 6, Colors.blueAccent), // 6th page right
-          // FrontOnStack(context, 5, Colors.green), // 5th page right
-          // FrontOnStack(context, 4, Colors.lightGreen), // 4th page right
+          FrontOnStack(context, 8, Colors.deepPurpleAccent), // 8th page right
+          FrontOnStack(context, 7, Colors.indigo), // 7th page right
+          FrontOnStack(context, 6, Colors.blueAccent), // 6th page right
+          FrontOnStack(context, 5, Colors.green), // 5th page right
+          FrontOnStack(context, 4, Colors.lightGreen), // 4th page right
           FrontOnStack(context, 3, Colors.yellow), // 3rd page right
           FrontOnStack(context, 2, Colors.orange), // 2nd page right
           FrontOnStack(context, 1, Colors.red), // 1st page right
@@ -172,11 +170,11 @@ class BookHomePage extends StatelessWidget {
           BackOnStack(context, 0, Colors.red), // 1st page left
           BackOnStack(context, 1, Colors.orange), // 2nd page left
           BackOnStack(context, 2, Colors.yellow), // 3rd page left
-          // BackOnStack(context, 3, Colors.lightGreen), // 4th page left
-          // BackOnStack(context, 4, Colors.green), // 5th page left
-          // BackOnStack(context, 5, Colors.blueAccent), // 6th page left
-          // BackOnStack(context, 6, Colors.indigo), // 7th page left
-          // BackOnStack(context, 7, Colors.deepPurpleAccent), // 8th page left
+          BackOnStack(context, 3, Colors.lightGreen), // 4th page left
+          BackOnStack(context, 4, Colors.green), // 5th page left
+          BackOnStack(context, 5, Colors.blueAccent), // 6th page left
+          BackOnStack(context, 6, Colors.indigo), // 7th page left
+          BackOnStack(context, 7, Colors.deepPurpleAccent), // 8th page left
           BackOnStack(context, 8, Colors.black), // back cover
           pageFlip(),
         ],
