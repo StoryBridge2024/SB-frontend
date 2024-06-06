@@ -121,7 +121,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
       print(clr_index.value - 1);
-      if (clr_index.value != 0) {
+      if (clr_index.value != 0 && clr_index.value != 9) {
         print(gSceneModel!
             .scriptModelList[clr_index.value - 1].action_used_in_action_list);
       }
