@@ -34,8 +34,8 @@ class MakeFairytale extends StatelessWidget {
                 print("action used in action list: ${gSceneModel!.scriptModelList[i].action_used_in_action_list}");
                 print("animals from animal list: ${gSceneModel!.scriptModelList[i].animals_from_animal_list}");
                 print("characters: ${gSceneModel!.scriptModelList[i].characters}");
+                print("b64 images: ${gSceneModel!.b64_images[i]}");
               }
-              print("b64 images: ${gSceneModel!.b64_images}");
 
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -216,6 +216,12 @@ class _TmpFairytaleState extends State<TmpFairytale> {
 
   @override
   Widget build(BuildContext context) {
+    print("hehehehehehehehe");
+    print(locX1.elementAt(index));
+    print(locY1.elementAt(index));
+    print(index);
+    print(clr_index);
+    print("gegege");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

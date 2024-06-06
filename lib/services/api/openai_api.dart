@@ -111,7 +111,7 @@ class OpenAI {
       } catch (e) {
         print("createImage: $e $count");
       }
-    } while (count != -1 && count++ < 3);
+    } while (count != -1 && ++count < LIMIT_OF_ITERATION);
     return b64_json;
   }
 
@@ -140,7 +140,7 @@ class OpenAI {
       } catch (e) {
         print("createScene: $e $count");
       }
-    } while (count != -1 && count++ < 3);
+    } while (count != -1 && ++count < LIMIT_OF_ITERATION);
 
     final List<Future<String>> imageFutures = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {

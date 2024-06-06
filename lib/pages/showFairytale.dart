@@ -1,15 +1,13 @@
-import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/const.dart';
-import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 import 'package:frontend/constants/dummy_data.dart';
-import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
-
-import '../constants/fairytaleConstants.dart';
+import 'package:frontend/pages/book.dart';
+import 'package:frontend/services/mediapipe/pose_detector_view.dart';
 
 class ShowFairytale extends StatelessWidget {
   ShowFairytale({super.key, required this.images, required this.face});
@@ -19,36 +17,81 @@ class ShowFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    clr_index.value = 0;
-    return Scaffold(
-      body: Container(
-        color: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFF),
+    for (int i = 0; i < NUMBER_OF_SCENE; i++) {
+      pages[i] = Container(
+        width: double.infinity,
+        height: double.infinity,
         child: Column(
           children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
-              child: Text(
-                '동화 보기',
-                style: TextStyle(
-                  fontSize: 60,
-                  fontWeight: FontWeight.w600,
-                  color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13),
-                ),
+            Flexible(
+              flex: 2,
+              child: Container(
+                alignment: Alignment.center,
+                child: (useDummy)
+                    ? Text(
+                        missions[i],
+                        style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
+                      )
+                    : Text(
+                        gSceneModel!
+                            .scriptModelList[i].action_used_in_action_list!,
+                        style: TextStyle(
+                          fontSize: 60,
+                          fontFamily: 'MOVE',
+                        ),
+                      ),
               ),
             ),
-            Expanded(
+            Flexible(
+              flex: 8,
               child: Container(
-                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                 height: double.infinity,
-                color: Color(0xFFFFFFFF),
-                margin: EdgeInsets.all(25),
-                child: Story(images: images, face: face),
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: (useDummy)
+                    ? Text(
+                        texts[i],
+                        style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
+                      )
+                    : Text(
+                        gSceneModel!.scriptModelList[i].scene_contents,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontFamily: 'DDO',
+                        ),
+                      ),
               ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(),
             ),
           ],
         ),
-      ),
+      );
+    }
+    return Stack(
+      children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          child: Container(
+            width: 1500,
+            height: 700,
+            child: Book(),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          child: Container(
+            width: 500,
+            height: 500,
+            child: Story(images: images, face: face),
+          ),
+        )
+      ],
     );
   }
 }
@@ -73,28 +116,21 @@ class _StoryState extends State<Story> {
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
+        if (clr_index.value == 0) {
+          return Container();
+        }
+        if (clr_index.value - 1 == NUMBER_OF_SCENE) {
+          return Container();
+        }
+
         return Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Container(
-                  color: Colors.white,
                   child: Stack(
                     children: [
-                      Center(
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Image.memory(
-                            base64Decode(gSceneModel!.b64_images
-                                .elementAt(clr_index.value)),
-                            height: 500,
-                            width: 500,
-                          ),
-                          //child: Image.asset(imgs.elementAt(clr_index.value)),
-                        ),
-                      ),
                       Positioned(
                         top: 0,
                         bottom: 0,
@@ -112,88 +148,7 @@ class _StoryState extends State<Story> {
                 ),
               ),
               Flexible(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Column(
-                    children: [
-                      Flexible(
-                        flex: 2,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .action_used_in_action_list!,
-                            style: TextStyle(
-                              fontSize: 60,
-                              fontFamily: 'MOVE',
-                            ),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 8,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                          height: double.infinity,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          child: Text(
-                            gSceneModel!.scriptModelList[clr_index.value]
-                                .scene_contents,
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontFamily: 'DDO',
-                            ),
-//                            texts.elementAt(clr_index.value),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: Row(
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: (clr_index.value == 0)
-                                  ? Container()
-                                  : Container(
-                                      alignment: Alignment.bottomLeft,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.arrow_back,
-                                        ),
-                                        onPressed: () {
-                                          if (clr_index.value != 0)
-                                            clr_index.value -= 1;
-                                        },
-                                      ),
-                                    ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: (clr_index.value == NUMBER_OF_SCENE - 1)
-                                  ? Container()
-                                  : Container(
-                                      alignment: Alignment.bottomRight,
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.arrow_forward,
-                                        ),
-                                        onPressed: () {
-                                          if (clr_index.value <
-                                              NUMBER_OF_SCENE - 1)
-                                            clr_index.value += 1;
-                                        },
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: Container(),
               ),
             ],
           ),

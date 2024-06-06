@@ -1,16 +1,21 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:frontend/constants/const.dart';
-import 'package:frontend/constants/dummy_data.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'package:frontend/constants/const.dart';
+import 'package:frontend/constants/dummy_data.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:frontend/services/mediapipe/pose_arrange.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+
 import 'camera_view.dart';
+
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:audioplayers/audioplayers.dart';
+
 
 bool doPrint = true;
 
@@ -58,6 +63,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
+    if (clr_index.value == 0) {
+      return Container();
+    }
     // 카메라뷰 보이기
     return Stack(
       children: [
@@ -72,8 +80,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value) - 50,
-          top: locY1.elementAt(clr_index.value) - 200,
+          left: locX1.elementAt(clr_index.value - 1) - 50,
+          top: locY1.elementAt(clr_index.value - 1) - 200,
           child: Container(
             width: 500,
             child: RotatedBox(
@@ -121,11 +129,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (clr_index.value != 8) {
-        if (doPrint) {
-          print(_kindOfPose);
+      if (!useDummy) {
+        print(clr_index.value - 1);
+        if (clr_index.value != 0 && clr_index.value != 9) {
           print(gSceneModel!
-              .scriptModelList[clr_index.value].action_used_in_action_list);
+              .scriptModelList[clr_index.value - 1].action_used_in_action_list);
           //print(missions[clr_index.value]);
           print(clr_index.value);
           doPrint = false;
@@ -144,19 +152,49 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           init();
 
         }
-
-        if (_kindOfPose == "박수 치기") {
-          if ("박수치기" ==
-                  gSceneModel!.scriptModelList[clr_index.value]
+        if (clr_index.value - 1 != 8) {
+          if (doPrint) {
+            print(_kindOfPose);
+            //print(missions[clr_index.value]);
+            print(clr_index.value - 1);
+            doPrint = false;
+          }
+          if (_kindOfPose ==
+                  gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
-              clr_index.value < NUMBER_OF_SCENE - 1) {
+
+              clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
+            toggle(true);
             _showStampEffect();
             missionclear = true;
             await _playAudio();
             await Future.delayed(Duration(seconds: 2));
             clr_index.value++;
+
             doPrint = true;
 
+            init();
+          }
+
+          if (_kindOfPose == "박수 치기") {
+            if ("박수치기" ==
+                    gSceneModel!.scriptModelList[clr_index.value - 1]
+                        .action_used_in_action_list &&
+                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
+              toggle(true);
+              init();
+            }
+          }
+        }
+      } else {
+        if (clr_index.value == 0 || clr_index.value == 9) {
+        } else {
+          print(_kindOfPose);
+          print(missions.elementAt(clr_index.value - 1));
+          print(clr_index.value - 1);
+
+          if (_kindOfPose == missions.elementAt(clr_index.value - 1)) {
+            toggle(true);
             init();
           }
         }
