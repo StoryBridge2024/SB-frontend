@@ -125,17 +125,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         print(gSceneModel!
             .scriptModelList[clr_index.value - 1].action_used_in_action_list);
       }
-      if (clr_index.value != 8) {
+      if (clr_index.value - 1 != 8) {
         if (doPrint) {
           print(_kindOfPose);
           //print(missions[clr_index.value]);
-          print(clr_index.value);
+          print(clr_index.value - 1);
           doPrint = false;
         }
         if (_kindOfPose ==
-                gSceneModel!.scriptModelList[clr_index.value]
+                gSceneModel!.scriptModelList[clr_index.value - 1]
                     .action_used_in_action_list &&
-            clr_index.value < NUMBER_OF_SCENE - 1) {
+            clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
           toggle(true);
           doPrint = true;
 
@@ -144,9 +144,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
         if (_kindOfPose == "박수 치기") {
           if ("박수치기" ==
-                  gSceneModel!.scriptModelList[clr_index.value]
+                  gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
-              clr_index.value < NUMBER_OF_SCENE - 1) {
+              clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
             clr_index.value++;
             toggle(true);
             init();
