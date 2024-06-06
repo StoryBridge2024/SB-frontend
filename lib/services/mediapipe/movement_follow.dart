@@ -226,6 +226,6 @@ class _MovementFollowState extends State<MovementFollow> {
       );
     }
 
-    return ret;
+    return (isTemp1Running || isTemp2Running) ? Container() : ret;
   }
 }
