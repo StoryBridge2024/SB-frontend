@@ -43,7 +43,7 @@ class OpenAI {
     var content =
         json.decode(response.body)["choices"][0]["message"]["content"];
     content = jsonDecode(content);
-    if (content["human"] == "yes" || content["text"] == "yes") {
+    if (content["human"] == "yes" || content["text"] == "yes"|| content["animal"] == "yes") {
       throw Exception('Invalid image');
     }
     return;

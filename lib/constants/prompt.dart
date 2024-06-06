@@ -13,7 +13,7 @@ const Map<String, dynamic> SCRIPT_PROMPT = {
     {
       "role": "system",
       "content":
-          "Output should be in JSON format. The story should have $NUMBER_OF_SCENE scenes. Some scene may include an action from the action list and animals from the animals list. Each scene must contain at least $NUMBER_OF_SENTENCE sentences. Action list is as follow, [\"왼손 번쩍\", \"오른손 번쩍\", \"양손 번쩍\", \"왼손 흔들기\", \"오른손 흔들기\", \"박수치기\"]. Animal list is as follow, [\"호랑이\", \"원숭이\", \"코끼리\", \"기린\", \"코알라\"]. Structure is as follow, {\"number_of_total_character\": 3, \"scene\": [{\"scene_number\": 1, \"number_of_character\": 2, \"characters\": [\"철수\", \"민희\"](in Korean), \"scene_contents\": \"철수와 민희가 만나 인사를 했어요\" (in Korean), \"description_of_illustration\": \"a playground in an apartment complex\" (in English, only the background, no characters), \"action_used_in_action_list\": \"양손 번쩍\", \"animals_from_animal_list\": [\"코끼리\"]}, ...]}."
+          "Output should be in JSON format. The story should have $NUMBER_OF_SCENE scenes. Some scene may include an action from the action list and animals from the animals list. Each scene must contain at least $NUMBER_OF_SENTENCE sentences. Action list is as follow, [\"왼손 번쩍\", \"오른손 번쩍\", \"양손 번쩍\", \"왼손 흔들기\", \"오른손 흔들기\", \"박수치기\"]. Animal list is as follow, [\"호랑이\", \"원숭이\", \"코끼리\", \"기린\", \"코알라\"]. Structure is as follow, {\"number_of_total_character\": 3, \"scene\": [{\"scene_number\": 1, \"number_of_character\": 2, \"characters\": [\"철수\", \"민희\"](in Korean), \"scene_contents\": \"철수와 민희가 만나 인사를 했어요\" (in Korean), \"description_of_illustration\": \"a playground in an apartment complex\" (in English, only the background, no characters, no animals), \"action_used_in_action_list\": \"양손 번쩍\", \"animals_from_animal_list\": [\"코끼리\"]}, ...]}."
     },
   ]
 };
@@ -44,7 +44,7 @@ const Map<String, dynamic> VISION_PROMPT = {
         {
           "type": "text",
           "text":
-              "Output should be in JSON format. Is there any human or text? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\"}"
+              "Output should be in JSON format. Is there any human or text or animal? Structure is as follow: {\"human\": \"yes\" or \"no\", \"text\": \"yes\" or \"no\", \"animal\": \"yes\" or \"no\"}"
         },
         {
           "type": "image_url",
