@@ -12,6 +12,7 @@ import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
 import 'package:value_notifier_tools/value_notifier_tools.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ShowImage extends StatefulWidget {
   var image;
@@ -383,6 +384,21 @@ class _DrawBoxState extends State<DrawBox> {
       ),
     );
   }
+  //
+  // Widget _buildColorToolbar(BuildContext context) {
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     children: [
+  //       _buildColorButton(context, color: Colors.black),
+  //       _buildColorButton(context, color: Colors.red),
+  //       _buildColorButton(context, color: Colors.green),
+  //       _buildColorButton(context, color: Colors.blue),
+  //       _buildColorButton(context, color: Colors.yellow),
+  //       _buildEraserButton(context),
+  //     ],
+  //   );
+  // }
 
   Widget _buildColorToolbar(BuildContext context) {
     return Row(
@@ -394,8 +410,46 @@ class _DrawBoxState extends State<DrawBox> {
         _buildColorButton(context, color: Colors.green),
         _buildColorButton(context, color: Colors.blue),
         _buildColorButton(context, color: Colors.yellow),
+        _buildColorPickerButton(context),
         _buildEraserButton(context),
       ],
+    );
+  }
+
+  Widget _buildColorPickerButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.palette),
+      onPressed: () => _showColorPicker(context),
+    );
+  }
+
+  void _showColorPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Color pickerColor = Color(0xff443a49); // Default color
+        return AlertDialog(
+          title: const Text('Pick a color!'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: (Color color) {
+                notifier.setColor(color);
+              },
+              showLabel: true,
+              pickerAreaHeightPercent: 0.8,
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text('Done'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
