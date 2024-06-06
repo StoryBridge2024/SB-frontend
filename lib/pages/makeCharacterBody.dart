@@ -238,7 +238,7 @@ class _DrawBoxState extends State<DrawBox> {
                 _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
                 _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
-              clr_index.value = 8;
+              clr_index.value = 9;
               Navigator.push(
                 context,
                 MaterialPageRoute(
