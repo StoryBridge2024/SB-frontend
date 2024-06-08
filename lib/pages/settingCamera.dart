@@ -15,14 +15,14 @@ class SettingCam extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xFFC9EEFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '캐릭터 카메라 세팅',
+                '카메라와 캐릭터를 세팅해봐요!',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,
@@ -87,13 +87,21 @@ class Content extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(10),
                   alignment: Alignment.centerRight,
-                  child: FloatingActionButton(
-                    backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
-                    shape: CircleBorder(),
-                    child: Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                      size: 50,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(0xFF, 0x5D, 0x54, 0xC0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    ),
+                    child: Text(
+                      '동화 세계로',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
                     ),
                     onPressed: () {
                       clr_index.value = 0;

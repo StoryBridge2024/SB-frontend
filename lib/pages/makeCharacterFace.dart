@@ -60,7 +60,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '캐릭터 제작하기',
+                '캐릭터를 만들어보아요',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,
