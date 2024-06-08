@@ -6,6 +6,8 @@ List<String> ANIMAL_LIST = [
   "코끼리",
   "기린",
   "코알라",
+  "사자",
+  "강아지",
 ];
 
 var ani_index = ValueNotifier<int>(0);

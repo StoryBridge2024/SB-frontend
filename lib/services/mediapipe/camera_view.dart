@@ -83,7 +83,9 @@ class _CameraViewState extends State<CameraView> {
     required String assetPath,
     required int index,
   }) {
-    if (gSceneModel == null || gSceneModel!.scriptModelList.length <= index || gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
+    if (gSceneModel == null ||
+        gSceneModel!.scriptModelList.length <= index ||
+        gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
       return Container(); // 조건에 맞지 않으면 빈 컨테이너 반환
     }
     return Positioned(
@@ -173,6 +175,20 @@ class _CameraViewState extends State<CameraView> {
               top: locY6.elementAt(clr_index.value),
               animalName: "코끼리",
               assetPath: 'assets/animal/elephant.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX7.elementAt(clr_index.value),
+              top: locY7.elementAt(clr_index.value),
+              animalName: "사자",
+              assetPath: 'assets/animal/lion.png',
+              index: clr_index.value,
+            ),
+            createPositionedAnimal(
+              left: locX8.elementAt(clr_index.value),
+              top: locY8.elementAt(clr_index.value),
+              animalName: "강아지",
+              assetPath: 'assets/animal/puppy.png',
               index: clr_index.value,
             ),
             _liveFeedBody(),
