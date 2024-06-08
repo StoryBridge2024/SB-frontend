@@ -34,8 +34,11 @@ class ShowFairytale extends StatelessWidget {
                         style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
                       )
                     : Text(
-                        gSceneModel!
-                            .scriptModelList[i].action_used_in_action_list!,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i]
+                                    .action_used_in_action_list ??
+                                ''
+                            : '',
                         style: TextStyle(
                           fontSize: 60,
                           fontFamily: 'MOVE',
@@ -56,7 +59,10 @@ class ShowFairytale extends StatelessWidget {
                         style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
                       )
                     : Text(
-                        gSceneModel!.scriptModelList[i].scene_contents,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i].scene_contents ??
+                                ''
+                            : '',
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'DDO',
