@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'makingFairytale.dart';
 
+final TextEditingController tec = TextEditingController(text: '');
+
 class GetMessage extends StatefulWidget {
   const GetMessage({super.key});
 
@@ -9,8 +11,6 @@ class GetMessage extends StatefulWidget {
 }
 
 class _GetMessageState extends State<GetMessage> {
-  var tec = TextEditingController(text: '');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
