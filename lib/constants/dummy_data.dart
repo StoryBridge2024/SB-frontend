@@ -31,3 +31,14 @@ List<String> missions = [
   "박수 치기",
   "손 허리에",
 ];
+
+List<String> audios = [
+  "dummyAudio/음성파일 1.mp3",
+  "dummyAudio/음성파일 2.mp3",
+  "dummyAudio/음성파일 3.mp3",
+  "dummyAudio/음성파일 4.mp3",
+  "dummyAudio/음성파일 1.mp3",
+  "dummyAudio/음성파일 2.mp3",
+  "dummyAudio/음성파일 3.mp3",
+  "dummyAudio/음성파일 4.mp3",
+];

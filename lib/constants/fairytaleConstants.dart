@@ -44,22 +44,24 @@ bool isClearAudioPlaying = false;
 bool isTTSRunning = false;
 bool TTSIsRunned = false;
 
+ValueNotifier<bool> playButton = ValueNotifier(false);
+
 void toggle(bool toggle) {
   if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
     if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
       isPageRunning = true;
       temp1(clr_index.value);
       clr_index.value++;
+      playButton.value = false;
     }
   } else if (!toggle && clr_index.value != 0) {
     if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
       isPageRunning = true;
       clr_index.value--;
       temp2(clr_index.value);
+      playButton.value = true;
     }
   }
-
-  print(clr_index.value);
 }
 
 void temp1(int index) {
