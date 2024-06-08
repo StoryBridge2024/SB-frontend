@@ -3,11 +3,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/script_model.dart';
+import 'package:frontend/services/api/tts.dart';
 import 'package:http/http.dart';
 import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
+import '../util.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
@@ -18,10 +20,6 @@ class OpenAI {
 
   factory OpenAI() {
     return _instance;
-  }
-
-  Map<String, dynamic> deepCopy(Map<String, dynamic> source) {
-    return json.decode(json.encode(source));
   }
 
   Future<void> checkValidation(String b64_json) async {
@@ -40,7 +38,7 @@ class OpenAI {
 
     //parse response
     if (response.statusCode != 200) {
-      throw Exception('Failed to load response');
+      throw Exception('Failed to load CV response');
     }
     var content =
         json.decode(response.body)["choices"][0]["message"]["content"];
@@ -52,14 +50,24 @@ class OpenAI {
   }
 
   Future<Map<String, dynamic>> createCompletion(String theme) async {
+    //set prompt
+    var scriptPrompt = deepCopy(SCRIPT_PROMPT);
+
+    //compose prompt with example responses
+    EXAMPLE_REQUEST.forEach((ELEMENT) {
+      var element= deepCopy(ELEMENT);
+      scriptPrompt["messages"].add(element);
+    });
+    for(int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
+      scriptPrompt["messages"][i*2+2]["content"] = jsonEncode(EXAMPLE_RESPONSE[i]);
+    }
+
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
-    var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
-            ['content'] =
-        prompt +
-            textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
-                ['content'];
+    var userPartPrompt = deepCopy(USER_PART_SCRIPT_PROMPT);
+    userPartPrompt['content'] = prompt + userPartPrompt['content'];
+
+    scriptPrompt["messages"].add(userPartPrompt);
 
     //post request
     final response = await post(
@@ -68,12 +76,14 @@ class OpenAI {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
       },
-      body: json.encode(textPromptWithTheme),
+      body: json.encode(scriptPrompt),
     );
 
     //parse response
     if (response.statusCode != 200) {
-      throw Exception('Failed to load response');
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      throw Exception('Failed to load Chat response');
     }
     var responseBody = utf8.decode(response.bodyBytes);
     ScriptResponse scriptResponse =
@@ -151,6 +161,8 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    return SceneModel(content: content, images: images);
+    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
+    return SceneModel(
+        content: content, images: images, audioSource: audioSource);
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/const.dart';
@@ -7,8 +8,8 @@ import 'package:frontend/services/api/openai_api.dart';
 import 'package:frontend/constants/animal_list.dart';
 import '../constants/action_list.dart';
 import '../constants/fairytaleConstants.dart';
+import '../services/api/tts.dart';
 import 'makingCharacter.dart';
-
 class MakeFairytale extends StatelessWidget {
   final String text;
 
@@ -17,6 +18,7 @@ class MakeFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
+    final Future<dynamic> tts = TTS().createSpeech("hello my name is juyoung.");
 
     return MaterialApp(
       home: Scaffold(
