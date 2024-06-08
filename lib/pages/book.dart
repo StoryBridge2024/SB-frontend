@@ -198,6 +198,7 @@ class BookHomePage extends StatelessWidget {
                   height: double.infinity,
                   color: color,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       QrImageView(
                         data: "https://github.com/StoryBridge2024",
