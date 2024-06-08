@@ -132,7 +132,7 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).forEach((e) {
+        (content["scenes"] as List).forEach((e) {
           ScriptModel scriptModel = ScriptModel.fromJson(e);
           if (scriptModel.action_used_in_action_list != null) {
             if (!ACTION_LIST.contains(scriptModel.action_used_in_action_list)) {
@@ -152,11 +152,14 @@ class OpenAI {
       }
     } while (count != -1 && ++count < LIMIT_OF_ITERATION);
 
+    print("createScene2");
     final List<Future<String>> imageFutures = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
       imageFutures
-          .add(createImage(content["scene"][i]["description_of_illustration"]));
+          .add(createImage(content["scenes"][i]["description_of_illustration"]));
     }
+
+    print("createScene3");
     List<String> images = await Future.wait(imageFutures);
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
