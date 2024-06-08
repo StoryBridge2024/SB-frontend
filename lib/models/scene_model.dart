@@ -5,7 +5,7 @@ class SceneModel {
   late final String primary_character;
   late final List<ScriptModel> scriptModelList;
   late final List<String> b64_images;
-  late final String audioSource;
+  late final List<String> audioSource;
 
   SceneModel({
     required Map<String, dynamic> content,

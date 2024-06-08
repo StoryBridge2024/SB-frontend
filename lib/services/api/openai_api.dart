@@ -43,7 +43,9 @@ class OpenAI {
     var content =
         json.decode(response.body)["choices"][0]["message"]["content"];
     content = jsonDecode(content);
-    if (content["human"] == "yes" || content["text"] == "yes"|| content["animal"] == "yes") {
+    if (content["human"] == "yes" ||
+        content["text"] == "yes" ||
+        content["animal"] == "yes") {
       throw Exception('Invalid image');
     }
     return;
@@ -55,11 +57,12 @@ class OpenAI {
 
     //compose prompt with example responses
     EXAMPLE_REQUEST.forEach((ELEMENT) {
-      var element= deepCopy(ELEMENT);
+      var element = deepCopy(ELEMENT);
       scriptPrompt["messages"].add(element);
     });
-    for(int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
-      scriptPrompt["messages"][i*2+2]["content"] = jsonEncode(EXAMPLE_RESPONSE[i]);
+    for (int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
+      scriptPrompt["messages"][i * 2 + 2]["content"] =
+          jsonEncode(EXAMPLE_RESPONSE[i]);
     }
 
     //compose prompt with theme
@@ -154,18 +157,21 @@ class OpenAI {
 
     print("createScene2");
     final List<Future<String>> imageFutures = [];
+    final List<Future<String>> audioSources = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
-      imageFutures
-          .add(createImage(content["scenes"][i]["description_of_illustration"]));
+      imageFutures.add(
+          createImage(content["scenes"][i]["description_of_illustration"]));
+      audioSources
+          .add(TTS().createSpeech(content["scenes"][i]["scene_contents"]));
     }
 
     print("createScene3");
     List<String> images = await Future.wait(imageFutures);
+    List<String> audios = await Future.wait(audioSources);
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
     return SceneModel(
-        content: content, images: images, audioSource: audioSource);
+        content: content, images: images, audioSource: audios);
   }
 }

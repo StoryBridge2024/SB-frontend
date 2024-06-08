@@ -18,7 +18,6 @@ class MakeFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
-    final Future<dynamic> tts = TTS().createSpeech("hello my name is juyoung.");
 
     return MaterialApp(
       home: Scaffold(
@@ -38,6 +37,7 @@ class MakeFairytale extends StatelessWidget {
                 print("animals from animal list: ${gSceneModel!.scriptModelList[i].animals_from_animal_list}");
                 //print("characters: ${gSceneModel!.scriptModelList[i].characters}");
                 print("b64 images: ${gSceneModel!.b64_images[i]}");
+                print("audio source: ${gSceneModel!.audioSource[i]}");
               }
 
               return Column(
