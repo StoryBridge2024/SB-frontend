@@ -140,8 +140,7 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isTemp1Running = false;
-          isTemp2Running = false;
+          isClearAudioPlaying = false;
         },
         front: Container(
           child: Row(
@@ -184,8 +183,7 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isTemp1Running = false;
-          isTemp2Running = false;
+          isClearAudioPlaying = false;
         },
         front: Container(),
         back: Container(
