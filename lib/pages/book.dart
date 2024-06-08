@@ -82,7 +82,7 @@ class BookHomePage extends StatelessWidget {
                   height: double.infinity,
                   width: double.infinity,
                   color: color,
-                  alignment: Alignment.center,
+                  alignment: Alignment.bottomCenter,
                   child: (index != 8)
                       ? (useDummy)
                           ? Image.asset(
@@ -134,6 +134,9 @@ class BookHomePage extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  alignment: Alignment.center,
                   color: color,
                   child: Text(
                     '동화주제:',
@@ -157,7 +160,7 @@ class BookHomePage extends StatelessWidget {
       elevation: 0.0,
       color: Color(0x00000000),
       child: FlipCard(
-        controller: controllerF[index],
+        controller: controllerB[index],
         direction: FlipDirection.HORIZONTAL,
         side: CardSide.FRONT,
         speed: 1000,
@@ -165,16 +168,15 @@ class BookHomePage extends StatelessWidget {
           isTemp1Running = false;
           isTemp2Running = false;
         },
-        front: Container(
+        front: Container(),
+        back: Container(
           child: Row(
             children: [
               Flexible(
                 flex: 1,
-                child: Container(),
-              ),
-              Flexible(
-                flex: 1,
                 child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
                   color: color,
                   child: Column(
                     children: [
@@ -194,10 +196,13 @@ class BookHomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
             ],
           ),
         ),
-        back: Container(),
       ),
     );
   }
