@@ -4,6 +4,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Book extends StatelessWidget {
   // This widget is the root of your application.
@@ -110,6 +111,117 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
+  _renderQRFront(context, int index, color) {
+    return Card(
+      elevation: 0.0,
+      color: Color(0x00000000),
+      child: FlipCard(
+        controller: controllerF[index],
+        direction: FlipDirection.HORIZONTAL,
+        side: CardSide.FRONT,
+        speed: 1000,
+        onFlipDone: (status) {
+          isTemp1Running = false;
+          isTemp2Running = false;
+        },
+        front: Container(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  color: color,
+                  child: Text(
+                    '동화주제:',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        back: Container(),
+      ),
+    );
+  }
+
+  _renderQRBack(context, int index, color) {
+    return Card(
+      elevation: 0.0,
+      color: Color(0x00000000),
+      child: FlipCard(
+        controller: controllerF[index],
+        direction: FlipDirection.HORIZONTAL,
+        side: CardSide.FRONT,
+        speed: 1000,
+        onFlipDone: (status) {
+          isTemp1Running = false;
+          isTemp2Running = false;
+        },
+        front: Container(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  color: color,
+                  child: Column(
+                    children: [
+                      QrImageView(
+                        data: "https://github.com/StoryBridge2024",
+                        version: QrVersions.auto,
+                        size: 200.0,
+                      ),
+                      Text(
+                        'by juyoung Kim, haeseung Lee, yejin Choi',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        back: Container(),
+      ),
+    );
+  }
+
+  FrontBookCoverOnStack(context, index, color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+        Expanded(
+          flex: 10,
+          child: _renderQRFront(context, index, color),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+      ],
+    );
+  }
+
   FrontOnStack(context, index, color) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -150,6 +262,26 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
+  BackBookCoverOnStack(context, index, color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+        Expanded(
+          flex: 10,
+          child: _renderQRBack(context, index, color),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -163,7 +295,7 @@ class BookHomePage extends StatelessWidget {
           FrontOnStack(context, 3, Color(0xFFFFFFFF)), // 3rd page right
           FrontOnStack(context, 2, Color(0xFFFFFFFF)), // 2nd page right
           FrontOnStack(context, 1, Color(0xFFFFFFFF)), // 1st page right
-          FrontOnStack(context, 0, Colors.black), // front cover
+          FrontBookCoverOnStack(context, 0, Colors.white), // front cover
           BackOnStack(context, 0, Color(0xFFFFFFFF)), // 1st page left
           BackOnStack(context, 1, Color(0xFFFFFFFF)), // 2nd page left
           BackOnStack(context, 2, Color(0xFFFFFFFF)), // 3rd page left
@@ -172,7 +304,7 @@ class BookHomePage extends StatelessWidget {
           BackOnStack(context, 5, Color(0xFFFFFFFF)), // 6th page left
           BackOnStack(context, 6, Color(0xFFFFFFFF)), // 7th page left
           BackOnStack(context, 7, Color(0xFFFFFFFF)), // 8th page left
-          BackOnStack(context, 8, Colors.black), // back cover
+          BackBookCoverOnStack(context, 8, Colors.white), // back cover
           pageFlip(),
         ],
       ),
