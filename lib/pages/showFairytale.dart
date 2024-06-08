@@ -24,7 +24,7 @@ class ShowFairytale extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 2,
+              flex: 3,
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 alignment: Alignment.center,
@@ -65,7 +65,7 @@ class ShowFairytale extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
+              flex: 2,
               child: Container(),
             ),
           ],
