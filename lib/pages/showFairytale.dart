@@ -118,7 +118,44 @@ class Story extends StatefulWidget {
   State<Story> createState() => _StoryState();
 }
 
-class _StoryState extends State<Story> {
+class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
+  bool _showStamp = false;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the animation controller
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+
+    // Define the scale animation
+    _scaleAnimation = Tween<double>(begin: 2.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.bounceOut));
+
+    // Define the shake animation
+    // _shakeAnimation = Tween<double>(begin: 0, end: 5).chain(
+    //   CurveTween(curve: Curves.elasticIn),
+    // ).animate(_controller);
+
+    // Listen to missionclear changes
+    missionclear.addListener(() {
+      if (missionclear.value) {
+        _showStampEffect();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var images = widget.images;
@@ -142,6 +179,7 @@ class _StoryState extends State<Story> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
+                flex: 1,
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -157,12 +195,66 @@ class _StoryState extends State<Story> {
                 ),
               ),
               Flexible(
-                child: Container(),
+                flex: 1,
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: ValueNotifier<bool>(_showStamp),
+                  builder: (context, value, _) {
+                    if (!_showStamp) return Container();
+                    return AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: child,
+                        );
+                      },
+                      child: Container(
+                          width: 300,
+                          height: 300,
+                          child: Image.asset('assets/image/stamp.png')),
+                    );
+                  },
+                ),
+                // child: (_showStamp)
+                //     ? Positioned(
+                //         right: 150,
+                //         top: -90,
+                //         child: AnimatedBuilder(
+                //           animation: _controller,
+                //           builder: (context, child) {
+                //             return Transform.scale(
+                //               scale: _scaleAnimation.value,
+                //               child: child,
+                //             );
+                //           },
+                //           child: Container(
+                //               width: 300,
+                //               height: 300,
+                //               child: Image.asset('assets/image/stamp.png')),
+                //         ),
+                //       )
+                //     : Container(),
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  void _showStampEffect() {
+    setState(() {
+      _showStamp = true;
+    });
+    print("wowwowwowwowwowwowwwowwwowoowoowwowowoowoowowow");
+    print(_showStamp);
+    _controller.forward(from: 0).then((_) {
+      Future.delayed(Duration(seconds: 1), () {
+        setState(() {
+          _showStamp = false;
+        });
+        missionclear.value = false; // Reset missionclear to false
+      });
+    });
   }
 }

@@ -141,11 +141,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
-          _showStampEffect();
-          missionclear = true;
+          missionclear.value = true;
           await _playAudio();
           await Future.delayed(Duration(seconds: 2));
-          clr_index.value++;
           doPrint = true;
 
           init();
@@ -162,11 +160,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                       .action_used_in_action_list &&
               clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
             toggle(true);
-            _showStampEffect();
-            missionclear = true;
+            missionclear.value = true;
             await _playAudio();
             await Future.delayed(Duration(seconds: 2));
-            clr_index.value++;
 
             doPrint = true;
 
@@ -179,6 +175,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                         .action_used_in_action_list &&
                 clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
               toggle(true);
+              missionclear.value = true;
+              await _playAudio();
+              await Future.delayed(Duration(seconds: 2));
+
+              doPrint = true;
+
               init();
             }
           }
@@ -196,9 +198,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           }
         }
       }
-      // if (_kindOfPose == missions[clr_index.value]) {
-      //   clr_index.value++;
-      // }
     } else {
       // 추출된 포즈 없음
       _customPaint = null;
