@@ -226,6 +226,6 @@ class _MovementFollowState extends State<MovementFollow> {
       );
     }
 
-    return ret;
+    return (isPageRunning) ? Container() : ret;
   }
 }

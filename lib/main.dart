@@ -1,9 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:frontend/pages/getImage.dart';
-import 'pages/homePage.dart';
-import 'package:camera/camera.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/pages/getImage.dart';
+import 'package:frontend/pages/homePage.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: GetImageFromCamera(),
     );
   }
 }

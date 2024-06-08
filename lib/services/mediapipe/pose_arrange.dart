@@ -23,13 +23,13 @@ class PoseArrange extends Object {
         changes.reduce((value, element) => value > element ? value : element);
     double min =
         changes.reduce((value, element) => value < element ? value : element);
-    return max - min > 50; // Waving threshold: change of 50 pixels
+    return max - min > 30; // Waving threshold: change of 50 pixels
   }
 
   String updatePoseCount(
       List<int> count, int index, String newPose, String currentPose) {
     count[index]++;
-    if (count[index] > 10) {
+    if (count[index] > 20) {
       count[index] = 0;
       currentPose = newPose;
     }
