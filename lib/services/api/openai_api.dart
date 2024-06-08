@@ -66,10 +66,13 @@ class OpenAI {
       scriptPrompt["messages"].add(
         {"role": "system", "content": ""},
       );
+      print("randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
     }
+    print("=============================================");
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
       scriptPrompt["messages"][i * 2 + 1]["content"] =
           jsonEncode(deepCopy(EXAMPLE_RESPONSE[randomSelect[i]]));
+      print("content: ${EXAMPLE_RESPONSE[randomSelect[i]]}");
     }
 
     //compose prompt with theme
