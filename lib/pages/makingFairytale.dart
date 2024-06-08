@@ -10,6 +10,7 @@ import '../constants/action_list.dart';
 import '../constants/fairytaleConstants.dart';
 import '../services/api/tts.dart';
 import 'makingCharacter.dart';
+
 class MakeFairytale extends StatelessWidget {
   final String text;
 
@@ -18,6 +19,7 @@ class MakeFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
+    final Future<dynamic> tts = TTS().createSpeech("hello my name is juyoung.");
 
     return MaterialApp(
       home: Scaffold(
@@ -27,19 +29,6 @@ class MakeFairytale extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               gSceneModel = snapshot.data as SceneModel;
-
-              //print("number of total character: ${gSceneModel!.number_of_total_character}");
-              for(int i=0;i<NUMBER_OF_SCENE;i++){
-                //print("number of character: ${gSceneModel!.scriptModelList[i].number_of_character}");
-                print("scene contents: ${gSceneModel!.scriptModelList[i].scene_contents}");
-                print("description of illustration: ${gSceneModel!.scriptModelList[i].description_of_illustration}");
-                print("action used in action list: ${gSceneModel!.scriptModelList[i].action_used_in_action_list}");
-                print("animals from animal list: ${gSceneModel!.scriptModelList[i].animals_from_animal_list}");
-                //print("characters: ${gSceneModel!.scriptModelList[i].characters}");
-                print("b64 images: ${gSceneModel!.b64_images[i]}");
-                print("audio source: ${gSceneModel!.audioSource[i]}");
-              }
-
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -178,7 +167,9 @@ class _TmpFairytaleState extends State<TmpFairytale> {
     required int index,
     required Function setStateCallback,
   }) {
-    if (gSceneModel == null || gSceneModel!.scriptModelList.length <= index || gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
+    if (gSceneModel == null ||
+        gSceneModel!.scriptModelList.length <= index ||
+        gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
       return Container(); // 조건에 맞지 않으면 빈 컨테이너 반환
     }
     return Stack(
@@ -306,6 +297,22 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     assetPath: 'assets/animal/elephant.png',
                     locX: locX6,
                     locY: locY6,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "사자",
+                    assetPath: 'assets/animal/lion.png',
+                    locX: locX7,
+                    locY: locY7,
+                    index: index,
+                    setStateCallback: setState,
+                  ),
+                  createPositionedAnimal(
+                    animalName: "강아지",
+                    assetPath: 'assets/animal/puppy.png',
+                    locX: locX8,
+                    locY: locY8,
                     index: index,
                     setStateCallback: setState,
                   ),

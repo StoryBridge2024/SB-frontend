@@ -12,8 +12,9 @@ class SceneModel {
     required List<String> images,
     required this.audioSource,
   }) {
-    scriptModelList =
-        (content["scenes"] as List).map((e) => ScriptModel.fromJson(e)).toList();
+    scriptModelList = (content["scenes"] as List)
+        .map((e) => ScriptModel.fromJson(e))
+        .toList();
     b64_images = images;
     primary_character = content["primary_character"];
   }

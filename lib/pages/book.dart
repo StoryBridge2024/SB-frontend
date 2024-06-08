@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+import 'getMessage.dart';
 
 class Book extends StatelessWidget {
   // This widget is the root of your application.
@@ -30,8 +34,7 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isTemp1Running = false;
-          isTemp2Running = false;
+          isPageRunning = false;
         },
         front: Container(
           child: Row(
@@ -43,7 +46,17 @@ class BookHomePage extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
-                  color: color,
+                  decoration: BoxDecoration(
+                    color: color,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                  ),
                   child: (index != 0) ? pages[index - 1] : Container(),
                 ),
               ),
@@ -65,8 +78,7 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isTemp1Running = false;
-          isTemp2Running = false;
+          isPageRunning = false;
         },
         front: Container(),
         back: Container(
@@ -78,9 +90,19 @@ class BookHomePage extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                  ),
                   height: double.infinity,
                   width: double.infinity,
-                  color: color,
                   alignment: Alignment.center,
                   child: (index != 8)
                       ? (useDummy)
@@ -107,6 +129,120 @@ class BookHomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _renderQRFront(context, int index, color) {
+    return Card(
+      elevation: 0.0,
+      color: Color(0x00000000),
+      child: FlipCard(
+        controller: controllerF[index],
+        direction: FlipDirection.HORIZONTAL,
+        side: CardSide.FRONT,
+        speed: 1000,
+        onFlipDone: (status) {
+          isClearAudioPlaying = false;
+        },
+        front: Container(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  alignment: Alignment.center,
+                  color: color,
+                  child: Text(
+                    tec.text,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        back: Container(),
+      ),
+    );
+  }
+
+  _renderQRBack(context, int index, color) {
+    return Card(
+      elevation: 0.0,
+      color: Color(0x00000000),
+      child: FlipCard(
+        controller: controllerB[index],
+        direction: FlipDirection.HORIZONTAL,
+        side: CardSide.FRONT,
+        speed: 1000,
+        onFlipDone: (status) {
+          isClearAudioPlaying = false;
+        },
+        front: Container(),
+        back: Container(
+          child: Row(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: color,
+                  child: Column(
+                    children: [
+                      QrImageView(
+                        data: "https://github.com/StoryBridge2024",
+                        version: QrVersions.auto,
+                        size: 200.0,
+                      ),
+                      Text(
+                        'by juyoung Kim, haeseung Lee, yejin Choi',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  FrontBookCoverOnStack(context, index, color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+        Expanded(
+          flex: 10,
+          child: _renderQRFront(context, index, color),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+      ],
     );
   }
 
@@ -150,6 +286,26 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
+  BackBookCoverOnStack(context, index, color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+        Expanded(
+          flex: 10,
+          child: _renderQRBack(context, index, color),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -163,7 +319,7 @@ class BookHomePage extends StatelessWidget {
           FrontOnStack(context, 3, Color(0xFFFFFFFF)), // 3rd page right
           FrontOnStack(context, 2, Color(0xFFFFFFFF)), // 2nd page right
           FrontOnStack(context, 1, Color(0xFFFFFFFF)), // 1st page right
-          FrontOnStack(context, 0, Colors.black), // front cover
+          FrontBookCoverOnStack(context, 0, Colors.white), // front cover
           BackOnStack(context, 0, Color(0xFFFFFFFF)), // 1st page left
           BackOnStack(context, 1, Color(0xFFFFFFFF)), // 2nd page left
           BackOnStack(context, 2, Color(0xFFFFFFFF)), // 3rd page left
@@ -172,10 +328,71 @@ class BookHomePage extends StatelessWidget {
           BackOnStack(context, 5, Color(0xFFFFFFFF)), // 6th page left
           BackOnStack(context, 6, Color(0xFFFFFFFF)), // 7th page left
           BackOnStack(context, 7, Color(0xFFFFFFFF)), // 8th page left
-          BackOnStack(context, 8, Colors.black), // back cover
+          BackBookCoverOnStack(context, 8, Colors.white), // back cover
           pageFlip(),
         ],
       ),
+    );
+  }
+
+  Widget ShadowContainer() {
+    return ValueListenableBuilder<int>(
+      valueListenable: clr_index,
+      builder: (context, value, _) {
+        return Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 10,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: (clr_index.value != 0)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.7),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(0, 7),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: (clr_index.value != 9)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.7),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(0, 7),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container(),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+          ],
+        );
+      },
     );
   }
 

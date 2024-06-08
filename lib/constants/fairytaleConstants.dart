@@ -20,6 +20,10 @@ List<double> locX5 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY5 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX6 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX7 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY7 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX8 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locY8 = [100, 100, 100, 100, 100, 100, 100, 100];
 
 int characterTurn = 0;
 int cameraTurn = 0;
@@ -34,22 +38,22 @@ List<FlipCardController> controllerF =
 List<FlipCardController> controllerB =
     List.generate(10, (_) => FlipCardController());
 
-bool isTemp1Running = false;
-bool isTemp2Running = false;
+bool isPageRunning = false;
+bool isClearAudioPlaying = false;
+
+bool isTTSRunning = false;
+bool TTSIsRunned = false;
 
 void toggle(bool toggle) {
-  print(isTemp1Running);
-  print(isTemp2Running);
-
   if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
-    if (!isTemp2Running && !isTemp1Running) {
-      isTemp1Running = true;
+    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
+      isPageRunning = true;
       temp1(clr_index.value);
       clr_index.value++;
     }
   } else if (!toggle && clr_index.value != 0) {
-    if (!isTemp1Running && !isTemp2Running) {
-      isTemp2Running = true;
+    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
+      isPageRunning = true;
       clr_index.value--;
       temp2(clr_index.value);
     }
