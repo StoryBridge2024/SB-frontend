@@ -3,3 +3,4 @@ const NUMBER_OF_SENTENCE = 1;
 const NUMBER_OF_EXAMPLE_PROMPT = 0;
 const TYPE_OF_DALLE = "dall-e-2";
 const LIMIT_OF_ITERATION = 3;
+const AUDIO_PATH="assets/audio";

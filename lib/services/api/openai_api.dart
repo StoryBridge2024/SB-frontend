@@ -3,11 +3,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/script_model.dart';
+import 'package:frontend/services/api/tts.dart';
 import 'package:http/http.dart';
 import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
+import '../util.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
@@ -18,10 +20,6 @@ class OpenAI {
 
   factory OpenAI() {
     return _instance;
-  }
-
-  Map<String, dynamic> deepCopy(Map<String, dynamic> source) {
-    return json.decode(json.encode(source));
   }
 
   Future<void> checkValidation(String b64_json) async {
@@ -151,6 +149,8 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    return SceneModel(content: content, images: images);
+    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
+    return SceneModel(
+        content: content, images: images, audioSource: audioSource);
   }
 }

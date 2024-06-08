@@ -2,6 +2,9 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
 
 SceneModel? gSceneModel;
 
