@@ -84,7 +84,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
-                scale: 0.5,
+                scale: 0.8,
                 child: Container(
                   alignment: Alignment.center,
                   width: 600,
@@ -137,7 +137,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                       .elementAt(clr_index.value - 1)
                       .replaceAll(" ", "")) &&
               !isPageRunning) {
-            await pageMove();
+            if (!isClearAudioPlaying) pageMove();
           }
         }
       } else if (!useDummy) {
@@ -152,7 +152,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if ((_kindOfPose.replaceAll(" ", "") ==
                   mission!.replaceAll(" ", "")) &&
               !isPageRunning) {
-            await pageMove();
+            if (!isClearAudioPlaying) pageMove();
           }
         }
       }
