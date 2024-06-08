@@ -126,7 +126,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (!isTTSRunning && !TTSIsRunned) {
+      if (!useDummy && (!isTTSRunning && !TTSIsRunned)) {
         if (clr_index.value != 0 && clr_index.value != 9) {
           _playTTS(gSceneModel!.audioSource[clr_index.value - 1]);
         }
