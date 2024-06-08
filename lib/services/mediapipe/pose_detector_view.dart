@@ -132,7 +132,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           print(missions.elementAt(clr_index.value - 1));
           print(clr_index.value - 1);
 
-          if ((_kindOfPose == missions.elementAt(clr_index.value - 1)) &&
+          if ((_kindOfPose.replaceAll(" ", "") ==
+                  missions
+                      .elementAt(clr_index.value - 1)
+                      .replaceAll(" ", "")) &&
               !isPageRunning) {
             await pageMove();
           }
@@ -165,9 +168,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> pageMove() async {
-    init();
-    missionclear.value = true;
     isClearAudioPlaying = true;
+    missionclear.value = true;
     _showStampEffect();
     await _playAudio();
     await Future.delayed(Duration(seconds: 2));
