@@ -36,7 +36,7 @@ class TTS {
     if (response.statusCode != 200) {
       print('Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
-      throw Exception('Failed to load response');
+      throw Exception('Failed to load TTS response');
     }
 
     // Get the directory for the app's temporary files.

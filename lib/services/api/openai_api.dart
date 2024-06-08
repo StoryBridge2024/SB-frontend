@@ -38,26 +38,46 @@ class OpenAI {
 
     //parse response
     if (response.statusCode != 200) {
-      throw Exception('Failed to load response');
+      throw Exception('Failed to load CV response');
     }
     var content =
         json.decode(response.body)["choices"][0]["message"]["content"];
     content = jsonDecode(content);
-    if (content["human"] == "yes" || content["text"] == "yes") {
+    if (content["human"] == "yes" ||
+        content["text"] == "yes" ||
+        content["animal"] == "yes") {
       throw Exception('Invalid image');
     }
     return;
   }
 
   Future<Map<String, dynamic>> createCompletion(String theme) async {
+    //set prompt
+    var scriptPrompt = deepCopy(SCRIPT_PROMPT);
+
+    //compose prompt with example responses
+    List<int> randomSelect = [];
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      randomSelect.add(randomInt);
+      scriptPrompt["messages"].add(
+        deepCopy(EXAMPLE_REQUEST[randomInt]),
+      );
+      scriptPrompt["messages"].add(
+        {"role": "system", "content": ""},
+      );
+    }
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      scriptPrompt["messages"][i * 2 + 1]["content"] =
+          jsonEncode(deepCopy(EXAMPLE_RESPONSE[randomSelect[i]]));
+    }
+
     //compose prompt with theme
     String prompt = "$MUTABLE_SCRIPT_PROMPT$theme.";
-    var textPromptWithTheme = deepCopy(SCRIPT_PROMPT);
-    textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
-            ['content'] =
-        prompt +
-            textPromptWithTheme['messages']?[NUMBER_OF_EXAMPLE_PROMPT * 2 + 1]
-                ['content'];
+    var userPartPrompt = deepCopy(USER_PART_SCRIPT_PROMPT);
+    userPartPrompt['content'] = prompt + userPartPrompt['content'];
+
+    scriptPrompt["messages"].add(userPartPrompt);
 
     //post request
     final response = await post(
@@ -66,12 +86,14 @@ class OpenAI {
         'Authorization': 'Bearer $apiKey',
         'Content-Type': 'application/json',
       },
-      body: json.encode(textPromptWithTheme),
+      body: json.encode(scriptPrompt),
     );
 
     //parse response
     if (response.statusCode != 200) {
-      throw Exception('Failed to load response');
+      print('Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}');
+      throw Exception('Failed to load Chat response');
     }
     var responseBody = utf8.decode(response.bodyBytes);
     ScriptResponse scriptResponse =
@@ -120,7 +142,7 @@ class OpenAI {
     do {
       try {
         content = await createCompletion(theme);
-        (content["scene"] as List).forEach((e) {
+        (content["scenes"] as List).forEach((e) {
           ScriptModel scriptModel = ScriptModel.fromJson(e);
           if (scriptModel.action_used_in_action_list != null) {
             if (!ACTION_LIST.contains(scriptModel.action_used_in_action_list)) {
@@ -140,17 +162,22 @@ class OpenAI {
       }
     } while (count != -1 && ++count < LIMIT_OF_ITERATION);
 
+    print("createScene2");
     final List<Future<String>> imageFutures = [];
+    final List<Future<String>> audioSources = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
-      imageFutures
-          .add(createImage(content["scene"][i]["description_of_illustration"]));
+      imageFutures.add(
+          createImage(content["scenes"][i]["description_of_illustration"]));
+      audioSources
+          .add(TTS().createSpeech(content["scenes"][i]["scene_contents"]));
     }
+
+    print("createScene3");
     List<String> images = await Future.wait(imageFutures);
+    List<String> audios = await Future.wait(audioSources);
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
-    return SceneModel(
-        content: content, images: images, audioSource: audioSource);
+    return SceneModel(content: content, images: images, audioSource: audios);
   }
 }
