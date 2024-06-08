@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -397,45 +398,81 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
-  pageFlip() {
-    return Row(
+  Widget pageFlip() {
+    return Column(
       children: [
-        Expanded(
+        Flexible(
           flex: 1,
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: FloatingActionButton(
-              elevation: 0,
-              hoverElevation: 0,
-              focusElevation: 0,
-              highlightElevation: 0,
-              focusColor: Color(0x00000000),
-              backgroundColor: Color(0x00000000),
-              onPressed: () {
-                toggle(false);
-              },
-            ),
+          child: ValueListenableBuilder<bool>(
+            valueListenable: playButton,
+            builder: (context, value, _) {
+              return Container(
+                alignment: Alignment.centerLeft,
+                child: playButton.value
+                    ? FloatingActionButton(
+                        elevation: 0,
+                        hoverElevation: 0,
+                        focusElevation: 0,
+                        highlightElevation: 0,
+                        backgroundColor: Color(0x00000000),
+                        child: Text("동화 다시 듣기"),
+                        onPressed: () {
+                          isTTSRunning = false;
+                          TTSIsRunned = false;
+                        },
+                      )
+                    : Container(),
+              );
+            },
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: FloatingActionButton(
-              elevation: 0,
-              hoverElevation: 0,
-              focusElevation: 0,
-              highlightElevation: 0,
-              focusColor: Color(0x00000000),
-              hoverColor: Color(0x00000000),
-              backgroundColor: Color(0x00000000),
-              onPressed: () {
-                toggle(true);
-              },
-            ),
+        Flexible(
+          flex: 10,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    hoverElevation: 0,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    focusColor: Color(0x00000000),
+                    backgroundColor: Color(0x00000000),
+                    onPressed: () {
+                      toggle(false);
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    hoverElevation: 0,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    focusColor: Color(0x00000000),
+                    hoverColor: Color(0x00000000),
+                    backgroundColor: Color(0x00000000),
+                    onPressed: () {
+                      toggle(true);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
+        ),
+        Flexible(
+          flex: 1,
+          child: Container(),
         ),
       ],
     );
