@@ -16,8 +16,6 @@ import 'camera_view.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-bool doPrint = true;
-
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
   PoseDetectorView({super.key, required this.images, required this.face});
@@ -135,54 +133,27 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
               .scriptModelList[clr_index.value - 1].action_used_in_action_list);
           //print(missions[clr_index.value]);
           print(clr_index.value);
-          doPrint = false;
         }
         if (_kindOfPose ==
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
-          missionclear.value = true;
-          await _playAudio();
-          await Future.delayed(Duration(seconds: 2));
-          doPrint = true;
-
-          init();
+          await pageMove();
         }
         if (clr_index.value - 1 != 8) {
-          if (doPrint) {
-            print(_kindOfPose);
-            //print(missions[clr_index.value]);
-            print(clr_index.value - 1);
-            doPrint = false;
-          }
           if (_kindOfPose ==
                   gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
               clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
-            toggle(true);
-            missionclear.value = true;
-            await _playAudio();
-            await Future.delayed(Duration(seconds: 2));
-
-            doPrint = true;
-
-            init();
+            await pageMove();
           }
 
           if (_kindOfPose == "박수 치기") {
             if ("박수치기" ==
                     gSceneModel!.scriptModelList[clr_index.value - 1]
                         .action_used_in_action_list &&
-                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
-              toggle(true);
-              missionclear.value = true;
-              await _playAudio();
-              await Future.delayed(Duration(seconds: 2));
-
-              doPrint = true;
-
-              init();
-            }
+                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {}
+            await pageMove();
           }
         }
       } else {
@@ -193,8 +164,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           print(clr_index.value - 1);
 
           if (_kindOfPose == missions.elementAt(clr_index.value - 1)) {
-            toggle(true);
-            init();
+            await pageMove();
           }
         }
       }
@@ -207,6 +177,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  Future<void> pageMove() async {
+    missionclear.value = true;
+    isTemp1Running = true;
+    _showStampEffect();
+    await _playAudio();
+    await Future.delayed(Duration(seconds: 2));
+    isTemp1Running = false;
+    toggle(true);
+    init();
   }
 
   Future<void> _playAudio() async {

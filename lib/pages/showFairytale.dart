@@ -196,44 +196,33 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
               ),
               Flexible(
                 flex: 1,
-                child: ValueListenableBuilder<bool>(
-                  valueListenable: ValueNotifier<bool>(_showStamp),
-                  builder: (context, value, _) {
-                    if (!_showStamp) return Container();
-                    return AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          scale: _scaleAnimation.value,
-                          child: child,
-                        );
-                      },
-                      child: Container(
-                          width: 300,
-                          height: 300,
-                          child: Image.asset('assets/image/stamp.png')),
-                    );
-                  },
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: ValueNotifier<bool>(_showStamp),
+                    builder: (context, value, _) {
+                      if (!_showStamp) return Container();
+                      return AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Transform.scale(
+                            scale: _scaleAnimation.value,
+                            child: child,
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          alignment: Alignment.topCenter,
+                          child: Image.asset(
+                            'assets/image/stamp.png',
+                            width: 350,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                // child: (_showStamp)
-                //     ? Positioned(
-                //         right: 150,
-                //         top: -90,
-                //         child: AnimatedBuilder(
-                //           animation: _controller,
-                //           builder: (context, child) {
-                //             return Transform.scale(
-                //               scale: _scaleAnimation.value,
-                //               child: child,
-                //             );
-                //           },
-                //           child: Container(
-                //               width: 300,
-                //               height: 300,
-                //               child: Image.asset('assets/image/stamp.png')),
-                //         ),
-                //       )
-                //     : Container(),
               ),
             ],
           ),
@@ -246,8 +235,6 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
     setState(() {
       _showStamp = true;
     });
-    print("wowwowwowwowwowwowwwowwwowoowoowwowowoowoowowow");
-    print(_showStamp);
     _controller.forward(from: 0).then((_) {
       Future.delayed(Duration(seconds: 1), () {
         setState(() {
