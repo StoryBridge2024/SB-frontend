@@ -69,25 +69,21 @@ const List<Map<String, dynamic>> EXAMPLE_REQUEST = [
     "content":
         "The theme is 선녀와 나무꾼을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
-  {"role": "assistant", "content": ""},
   {
     "role": "user",
     "content":
         "The theme is 신데렐라를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
-  {"role": "assistant", "content": ""},
   {
     "role": "user",
     "content":
         "The theme is 잭과 콩나무를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
-  {"role": "assistant", "content": ""},
   {
     "role": "user",
     "content":
         "The theme is 벌거벗은 임금님을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
-  {"role": "assistant", "content": ""},
 ];
 
 const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [

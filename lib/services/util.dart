@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 Map<String, dynamic> deepCopy(Map<String, dynamic> source) {
   return json.decode(json.encode(source));
@@ -11,4 +12,9 @@ void printLongString(String longString) {
         (i + chunkSize < longString.length) ? i + chunkSize : longString.length;
     print(longString.substring(i, end));
   }
+}
+
+int get_random_int(int max) {
+  int rng = Random().nextInt(max);
+  return rng;
 }

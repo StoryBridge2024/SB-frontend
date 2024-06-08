@@ -56,18 +56,20 @@ class OpenAI {
     var scriptPrompt = deepCopy(SCRIPT_PROMPT);
 
     //compose prompt with example responses
-    EXAMPLE_REQUEST.forEach((ELEMENT) {
-      var element = deepCopy(ELEMENT);
-      scriptPrompt["messages"].add(element);
-    });
-    for (int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT * 2; i++) {
+    List<int> randomSelect = [];
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      randomSelect.add(randomInt);
       scriptPrompt["messages"].add(
-        EXAMPLE_REQUEST[i],
+        deepCopy(EXAMPLE_REQUEST[randomInt]),
+      );
+      scriptPrompt["messages"].add(
+        {"role": "system", "content": ""},
       );
     }
-    for (int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
-      scriptPrompt["messages"][i * 2 + 2]["content"] =
-          jsonEncode(EXAMPLE_RESPONSE[i]);
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      scriptPrompt["messages"][i * 2 + 1]["content"] =
+          jsonEncode(deepCopy(EXAMPLE_RESPONSE[randomSelect[i]]));
     }
 
     //compose prompt with theme
