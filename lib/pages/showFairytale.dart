@@ -192,6 +192,12 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
+        if (clr_index.value == 0) {
+          return Container();
+        }
+        if (clr_index.value - 1 == NUMBER_OF_SCENE) {
+          return Container();
+        }
         return Container(
           width: 600,
           height: 600,
