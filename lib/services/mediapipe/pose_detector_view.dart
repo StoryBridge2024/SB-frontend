@@ -173,6 +173,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     await Future.delayed(Duration(seconds: 2));
     isClearAudioPlaying = false;
     toggle(true);
+    init();
   }
 
   Future<void> _playAudio() async {
