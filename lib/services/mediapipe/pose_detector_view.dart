@@ -130,6 +130,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         if (clr_index.value != 0 && clr_index.value != 9) {
           _playTTS(gSceneModel!.audioSource[clr_index.value - 1]);
         }
+      } else if (useDummy && (!isTTSRunning && !TTSIsRunned)) {
+        if (clr_index.value != 0 && clr_index.value != 9) {
+          _playTTS(audios[clr_index.value - 1]);
+        }
       }
 
       if (TTSIsRunned) {
@@ -193,12 +197,22 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     isTTSRunning = true;
     try {
       print('Attempting to play TTS...');
-      await _audioPlayer.play(DeviceFileSource(path)); // TTS 재생
+      if (!useDummy) {
+        await _audioPlayer.play(DeviceFileSource(path)); // TTS 재생
+      } else {
+        await _audioPlayer.play(AssetSource(path));
+      }
       print('TTS playing...');
-      setState(() {
-        isTTSRunning = false;
-        TTSIsRunned = true; // TTS 재생 끝
-      });
+      _audioPlayer.onPlayerComplete.listen(
+        (event) {
+          setState(
+            () {
+              isTTSRunning = false;
+              TTSIsRunned = true; // TTS 재생 끝
+            },
+          );
+        },
+      );
     } catch (e) {
       print('Error playing TTS: $e');
     }
