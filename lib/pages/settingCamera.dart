@@ -97,6 +97,8 @@ class Content extends StatelessWidget {
                     ),
                     onPressed: () {
                       clr_index.value = 0;
+                      isPageRunning = false;
+
                       Navigator.push(
                         (context),
                         MaterialPageRoute(

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import 'package:frontend/main.dart';
@@ -83,6 +84,8 @@ class _CameraViewState extends State<CameraView> {
     required String assetPath,
     required int index,
   }) {
+    if (useDummy) return Container();
+
     if (gSceneModel == null ||
         gSceneModel!.scriptModelList.length <= index ||
         gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
@@ -104,15 +107,17 @@ class _CameraViewState extends State<CameraView> {
 
   @override
   Widget build(BuildContext context) {
-    // print(gSceneModel!.scriptModelList[clr_index.value]
+    // print(gSceneModel!.scriptModelList[clr_index.value-1]
     //     .animals_from_animal_list[0]);
-
-    if (clr_index.value == 8) {
+    if (clr_index.value == 0) {
+      return Container();
+    }
+    if (clr_index.value - 1 == 8) {
       return Transform.scale(
         scale: 1,
         child: Container(
-          height: 500,
-          width: 500,
+          height: 600,
+          width: 600,
           child: Stack(
             children: [
               _liveFeedBody(),
@@ -138,44 +143,44 @@ class _CameraViewState extends State<CameraView> {
     return Transform.scale(
       scale: 1,
       child: Container(
-        height: 500,
-        width: 500,
+        height: 600,
+        width: 600,
         child: Stack(
           children: [
             createPositionedAnimal(
-              left: locX2.elementAt(clr_index.value),
-              top: locY2.elementAt(clr_index.value),
+              left: locX2.elementAt(clr_index.value - 1),
+              top: locY2.elementAt(clr_index.value - 1),
               animalName: "호랑이",
               assetPath: 'assets/animal/tiger.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX3.elementAt(clr_index.value),
-              top: locY3.elementAt(clr_index.value),
+              left: locX3.elementAt(clr_index.value - 1),
+              top: locY3.elementAt(clr_index.value - 1),
               animalName: "원숭이",
               assetPath: 'assets/animal/monkey.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX4.elementAt(clr_index.value),
-              top: locY4.elementAt(clr_index.value),
+              left: locX4.elementAt(clr_index.value - 1),
+              top: locY4.elementAt(clr_index.value - 1),
               animalName: "기린",
               assetPath: 'assets/animal/giraffe.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX5.elementAt(clr_index.value),
-              top: locY5.elementAt(clr_index.value),
+              left: locX5.elementAt(clr_index.value - 1),
+              top: locY5.elementAt(clr_index.value - 1),
               animalName: "코알라",
               assetPath: 'assets/animal/koala.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX6.elementAt(clr_index.value),
-              top: locY6.elementAt(clr_index.value),
+              left: locX6.elementAt(clr_index.value - 1),
+              top: locY6.elementAt(clr_index.value - 1),
               animalName: "코끼리",
               assetPath: 'assets/animal/elephant.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
               left: locX7.elementAt(clr_index.value),
