@@ -126,33 +126,43 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (useDummy) {
+      if (!useDummy && (!isTTSRunning && !TTSIsRunned)) {
         if (clr_index.value != 0 && clr_index.value != 9) {
-          print(_kindOfPose);
-          print(missions.elementAt(clr_index.value - 1));
-          print(clr_index.value - 1);
-
-          if ((_kindOfPose.replaceAll(" ", "") ==
-                  missions
-                      .elementAt(clr_index.value - 1)
-                      .replaceAll(" ", "")) &&
-              !isPageRunning) {
-            if (!isClearAudioPlaying) pageMove();
-          }
+          _playTTS(gSceneModel!.audioSource[clr_index.value - 1]);
         }
-      } else if (!useDummy) {
-        if (clr_index.value != 0 && clr_index.value != 9) {
-          print(_kindOfPose);
-          print(gSceneModel!.scriptModelList.elementAt(clr_index.value - 1));
-          print(clr_index.value - 1);
+      }
 
-          String? mission = gSceneModel!.scriptModelList
-              .elementAt(clr_index.value - 1)
-              .action_used_in_action_list;
-          if ((_kindOfPose.replaceAll(" ", "") ==
-                  mission!.replaceAll(" ", "")) &&
-              !isPageRunning) {
-            if (!isClearAudioPlaying) pageMove();
+      if (TTSIsRunned) {
+        if (useDummy) {
+          if (clr_index.value != 0 && clr_index.value != 9) {
+            print(_kindOfPose);
+            print(missions.elementAt(clr_index.value - 1));
+            print(clr_index.value - 1);
+
+            if ((_kindOfPose.replaceAll(" ", "") ==
+                    missions
+                        .elementAt(clr_index.value - 1)
+                        .replaceAll(" ", "")) &&
+                !isPageRunning) {
+              if (!isClearAudioPlaying) pageMove();
+            }
+          }
+        } else if (!useDummy) {
+          if (clr_index.value != 0 && clr_index.value != 9) {
+            print(_kindOfPose);
+            print(gSceneModel!.scriptModelList.elementAt(clr_index.value - 1));
+            print(clr_index.value - 1);
+
+            String? mission = gSceneModel!.scriptModelList
+                .elementAt(clr_index.value - 1)
+                .action_used_in_action_list;
+            if ((_kindOfPose.replaceAll(" ", "") ==
+                    mission!.replaceAll(" ", "")) &&
+                !isPageRunning) {
+              if (!isClearAudioPlaying) {
+                pageMove();
+              }
+            }
           }
         }
       }
@@ -175,7 +185,23 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     await Future.delayed(Duration(seconds: 2));
     isClearAudioPlaying = false;
     toggle(true);
+    TTSIsRunned = false;
     init();
+  }
+
+  Future<void> _playTTS(String path) async {
+    isTTSRunning = true;
+    try {
+      print('Attempting to play TTS...');
+      await _audioPlayer.play(DeviceFileSource(path)); // TTS 재생
+      print('TTS playing...');
+      setState(() {
+        isTTSRunning = false;
+        TTSIsRunned = true; // TTS 재생 끝
+      });
+    } catch (e) {
+      print('Error playing TTS: $e');
+    }
   }
 
   Future<void> _playAudio() async {

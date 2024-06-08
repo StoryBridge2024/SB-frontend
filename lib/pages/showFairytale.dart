@@ -34,8 +34,11 @@ class ShowFairytale extends StatelessWidget {
                         style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
                       )
                     : Text(
-                        gSceneModel!
-                            .scriptModelList[i].action_used_in_action_list!,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i]
+                                    .action_used_in_action_list ??
+                                ''
+                            : '',
                         style: TextStyle(
                           fontSize: 60,
                           fontFamily: 'MOVE',
@@ -56,7 +59,10 @@ class ShowFairytale extends StatelessWidget {
                         style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
                       )
                     : Text(
-                        gSceneModel!.scriptModelList[i].scene_contents,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i].scene_contents ??
+                                ''
+                            : '',
                         style: TextStyle(
                           fontSize: 30,
                           fontFamily: 'DDO',
@@ -194,6 +200,12 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
+        if (clr_index.value == 0) {
+          return Container();
+        }
+        if (clr_index.value - 1 == NUMBER_OF_SCENE) {
+          return Container();
+        }
         return Container(
           width: 600,
           height: 600,

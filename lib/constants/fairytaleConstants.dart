@@ -37,15 +37,18 @@ List<FlipCardController> controllerB =
 bool isPageRunning = false;
 bool isClearAudioPlaying = false;
 
+bool isTTSRunning = false;
+bool TTSIsRunned = false;
+
 void toggle(bool toggle) {
   if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
-    if (!isPageRunning && !isClearAudioPlaying) {
+    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
       isPageRunning = true;
       temp1(clr_index.value);
       clr_index.value++;
     }
   } else if (!toggle && clr_index.value != 0) {
-    if (!isPageRunning && !isClearAudioPlaying) {
+    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
       isPageRunning = true;
       clr_index.value--;
       temp2(clr_index.value);
