@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
@@ -43,7 +44,17 @@ class BookHomePage extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
-                  color: color,
+                  decoration: BoxDecoration(
+                    color: color,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                  ),
                   child: (index != 0) ? pages[index - 1] : Container(),
                 ),
               ),
@@ -78,9 +89,19 @@ class BookHomePage extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: color,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                  ),
                   height: double.infinity,
                   width: double.infinity,
-                  color: color,
                   alignment: Alignment.center,
                   child: (index != 8)
                       ? (useDummy)
@@ -176,6 +197,67 @@ class BookHomePage extends StatelessWidget {
           pageFlip(),
         ],
       ),
+    );
+  }
+
+  Widget ShadowContainer() {
+    return ValueListenableBuilder<int>(
+      valueListenable: clr_index,
+      builder: (context, value, _) {
+        return Column(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+            Expanded(
+              flex: 10,
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: (clr_index.value != 0)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.7),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(0, 7),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: (clr_index.value != 9)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.7),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 0.0,
+                                  offset: const Offset(0, 7),
+                                )
+                              ],
+                            ),
+                          )
+                        : Container(),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(),
+            ),
+          ],
+        );
+      },
     );
   }
 
