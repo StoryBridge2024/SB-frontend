@@ -161,70 +161,69 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
     var images = widget.images;
     var face = widget.face;
 
-    ValueNotifier(clr_index);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          flex: 1,
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: _characterAndCamera(),
+          ),
+        ),
+        Flexible(
+          flex: 1,
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: _stamp(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _characterAndCamera() {
+    var images = widget.images;
+    var face = widget.face;
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
-        if (clr_index.value == 0) {
-          return Container();
-        }
-        if (clr_index.value - 1 == NUMBER_OF_SCENE) {
-          return Container();
-        }
-
         return Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 600,
-                    height: 600,
-                    child: Transform.scale(
-                      scale: 1,
-                      child: PoseDetectorView(images: images, face: face),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: ValueListenableBuilder<bool>(
-                    valueListenable: ValueNotifier<bool>(_showStamp),
-                    builder: (context, value, _) {
-                      if (!_showStamp) return Container();
-                      return AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Transform.scale(
-                            scale: _scaleAnimation.value,
-                            child: child,
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            'assets/image/stamp.png',
-                            width: 350,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+          width: 600,
+          height: 600,
+          child: Transform.scale(
+            scale: 1,
+            child: PoseDetectorView(images: images, face: face),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _stamp() {
+    return ValueListenableBuilder(
+      valueListenable: ValueNotifier<bool>(_showStamp),
+      builder: (context, value, _) {
+        if (!_showStamp) return Container();
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _scaleAnimation.value,
+              child: child,
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              'assets/image/stamp.png',
+              width: 350,
+            ),
           ),
         );
       },

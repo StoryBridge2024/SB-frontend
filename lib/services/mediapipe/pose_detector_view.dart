@@ -84,7 +84,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
-                scale: 0.5,
+                scale: 0.8,
                 child: Container(
                   alignment: Alignment.center,
                   width: 600,
@@ -126,45 +126,33 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (!useDummy) {
-        print(clr_index.value - 1);
+      if (useDummy) {
         if (clr_index.value != 0 && clr_index.value != 9) {
-          print(gSceneModel!
-              .scriptModelList[clr_index.value - 1].action_used_in_action_list);
-          //print(missions[clr_index.value]);
-          print(clr_index.value);
-        }
-        if (_kindOfPose ==
-                gSceneModel!.scriptModelList[clr_index.value]
-                    .action_used_in_action_list &&
-            clr_index.value < NUMBER_OF_SCENE - 1) {
-          await pageMove();
-        }
-        if (clr_index.value - 1 != 8) {
-          if (_kindOfPose ==
-                  gSceneModel!.scriptModelList[clr_index.value - 1]
-                      .action_used_in_action_list &&
-              clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
-            await pageMove();
-          }
-
-          if (_kindOfPose == "박수 치기") {
-            if ("박수치기" ==
-                    gSceneModel!.scriptModelList[clr_index.value - 1]
-                        .action_used_in_action_list &&
-                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {}
-            await pageMove();
-          }
-        }
-      } else {
-        if (clr_index.value == 0 || clr_index.value == 9) {
-        } else {
           print(_kindOfPose);
           print(missions.elementAt(clr_index.value - 1));
           print(clr_index.value - 1);
 
-          if (_kindOfPose == missions.elementAt(clr_index.value - 1)) {
-            await pageMove();
+          if ((_kindOfPose.replaceAll(" ", "") ==
+                  missions
+                      .elementAt(clr_index.value - 1)
+                      .replaceAll(" ", "")) &&
+              !isPageRunning) {
+            if (!isClearAudioPlaying) pageMove();
+          }
+        }
+      } else if (!useDummy) {
+        if (clr_index.value != 0 && clr_index.value != 9) {
+          print(_kindOfPose);
+          print(gSceneModel!.scriptModelList.elementAt(clr_index.value - 1));
+          print(clr_index.value - 1);
+
+          String? mission = gSceneModel!.scriptModelList
+              .elementAt(clr_index.value - 1)
+              .action_used_in_action_list;
+          if ((_kindOfPose.replaceAll(" ", "") ==
+                  mission!.replaceAll(" ", "")) &&
+              !isPageRunning) {
+            if (!isClearAudioPlaying) pageMove();
           }
         }
       }
@@ -180,12 +168,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> pageMove() async {
+    isClearAudioPlaying = true;
     missionclear.value = true;
-    isTemp1Running = true;
     _showStampEffect();
     await _playAudio();
     await Future.delayed(Duration(seconds: 2));
-    isTemp1Running = false;
+    isClearAudioPlaying = false;
     toggle(true);
     init();
   }

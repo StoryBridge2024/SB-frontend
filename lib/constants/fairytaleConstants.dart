@@ -34,22 +34,19 @@ List<FlipCardController> controllerF =
 List<FlipCardController> controllerB =
     List.generate(10, (_) => FlipCardController());
 
-bool isTemp1Running = false;
-bool isTemp2Running = false;
+bool isPageRunning = false;
+bool isClearAudioPlaying = false;
 
 void toggle(bool toggle) {
-  print(isTemp1Running);
-  print(isTemp2Running);
-
   if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
-    if (!isTemp2Running && !isTemp1Running) {
-      isTemp1Running = true;
+    if (!isPageRunning && !isClearAudioPlaying) {
+      isPageRunning = true;
       temp1(clr_index.value);
       clr_index.value++;
     }
   } else if (!toggle && clr_index.value != 0) {
-    if (!isTemp1Running && !isTemp2Running) {
-      isTemp2Running = true;
+    if (!isPageRunning && !isClearAudioPlaying) {
+      isPageRunning = true;
       clr_index.value--;
       temp2(clr_index.value);
     }
