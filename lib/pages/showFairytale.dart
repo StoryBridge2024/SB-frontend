@@ -24,8 +24,9 @@ class ShowFairytale extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 2,
+              flex: 3,
               child: Container(
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
@@ -64,7 +65,7 @@ class ShowFairytale extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
+              flex: 2,
               child: Container(),
             ),
           ],
@@ -176,6 +177,7 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
         Flexible(
           flex: 1,
           child: Container(
+            padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
             height: double.infinity,
             width: double.infinity,
             alignment: Alignment.center,
