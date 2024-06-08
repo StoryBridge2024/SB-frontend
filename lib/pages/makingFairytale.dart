@@ -18,6 +18,7 @@ class MakeFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
+    final Future<dynamic> tts = TTS().createSpeech("hello my name is juyoung.");
 
     return MaterialApp(
       home: Scaffold(
