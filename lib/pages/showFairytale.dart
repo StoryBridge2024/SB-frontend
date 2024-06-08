@@ -71,27 +71,39 @@ class ShowFairytale extends StatelessWidget {
         ),
       );
     }
-    return Stack(
-      children: [
-        Positioned(
-          left: 0,
-          right: 0,
-          child: Container(
-            width: 1500,
-            height: 700,
-            child: Book(),
+    return Container(
+      color: Colors.white,
+      child: Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 0,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Book(),
+            ),
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          child: Container(
-            width: 500,
-            height: 500,
-            child: Story(images: images, face: face),
+          Positioned(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 0,
+            child: IgnorePointer(
+              ignoring: true,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Story(images: images, face: face),
+              ),
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
@@ -124,26 +136,23 @@ class _StoryState extends State<Story> {
         }
 
         return Container(
+          height: double.infinity,
+          width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Container(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: 500,
-                          height: 500,
-                          child: Transform.scale(
-                            scale: 1,
-                            child: PoseDetectorView(images: images, face: face),
-                          ),
-                        ),
-                      ),
-                    ],
+                  width: double.infinity,
+                  height: double.infinity,
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 600,
+                    height: 600,
+                    child: Transform.scale(
+                      scale: 1,
+                      child: PoseDetectorView(images: images, face: face),
+                    ),
                   ),
                 ),
               ),

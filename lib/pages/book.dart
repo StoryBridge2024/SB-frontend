@@ -20,21 +20,9 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
-  _renderAppBar(context) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeBottom: true,
-      child: AppBar(
-        elevation: 0.0,
-        backgroundColor: Color(0x00FFFFFF),
-      ),
-    );
-  }
-
   _renderContentFront(context, int index, color) {
     return Card(
       elevation: 0.0,
-      margin: EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
       color: Color(0x00000000),
       child: FlipCard(
         controller: controllerF[index],
@@ -70,7 +58,6 @@ class BookHomePage extends StatelessWidget {
   _renderContentBack(context, int index, color) {
     return Card(
       elevation: 0.0,
-      margin: EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
       color: Color(0x00000000),
       child: FlipCard(
         controller: controllerB[index],
@@ -83,25 +70,31 @@ class BookHomePage extends StatelessWidget {
         },
         front: Container(),
         back: Container(
+          height: double.infinity,
+          width: double.infinity,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 flex: 1,
                 child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
                   color: color,
+                  alignment: Alignment.center,
                   child: (index != 8)
                       ? (useDummy)
                           ? Image.asset(
                               imgs[index],
-                              height: 500,
-                              width: 500,
+                              height: 600,
+                              width: 600,
                             )
                           : Image.memory(
                               base64Decode(
                                 gSceneModel!.b64_images.elementAt(index),
                               ),
-                              height: 500,
-                              width: 500,
+                              height: 600,
+                              width: 600,
                             )
                       : Container(),
                 ),
@@ -121,7 +114,10 @@ class BookHomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        _renderAppBar(context),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
         Expanded(
           flex: 10,
           child: _renderContentFront(context, index, color),
@@ -138,7 +134,10 @@ class BookHomePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        _renderAppBar(context),
+        Expanded(
+          flex: 1,
+          child: Container(),
+        ),
         Expanded(
           flex: 10,
           child: _renderContentBack(context, index, color),
@@ -153,28 +152,26 @@ class BookHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
+    return Container(
+      child: Stack(
         children: <Widget>[
-          _renderBg(),
-          FrontOnStack(context, 8, Colors.deepPurpleAccent), // 8th page right
-          FrontOnStack(context, 7, Colors.indigo), // 7th page right
-          FrontOnStack(context, 6, Colors.blueAccent), // 6th page right
-          FrontOnStack(context, 5, Colors.green), // 5th page right
-          FrontOnStack(context, 4, Colors.lightGreen), // 4th page right
-          FrontOnStack(context, 3, Colors.yellow), // 3rd page right
-          FrontOnStack(context, 2, Colors.orange), // 2nd page right
-          FrontOnStack(context, 1, Colors.red), // 1st page right
+          FrontOnStack(context, 8, Color(0xFFFFFFFF)), // 8th page right
+          FrontOnStack(context, 7, Color(0xFFFFFFFF)), // 7th page right
+          FrontOnStack(context, 6, Color(0xFFFFFFFF)), // 6th page right
+          FrontOnStack(context, 5, Color(0xFFFFFFFF)), // 5th page right
+          FrontOnStack(context, 4, Color(0xFFFFFFFF)), // 4th page right
+          FrontOnStack(context, 3, Color(0xFFFFFFFF)), // 3rd page right
+          FrontOnStack(context, 2, Color(0xFFFFFFFF)), // 2nd page right
+          FrontOnStack(context, 1, Color(0xFFFFFFFF)), // 1st page right
           FrontOnStack(context, 0, Colors.black), // front cover
-          BackOnStack(context, 0, Colors.red), // 1st page left
-          BackOnStack(context, 1, Colors.orange), // 2nd page left
-          BackOnStack(context, 2, Colors.yellow), // 3rd page left
-          BackOnStack(context, 3, Colors.lightGreen), // 4th page left
-          BackOnStack(context, 4, Colors.green), // 5th page left
-          BackOnStack(context, 5, Colors.blueAccent), // 6th page left
-          BackOnStack(context, 6, Colors.indigo), // 7th page left
-          BackOnStack(context, 7, Colors.deepPurpleAccent), // 8th page left
+          BackOnStack(context, 0, Color(0xFFFFFFFF)), // 1st page left
+          BackOnStack(context, 1, Color(0xFFFFFFFF)), // 2nd page left
+          BackOnStack(context, 2, Color(0xFFFFFFFF)), // 3rd page left
+          BackOnStack(context, 3, Color(0xFFFFFFFF)), // 4th page left
+          BackOnStack(context, 4, Color(0xFFFFFFFF)), // 5th page left
+          BackOnStack(context, 5, Color(0xFFFFFFFF)), // 6th page left
+          BackOnStack(context, 6, Color(0xFFFFFFFF)), // 7th page left
+          BackOnStack(context, 7, Color(0xFFFFFFFF)), // 8th page left
           BackOnStack(context, 8, Colors.black), // back cover
           pageFlip(),
         ],

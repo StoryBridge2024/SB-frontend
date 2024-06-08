@@ -116,8 +116,8 @@ class _CameraViewState extends State<CameraView> {
       return Transform.scale(
         scale: 1,
         child: Container(
-          height: 500,
-          width: 500,
+          height: 600,
+          width: 600,
           child: Stack(
             children: [
               _liveFeedBody(),
@@ -143,8 +143,8 @@ class _CameraViewState extends State<CameraView> {
     return Transform.scale(
       scale: 1,
       child: Container(
-        height: 500,
-        width: 500,
+        height: 600,
+        width: 600,
         child: Stack(
           children: [
             createPositionedAnimal(

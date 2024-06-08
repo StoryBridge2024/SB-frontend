@@ -16,7 +16,6 @@ import 'camera_view.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-
 bool doPrint = true;
 
 // 카메라에서 스켈레톤 추출하는 화면
@@ -70,8 +69,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     return Stack(
       children: [
         Container(
-          height: 500,
-          width: 500,
+          height: 600,
+          width: 600,
           child: CameraView(
             // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
             onImage: (inputImage) {
@@ -83,14 +82,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           left: locX1.elementAt(clr_index.value - 1) - 50,
           top: locY1.elementAt(clr_index.value - 1) - 200,
           child: Container(
-            width: 500,
+            width: 600,
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
                 scale: 0.5,
                 child: Container(
                   alignment: Alignment.center,
-                  width: 500,
+                  width: 600,
                   height: 1000,
                   child: _movementFollow,
                 ),
@@ -150,7 +149,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           doPrint = true;
 
           init();
-
         }
         if (clr_index.value - 1 != 8) {
           if (doPrint) {
@@ -162,7 +160,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if (_kindOfPose ==
                   gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
-
               clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
             toggle(true);
             _showStampEffect();
