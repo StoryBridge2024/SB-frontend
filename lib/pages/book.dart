@@ -407,15 +407,18 @@ class BookHomePage extends StatelessWidget {
             valueListenable: playButton,
             builder: (context, value, _) {
               return Container(
-                alignment: Alignment.centerLeft,
-                child: playButton.value
-                    ? FloatingActionButton(
-                        elevation: 0,
-                        hoverElevation: 0,
-                        focusElevation: 0,
-                        highlightElevation: 0,
-                        backgroundColor: Color(0x00000000),
-                        child: Text("동화 다시 듣기"),
+                alignment: Alignment.centerRight,
+                child: (playButton.value && (clr_index.value != 0))
+                    ? TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
+                          ),
+                        ),
+                        child: Text(
+                          "📢 이 페이지의 동화 다시 듣기 📢",
+                          style: TextStyle(fontSize: 25),
+                        ),
                         onPressed: () {
                           isTTSRunning = false;
                           TTSIsRunned = false;
