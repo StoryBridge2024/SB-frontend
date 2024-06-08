@@ -1,17 +1,20 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:frontend/constants/const.dart';
-import 'package:frontend/constants/dummy_data.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/services/mediapipe/movement_follow.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'package:frontend/services/mediapipe/pose_arrange.dart';
-import 'camera_view.dart';
+import 'package:frontend/constants/const.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/services/mediapipe/movement_follow.dart';
+import 'package:frontend/services/mediapipe/pose_arrange.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
-bool doPrint = true;
+import 'camera_view.dart';
+
+import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
@@ -36,6 +39,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   String _kindOfPose = "";
   var _movementFollow;
+  bool _showStamp = false;
+  final _audioPlayer = AudioPlayer();
 
   //동작 개수만큼 리스트 요소 개수 정하면 됨.
   List<int> count = List.filled(11, 0);
@@ -49,17 +54,21 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   void dispose() async {
     _canProcess = false;
     _poseDetector.close();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (clr_index.value == 0) {
+      return Container();
+    }
     // 카메라뷰 보이기
     return Stack(
       children: [
         Container(
-          height: 500,
-          width: 500,
+          height: 600,
+          width: 600,
           child: CameraView(
             // 카메라에서 전해주는 이미지 받을 때마다 아래 함수 실행
             onImage: (inputImage) {
@@ -68,17 +77,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value) - 150,
-          top: locY1.elementAt(clr_index.value) - 200,
+          left: locX1.elementAt(clr_index.value - 1) - 50,
+          top: locY1.elementAt(clr_index.value - 1) - 200,
           child: Container(
-            width: 500,
+            width: 600,
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
                 scale: 0.5,
                 child: Container(
                   alignment: Alignment.center,
-                  width: 500,
+                  width: 600,
                   height: 1000,
                   child: _movementFollow,
                 ),
@@ -88,6 +97,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         ),
       ],
     );
+  }
+
+  void init() {
+    count = List.filled(11, 0);
+    leftWristXChanges = [];
+    rightWristXChanges = [];
   }
 
   // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
@@ -111,36 +126,48 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (clr_index.value != 8) {
-        if (doPrint) {
-          print(_kindOfPose);
+      if (!useDummy) {
+        print(clr_index.value - 1);
+        if (clr_index.value != 0 && clr_index.value != 9) {
           print(gSceneModel!
-              .scriptModelList[clr_index.value].action_used_in_action_list);
+              .scriptModelList[clr_index.value - 1].action_used_in_action_list);
           //print(missions[clr_index.value]);
           print(clr_index.value);
-          doPrint = false;
         }
         if (_kindOfPose ==
                 gSceneModel!.scriptModelList[clr_index.value]
                     .action_used_in_action_list &&
             clr_index.value < NUMBER_OF_SCENE - 1) {
-          clr_index.value++;
-          doPrint = true;
+          await pageMove();
         }
-
-        if (_kindOfPose == "박수 치기") {
-          if ("박수치기" ==
-                  gSceneModel!.scriptModelList[clr_index.value]
+        if (clr_index.value - 1 != 8) {
+          if (_kindOfPose ==
+                  gSceneModel!.scriptModelList[clr_index.value - 1]
                       .action_used_in_action_list &&
-              clr_index.value < NUMBER_OF_SCENE - 1) {
-            clr_index.value++;
-            doPrint = true;
+              clr_index.value - 1 < NUMBER_OF_SCENE - 1) {
+            await pageMove();
+          }
+
+          if (_kindOfPose == "박수 치기") {
+            if ("박수치기" ==
+                    gSceneModel!.scriptModelList[clr_index.value - 1]
+                        .action_used_in_action_list &&
+                clr_index.value - 1 < NUMBER_OF_SCENE - 1) {}
+            await pageMove();
+          }
+        }
+      } else {
+        if (clr_index.value == 0 || clr_index.value == 9) {
+        } else {
+          print(_kindOfPose);
+          print(missions.elementAt(clr_index.value - 1));
+          print(clr_index.value - 1);
+
+          if (_kindOfPose == missions.elementAt(clr_index.value - 1)) {
+            await pageMove();
           }
         }
       }
-      // if (_kindOfPose == missions[clr_index.value]) {
-      //   clr_index.value++;
-      // }
     } else {
       // 추출된 포즈 없음
       _customPaint = null;
@@ -150,5 +177,38 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  Future<void> pageMove() async {
+    missionclear.value = true;
+    isTemp1Running = true;
+    _showStampEffect();
+    await _playAudio();
+    await Future.delayed(Duration(seconds: 2));
+    isTemp1Running = false;
+    toggle(true);
+    init();
+  }
+
+  Future<void> _playAudio() async {
+    try {
+      print('Attempting to play audio...');
+      await _audioPlayer.play(AssetSource('audio/whistle.mp3'));
+      print('Audio playing...');
+    } catch (e) {
+      print('Error playing audio: $e');
+    }
+  }
+
+  void _showStampEffect() {
+    setState(() {
+      _showStamp = true;
+    });
+
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _showStamp = false;
+      });
+    });
   }
 }

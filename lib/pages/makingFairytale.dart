@@ -219,6 +219,12 @@ class _TmpFairytaleState extends State<TmpFairytale> {
 
   @override
   Widget build(BuildContext context) {
+    print("hehehehehehehehe");
+    print(locX1.elementAt(index));
+    print(locY1.elementAt(index));
+    print(index);
+    print(clr_index);
+    print("gegege");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -228,9 +234,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
               color: Colors.white,
               child: Stack(
                 children: [
-                  Positioned(
-                    left: 0,
-                    right: 0,
+                  Center(
                     child: Image.memory(
                       base64Decode(gSceneModel!.b64_images.elementAt(index)),
                       height: 500,
