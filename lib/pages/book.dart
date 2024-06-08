@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/pages/homePage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'getMessage.dart';
@@ -475,7 +476,35 @@ class BookHomePage extends StatelessWidget {
         ),
         Flexible(
           flex: 1,
-          child: Container(),
+          child: ValueListenableBuilder<int>(
+            valueListenable: clr_index,
+            builder: (context, value, _) {
+              return Container(
+                alignment: Alignment.centerRight,
+                child: (clr_index.value == 9)
+                    ? TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
+                          ),
+                        ),
+                        child: Text(
+                          "첫 화면으로 가기",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ),
+                          );
+                        },
+                      )
+                    : Container(),
+              );
+            },
+          ),
         ),
       ],
     );
