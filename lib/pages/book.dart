@@ -7,6 +7,8 @@ import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'getMessage.dart';
+
 class Book extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -157,7 +159,7 @@ class BookHomePage extends StatelessWidget {
                   alignment: Alignment.center,
                   color: color,
                   child: Text(
-                    '동화주제:',
+                    tec.text,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
