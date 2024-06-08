@@ -103,6 +103,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     count = List.filled(11, 0);
     leftWristXChanges = [];
     rightWristXChanges = [];
+    isFinishTTS = false;
   }
 
   // 카메라에서 실시간으로 받아온 이미지 처리: 이미지에 포즈가 추출되었으면 스켈레톤 그려주기
@@ -125,6 +126,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final movementFollow =
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
+      await _playTTS(gSceneModel!.audioSource[clr_index.value]);
 
       if (useDummy) {
         if (clr_index.value != 0 && clr_index.value != 9) {
@@ -152,7 +154,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if ((_kindOfPose.replaceAll(" ", "") ==
                   mission!.replaceAll(" ", "")) &&
               !isPageRunning) {
-            if (!isClearAudioPlaying) pageMove();
+            if (!isClearAudioPlaying) {
+              pageMove();
+            }
           }
         }
       }
@@ -168,14 +172,29 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> pageMove() async {
+    // isFinishTTS = true;
     isClearAudioPlaying = true;
     missionclear.value = true;
+    // await _playTTS(gSceneModel!.audioSource[clr_index.value]);
     _showStampEffect();
     await _playAudio();
     await Future.delayed(Duration(seconds: 2));
     isClearAudioPlaying = false;
     toggle(true);
     init();
+  }
+
+  Future<void> _playTTS(String path) async {
+    try {
+      print('Attempting to play TTS...');
+      await _audioPlayer.play(AssetSource(path)); // TTS 재생
+      print('TTS playing...');
+      setState(() {
+        isFinishTTS = false; // TTS 재생 끝
+      });
+    } catch (e) {
+      print('Error playing TTS: $e');
+    }
   }
 
   Future<void> _playAudio() async {
