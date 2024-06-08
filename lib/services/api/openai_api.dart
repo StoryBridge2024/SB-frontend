@@ -60,6 +60,11 @@ class OpenAI {
       var element = deepCopy(ELEMENT);
       scriptPrompt["messages"].add(element);
     });
+    for (int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT * 2; i++) {
+      scriptPrompt["messages"].add(
+        EXAMPLE_REQUEST[i],
+      );
+    }
     for (int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
       scriptPrompt["messages"][i * 2 + 2]["content"] =
           jsonEncode(EXAMPLE_RESPONSE[i]);
@@ -171,7 +176,6 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    return SceneModel(
-        content: content, images: images, audioSource: audios);
+    return SceneModel(content: content, images: images, audioSource: audios);
   }
 }
