@@ -34,13 +34,11 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool _canProcess = true;
   bool _isBusy = false;
 
-  // 스켈레톤 모양을 그려주는 변수
-  CustomPaint? _customPaint;
-
   String _kindOfPose = "";
   var _movementFollow;
   bool _showStamp = false;
-  final _audioPlayer = AudioPlayer();
+  final _missionAudioPlayer = AudioPlayer();
+  final _ttsAudioPlayer = AudioPlayer();
 
   //동작 개수만큼 리스트 요소 개수 정하면 됨.
   List<int> count = List.filled(11, 0);
@@ -54,7 +52,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   void dispose() async {
     _canProcess = false;
     _poseDetector.close();
-    _audioPlayer.dispose();
+    _missionAudioPlayer.dispose();
+    _ttsAudioPlayer.dispose();
     super.dispose();
   }
 
@@ -126,53 +125,42 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           MovementFollow(poses: poses, images: images, face: face);
       _movementFollow = movementFollow;
 
-      if (!useDummy && (!isTTSRunning && !TTSIsRunned)) {
-        if (clr_index.value != 0 && clr_index.value != 9) {
-          _playTTS(gSceneModel!.audioSource[clr_index.value - 1]);
-        }
-      } else if (useDummy && (!isTTSRunning && !TTSIsRunned)) {
-        if (clr_index.value != 0 && clr_index.value != 9) {
-          _playTTS(audios[clr_index.value - 1]);
-        }
+      if (!doMissionChecking) {
+        init();
       }
 
-      if (TTSIsRunned) {
-        if (useDummy) {
-          if (clr_index.value != 0 && clr_index.value != 9) {
-            print(_kindOfPose);
-            print(missions.elementAt(clr_index.value - 1));
-            print(clr_index.value - 1);
+      var index = clr_index.value - 1;
+      if (index != -1 && index != 8) {
+        if (doTTSRunning) {
+          doTTSRunning = false;
 
-            if ((_kindOfPose.replaceAll(" ", "") ==
-                    missions
-                        .elementAt(clr_index.value - 1)
-                        .replaceAll(" ", "")) &&
-                !isPageRunning) {
-              if (!isClearAudioPlaying) pageMove();
-            }
+          if (useDummy) {
+            _playTTS(audios[index]);
+          } else if (!useDummy) {
+            _playTTS(gSceneModel!.audioSource[index]);
           }
-        } else if (!useDummy) {
-          if (clr_index.value != 0 && clr_index.value != 9) {
-            print(_kindOfPose);
-            print(gSceneModel!.scriptModelList.elementAt(clr_index.value - 1));
-            print(clr_index.value - 1);
+        }
 
-            String? mission = gSceneModel!.scriptModelList
-                .elementAt(clr_index.value - 1)
-                .action_used_in_action_list;
-            if ((_kindOfPose.replaceAll(" ", "") ==
-                    mission!.replaceAll(" ", "")) &&
-                !isPageRunning) {
-              if (!isClearAudioPlaying) {
-                pageMove();
-              }
+        if (doMissionChecking) {
+          if (useDummy) {
+            if (_kindOfPose.replaceAll(" ", "") ==
+                missions[index].replaceAll(" ", "")) {
+              doMissionChecking = false;
+              doStampRunning = true;
+              missionClear(_kindOfPose);
+            }
+          } else if (!useDummy) {
+            if (_kindOfPose.replaceAll(" ", "") ==
+                gSceneModel!.scriptModelList[index].action_used_in_action_list!
+                    .replaceAll(" ", "")) {
+              doMissionChecking = false;
+              doStampRunning = true;
+              missionClear(_kindOfPose);
             }
           }
         }
       }
     } else {
-      // 추출된 포즈 없음
-      _customPaint = null;
       _movementFollow = Container();
     }
     _isBusy = false;
@@ -181,50 +169,46 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     }
   }
 
-  Future<void> pageMove() async {
-    isClearAudioPlaying = true;
-    missionclear.value = true;
-    _showStampEffect();
-    await _playAudio();
-    await Future.delayed(Duration(seconds: 2));
-    isClearAudioPlaying = false;
-    toggle(true);
-    TTSIsRunned = false;
-    init();
+  void missionClear(kindOfPose) {
+    if (doStampRunning) {
+      doStampRunning = false;
+      if (kindOfPose.replaceAll(" ", "") == "") {
+        doPageMovementRunning = true;
+        toggle(true);
+      } else {
+        missionclear.value = true;
+        _showStampEffect();
+        _missionAudioPlayer.play(AssetSource('audio/whistle.mp3'));
+        _missionAudioPlayer.onPlayerComplete.listen(
+          (event) {
+            doPageMovementRunning = true;
+            toggle(true);
+          },
+        );
+      }
+    }
   }
 
   Future<void> _playTTS(String path) async {
-    isTTSRunning = true;
     try {
       print('Attempting to play TTS...');
       if (!useDummy) {
-        await _audioPlayer.play(DeviceFileSource(path)); // TTS 재생
+        await _ttsAudioPlayer.play(DeviceFileSource(path)); // TTS 재생
       } else {
-        await _audioPlayer.play(AssetSource(path));
+        await _ttsAudioPlayer.play(AssetSource(path));
       }
       print('TTS playing...');
-      _audioPlayer.onPlayerComplete.listen(
+      _ttsAudioPlayer.onPlayerComplete.listen(
         (event) {
           setState(
             () {
-              isTTSRunning = false;
-              TTSIsRunned = true; // TTS 재생 끝
+              doMissionChecking = true;
             },
           );
         },
       );
     } catch (e) {
       print('Error playing TTS: $e');
-    }
-  }
-
-  Future<void> _playAudio() async {
-    try {
-      print('Attempting to play audio...');
-      await _audioPlayer.play(AssetSource('audio/whistle.mp3'));
-      print('Audio playing...');
-    } catch (e) {
-      print('Error playing audio: $e');
     }
   }
 

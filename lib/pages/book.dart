@@ -36,7 +36,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageRunning = false;
+          isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(
           child: Row(
@@ -80,7 +85,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageRunning = false;
+          isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(),
         back: Container(
@@ -144,7 +154,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isClearAudioPlaying = false;
+          isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(
           child: Row(
@@ -187,7 +202,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isClearAudioPlaying = false;
+          isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(),
         back: Container(
@@ -421,8 +441,7 @@ class BookHomePage extends StatelessWidget {
                           style: TextStyle(fontSize: 25),
                         ),
                         onPressed: () {
-                          isTTSRunning = false;
-                          TTSIsRunned = false;
+                          doTTSRunning = true;
                         },
                       )
                     : Container(),
@@ -447,6 +466,11 @@ class BookHomePage extends StatelessWidget {
                     focusColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
+                      doTTSRunning = false;
+                      doMissionChecking = false;
+                      doStampRunning = false;
+                      doPageMovementRunning = true;
+
                       toggle(false);
                     },
                   ),
@@ -466,6 +490,11 @@ class BookHomePage extends StatelessWidget {
                     hoverColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
+                      doTTSRunning = false;
+                      doMissionChecking = false;
+                      doStampRunning = false;
+                      doPageMovementRunning = true;
+
                       toggle(true);
                     },
                   ),

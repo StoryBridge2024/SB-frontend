@@ -38,40 +38,30 @@ List<FlipCardController> controllerF =
 List<FlipCardController> controllerB =
     List.generate(10, (_) => FlipCardController());
 
-bool isPageRunning = false;
-bool isClearAudioPlaying = false;
+bool doTTSRunning = false;
+bool doMissionChecking = false;
+bool doStampRunning = false;
+bool doPageMovementRunning = false;
 
-bool isTTSRunning = false;
-bool TTSIsRunned = false;
+bool isPageMovementRunning = false;
 
 ValueNotifier<bool> playButton = ValueNotifier(false);
 
 void toggle(bool toggle) {
-  if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
-    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
-      isPageRunning = true;
-      temp1(clr_index.value);
+  if (doPageMovementRunning && !isPageMovementRunning) {
+    isPageMovementRunning = true;
+    doPageMovementRunning = false;
+
+    if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
+      controllerF[clr_index.value].toggleCard();
+      controllerB[clr_index.value].toggleCard();
       clr_index.value++;
-      playButton.value = false;
-    }
-  } else if (!toggle && clr_index.value != 0) {
-    if (!isPageRunning && !isClearAudioPlaying && !isTTSRunning) {
-      isPageRunning = true;
+    } else if (!toggle && clr_index.value != 0) {
       clr_index.value--;
-      temp2(clr_index.value);
-      playButton.value = true;
+      controllerF[clr_index.value].toggleCard();
+      controllerB[clr_index.value].toggleCard();
     }
   }
-}
-
-void temp1(int index) {
-  controllerF[index].toggleCard();
-  controllerB[index].toggleCard();
-}
-
-void temp2(int index) {
-  controllerF[index].toggleCard();
-  controllerB[index].toggleCard();
 }
 
 List<Widget> pages = List<Widget>.filled(8, Container());
