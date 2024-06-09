@@ -34,9 +34,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   bool _canProcess = true;
   bool _isBusy = false;
 
-  // 스켈레톤 모양을 그려주는 변수
-  CustomPaint? _customPaint;
-
   String _kindOfPose = "";
   var _movementFollow;
   bool _showStamp = false;
@@ -164,8 +161,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         }
       }
     } else {
-      // 추출된 포즈 없음
-      _customPaint = null;
       _movementFollow = Container();
     }
     _isBusy = false;
