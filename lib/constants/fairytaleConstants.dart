@@ -52,6 +52,7 @@ void toggle(bool toggle) {
     isPageMovementRunning = true;
     doPageMovementRunning = false;
 
+    AudioPlayer().play(AssetSource('audio/pageTurn.mp3'));
     if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
       controllerF[clr_index.value].toggleCard();
       controllerB[clr_index.value].toggleCard();
