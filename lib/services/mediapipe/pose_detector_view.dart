@@ -150,7 +150,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                 missions[index].replaceAll(" ", "")) {
               doMissionChecking = false;
               doStampRunning = true;
-              missionClear();
+              missionClear(_kindOfPose);
             }
           } else if (!useDummy) {
             if (_kindOfPose.replaceAll(" ", "") ==
@@ -158,7 +158,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
                     .replaceAll(" ", "")) {
               doMissionChecking = false;
               doStampRunning = true;
-              missionClear();
+              missionClear(_kindOfPose);
             }
           }
         }
@@ -174,18 +174,23 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     }
   }
 
-  void missionClear() {
+  void missionClear(kindOfPose) {
     if (doStampRunning) {
       doStampRunning = false;
-      missionclear.value = true;
-      _showStampEffect();
-      _missionAudioPlayer.play(AssetSource('audio/whistle.mp3'));
-      _missionAudioPlayer.onPlayerComplete.listen(
-        (event) {
-          doPageMovementRunning = true;
-          toggle(true);
-        },
-      );
+      if (kindOfPose.replaceAll(" ", "") == "") {
+        doPageMovementRunning = true;
+        toggle(true);
+      } else {
+        missionclear.value = true;
+        _showStampEffect();
+        _missionAudioPlayer.play(AssetSource('audio/whistle.mp3'));
+        _missionAudioPlayer.onPlayerComplete.listen(
+          (event) {
+            doPageMovementRunning = true;
+            toggle(true);
+          },
+        );
+      }
     }
   }
 
