@@ -42,3 +42,14 @@ List<String> audios = [
   "dummyAudio/음성파일 3.mp3",
   "dummyAudio/음성파일 4.mp3",
 ];
+
+List<List<String>> animals = [
+  ["코끼리"],
+  ["기린"],
+  ["코알라"],
+  ["사자"],
+  ["원숭이"],
+  ["강아지"],
+  ["호랑이"],
+  [],
+];
