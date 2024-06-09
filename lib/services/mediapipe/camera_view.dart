@@ -108,8 +108,8 @@ class _CameraViewState extends State<CameraView> {
     return Positioned(
       left: left,
       top: top,
-      child: animalName ==
-              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+      child: gSceneModel!.scriptModelList[index].animals_from_animal_list
+              .contains(animalName)
           ? Image.asset(
               assetPath,
               height: 150,
