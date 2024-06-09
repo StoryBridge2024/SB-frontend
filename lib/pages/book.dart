@@ -166,7 +166,7 @@ class BookHomePage extends StatelessWidget {
                   child: Text(
                     tec.text,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 35,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

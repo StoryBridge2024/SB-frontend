@@ -23,7 +23,7 @@ class MakeFairytale extends StatelessWidget {
 
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color.fromARGB(0xFF, 0xC9, 0xEE, 0xFC),
+        backgroundColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         body: FutureBuilder(
           future: sceneModel,
           builder: (context, snapshot) {
@@ -45,6 +45,9 @@ class MakeFairytale extends StatelessWidget {
                   Text(
                     '삽화와 이야기를 보고, 캐릭터를 적절한 곳에 배치해주세요!',
                     style: TextStyle(fontSize: 50),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   TextButton(
                     style: ButtonStyle(
@@ -80,11 +83,14 @@ class MakeFairytale extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      '이야기를 만드는 중입니다',
+                      '어떤 이야기가 나올까요? 같이 상상해봐요!',
                       style: TextStyle(
                         color: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
-                        fontSize: 80,
+                        fontSize: 65,
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Text(
                       '동화 주제: $text',
