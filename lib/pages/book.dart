@@ -36,8 +36,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          doTTSRunning = true;
           isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(
           child: Row(
@@ -81,8 +85,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          doTTSRunning = true;
           isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(),
         back: Container(
@@ -146,8 +154,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          doTTSRunning = true;
           isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(
           child: Row(
@@ -190,8 +202,12 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          doTTSRunning = true;
           isPageMovementRunning = false;
+          if (clr_index.value != 0 || clr_index.value != 9) {
+            doTTSRunning = true;
+          } else {
+            doPageMovementRunning = true;
+          }
         },
         front: Container(),
         back: Container(
@@ -450,6 +466,11 @@ class BookHomePage extends StatelessWidget {
                     focusColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
+                      doTTSRunning = false;
+                      doMissionChecking = false;
+                      doStampRunning = false;
+                      doPageMovementRunning = true;
+
                       toggle(false);
                     },
                   ),
@@ -469,6 +490,11 @@ class BookHomePage extends StatelessWidget {
                     hoverColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
+                      doTTSRunning = false;
+                      doMissionChecking = false;
+                      doStampRunning = false;
+                      doPageMovementRunning = true;
+
                       toggle(true);
                     },
                   ),
