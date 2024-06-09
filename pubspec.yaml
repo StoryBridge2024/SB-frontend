@@ -47,6 +47,7 @@ dependencies:
   audioplayers: ^6.0.0
   sqlite3_flutter_libs: ^0.5.23
   firebase_core: ^3.0.0
+  cloud_firestore: ^5.0.0
 
 dev_dependencies:
   flutter_test:
