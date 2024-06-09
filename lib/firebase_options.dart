@@ -59,5 +59,4 @@ class DefaultFirebaseOptions {
     projectId: 'story-bridge-51117',
     storageBucket: 'story-bridge-51117.appspot.com',
   );
-
 }

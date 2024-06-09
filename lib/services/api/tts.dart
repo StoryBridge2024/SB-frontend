@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:frontend/constants/const.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
+
 import '../../constants/prompt.dart';
 import '../util.dart';
 
@@ -43,7 +43,8 @@ class TTS {
     Directory tempDirectory = await getTemporaryDirectory();
 
     // Create a file path with timestamp so that multiple files do not overwrite each other.
-    String filePath = '${tempDirectory.path}/audio_${DateTime.now().millisecondsSinceEpoch}.mp3';
+    String filePath =
+        '${tempDirectory.path}/audio_${DateTime.now().millisecondsSinceEpoch}.mp3';
 
     // Write the file.
     var file = File(filePath);

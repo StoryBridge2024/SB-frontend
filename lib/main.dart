@@ -19,7 +19,10 @@ void main() async {
   );
   var fireStore = FireStore();
   await fireStore.create();
-  print("Firebase initialized");
+  print("Firebase: created document in collection 'cars'");
+  var ReadedData = await fireStore.read();
+  print("Firebase: read data from collection 'cars'");
+  print(ReadedData);
   cameras = await availableCameras();
   runApp(
     const MyApp(),
