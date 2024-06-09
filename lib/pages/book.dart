@@ -36,7 +36,8 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageRunning = false;
+          doTTSRunning = true;
+          isPageMovementRunning = false;
         },
         front: Container(
           child: Row(
@@ -80,7 +81,8 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageRunning = false;
+          doTTSRunning = true;
+          isPageMovementRunning = false;
         },
         front: Container(),
         back: Container(
@@ -144,7 +146,8 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isClearAudioPlaying = false;
+          doTTSRunning = true;
+          isPageMovementRunning = false;
         },
         front: Container(
           child: Row(
@@ -187,7 +190,8 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isClearAudioPlaying = false;
+          doTTSRunning = true;
+          isPageMovementRunning = false;
         },
         front: Container(),
         back: Container(
@@ -421,8 +425,7 @@ class BookHomePage extends StatelessWidget {
                           style: TextStyle(fontSize: 25),
                         ),
                         onPressed: () {
-                          isTTSRunning = false;
-                          TTSIsRunned = false;
+                          doTTSRunning = true;
                         },
                       )
                     : Container(),
