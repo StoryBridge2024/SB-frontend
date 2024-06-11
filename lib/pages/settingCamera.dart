@@ -89,7 +89,7 @@ class Content extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(0xFF, 0x5D, 0x54, 0xC0),
+                      backgroundColor: Color.fromARGB(0x75, 0x22, 0x1A, 0x7E),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
