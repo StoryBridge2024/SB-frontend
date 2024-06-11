@@ -402,26 +402,30 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                               padding: EdgeInsets.all(30),
                               height: double.infinity,
                               width: double.infinity,
-                              child: TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (index > 0) {
-                                    setState(
-                                      () {
-                                        index -= 1;
+                              child: (index == 0)
+                                  ? Container()
+                                  : TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          Color.fromARGB(
+                                              0x75, 0x91, 0xB6, 0xFF),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (index > 0) {
+                                          setState(
+                                            () {
+                                              index -= 1;
+                                            },
+                                          );
+                                        }
                                       },
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  '이전',
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                              ),
+                                      child: Text(
+                                        '이전',
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                    ),
                             ),
                           ),
                           Flexible(
@@ -451,10 +455,15 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                     );
                                   }
                                 },
-                                child: Text(
-                                  '다음',
-                                  style: TextStyle(fontSize: 30),
-                                ),
+                                child: (index == 7)
+                                    ? Text(
+                                        '배치하기 종료',
+                                        style: TextStyle(fontSize: 30),
+                                      )
+                                    : Text(
+                                        '다음',
+                                        style: TextStyle(fontSize: 30),
+                                      ),
                               ),
                             ),
                           ),

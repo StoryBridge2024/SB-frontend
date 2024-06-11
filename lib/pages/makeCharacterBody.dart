@@ -67,41 +67,31 @@ class MakeCharacterBody extends StatelessWidget {
                       child: Container(),
                     ),
                     Flexible(
-                        flex: 11,
-                        child: Stack(
-                          children: [
-                            DrawBox(face: file),
-                            Center(
-                              child: IgnorePointer(
-                                ignoring: true,
-                                child: Container(
-                                  child: Image.asset(
-                                    "assets/image/human_shape_no_head.png",
-                                    scale: 0.85,
-                                  ),
+                      flex: 11,
+                      child: Stack(
+                        children: [
+                          DrawBox(face: file),
+                          Center(
+                            child: IgnorePointer(
+                              ignoring: true,
+                              child: Container(
+                                child: Image.asset(
+                                  "assets/image/human_shape_no_head.png",
+                                  scale: 0.85,
                                 ),
                               ),
                             ),
-                            Container(
-                                alignment: Alignment.topCenter,
-                                child: SizedBox(
-                                  // width: 100,
-                                  height: 130,
-                                  child: file,
-                                )),
-                            // Positioned(
-                            //
-                            //   top: 50.0,
-                            //   left: 400,
-                            //   // right: 0,
-                            //   child: SizedBox(
-                            //     // width: 100,
-                            //     height: 150,
-                            //     child: file,
-                            //   ),
-                            // ),
-                          ],
-                        )),
+                          ),
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              height: 130,
+                              child: file,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Flexible(
                       flex: 1,
                       child: Container(),
@@ -139,7 +129,7 @@ class _DrawBoxState extends State<DrawBox> {
     var face = widget.face;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 64),
         child: Column(
