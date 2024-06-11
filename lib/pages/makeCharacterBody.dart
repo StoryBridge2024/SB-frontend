@@ -89,7 +89,7 @@ class MakeCharacterBody extends StatelessWidget {
                                   height: 130,
                                   child: file,
                                 )),
-                            // Positioned( // 주영이 태블릿에 맞게 재설정
+                            // Positioned(
                             //
                             //   top: 50.0,
                             //   left: 400,

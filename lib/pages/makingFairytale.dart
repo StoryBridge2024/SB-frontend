@@ -130,7 +130,7 @@ class _PlacingCharacterState extends State<PlacingCharacter> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
@@ -140,6 +140,7 @@ class _PlacingCharacterState extends State<PlacingCharacter> {
                 '동화 만들기',
                 style: TextStyle(
                     fontSize: 60,
+                    fontWeight: FontWeight.w600,
                     color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13)),
               ),
             ),
