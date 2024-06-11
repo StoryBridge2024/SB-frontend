@@ -249,7 +249,7 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
       _showStamp = true;
     });
     _controller.forward(from: 0).then((_) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(milliseconds: 200), () {
         setState(() {
           _showStamp = false;
         });
