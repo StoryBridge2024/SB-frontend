@@ -105,6 +105,9 @@ class Content extends StatelessWidget {
                     ),
                     onPressed: () {
                       clr_index.value = 0;
+                      doTTSRunning = false;
+                      doMissionChecking = false;
+                      doStampRunning = false;
                       doPageMovementRunning = true;
 
                       Navigator.push(

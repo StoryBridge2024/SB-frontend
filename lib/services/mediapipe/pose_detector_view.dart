@@ -76,14 +76,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value - 1) - 50,
-          top: locY1.elementAt(clr_index.value - 1) - 200,
+          left: locX1.elementAt(clr_index.value - 1) - 80,
+          top: locY1.elementAt(clr_index.value - 1) - 240,
           child: Container(
             width: 600,
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
-                scale: 0.8,
+                scale: 1.1,
                 child: Container(
                   alignment: Alignment.center,
                   width: 600,
