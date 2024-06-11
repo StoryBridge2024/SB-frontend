@@ -24,9 +24,9 @@ class MovementFollow extends StatefulWidget {
 }
 
 class _MovementFollowState extends State<MovementFollow> {
-  int x = 200;
-  int y = 0;
-  double rate = 0.8;
+  int x = 250;
+  int y = 250;
+  double rate = 0.5;
 
   double lengthX(var p1, var p2) {
     double x1 = p1!.x;
@@ -72,13 +72,15 @@ class _MovementFollowState extends State<MovementFollow> {
     return angle;
   }
 
-  Widget _arm(var p1, var p2, var image) {
+  Widget _arm(var middleX, var middleY, var p1, var p2, var image) {
     return Positioned(
-      right: ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) + x) * rate,
-      top: ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) + y) * rate,
+      right:
+          ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) - middleX) * rate + x,
+      top:
+          ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) - middleY) * rate + y,
       child: Container(
-        width: length(p2, p1) * 1.2,
-        height: length(p2, p1) * 1.2,
+        width: length(p2, p1) * 1.2 * rate,
+        height: length(p2, p1) * 1.2 * rate,
         child: Transform.rotate(
           angle: angle(p1, p2),
           child: Container(
@@ -90,17 +92,20 @@ class _MovementFollowState extends State<MovementFollow> {
     );
   }
 
-  Widget _body(var p1, var p2, var p3, var p4, var image) {
+  Widget _body(
+      var middleX, var middleY, var p1, var p2, var p3, var p4, var image) {
     return Positioned(
-      right:
-          ((((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) + x) *
-              rate,
-      top:
-          ((((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) + y) *
-              rate,
+      right: ((((p1!.x + p2!.x + p3!.x + p4!.x) / 4) - length(p4, p1) * 0.5) -
+                  middleX) *
+              rate +
+          x,
+      top: ((((p1!.y + p2!.y + p3!.y + p4!.y) / 4) - length(p4, p1) * 0.5) -
+                  middleY) *
+              rate +
+          y,
       child: Container(
-        width: length(p4, p1) * 1,
-        height: length(p4, p1) * 1,
+        width: length(p4, p1) * 1 * rate,
+        height: length(p4, p1) * 1 * rate,
         child: Transform.rotate(
           angle: angle(p2, p1),
           child: Container(
@@ -112,15 +117,17 @@ class _MovementFollowState extends State<MovementFollow> {
     );
   }
 
-  Widget _leg(var p1, var p2, var image) {
+  Widget _leg(var middleX, var middleY, var p1, var p2, var image) {
     return Positioned(
-      right: ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.75) + x) * rate,
-      top: ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.75) + y) * rate,
+      right:
+          ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 0.6) - middleX) * rate + x,
+      top:
+          ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 0.6) - middleY) * rate + y,
       child: RotatedBox(
         quarterTurns: 1,
         child: Container(
-          width: length(p2, p1) * 1.5,
-          height: length(p2, p1) * 1.5,
+          width: length(p2, p1) * 1.2 * rate,
+          height: length(p2, p1) * 1.2 * rate,
           child: Transform.rotate(
             angle: angle(p1, p2),
             child: Container(
@@ -133,15 +140,18 @@ class _MovementFollowState extends State<MovementFollow> {
     );
   }
 
-  Widget _face(var p1, var p2, var image) {
+  Widget _face(var middleX, var middleY, var p1, var p2, var image) {
     return Positioned(
-      right: ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 1) + x) * rate,
-      top: ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 1) + y) * rate,
+      right:
+          ((((p1!.x + p2!.x) / 2) - length(p2, p1) * 1.4) - middleX) * rate + x,
+      top:
+          ((((p1!.y + p2!.y) / 2) - length(p2, p1) * 1.4) - middleY) * rate + y,
       child: Container(
-        width: length(p1, p2) * 2 / rate,
+        width: length(p2, p1) * 2.8 * rate,
         child: Transform.rotate(
           angle: angle(p1, p2),
           child: Container(
+            width: double.infinity,
             child: image,
           ),
         ),
@@ -158,6 +168,18 @@ class _MovementFollowState extends State<MovementFollow> {
 
     if (poses.length == 0) ret = Container();
     for (final pose in poses) {
+      double middleX = pose.landmarks[PoseLandmarkType.leftShoulder]!.x +
+          pose.landmarks[PoseLandmarkType.rightShoulder]!.x +
+          pose.landmarks[PoseLandmarkType.leftHip]!.x +
+          pose.landmarks[PoseLandmarkType.rightHip]!.x;
+      middleX = middleX / 4;
+
+      double middleY = pose.landmarks[PoseLandmarkType.leftShoulder]!.y +
+          pose.landmarks[PoseLandmarkType.rightShoulder]!.y +
+          pose.landmarks[PoseLandmarkType.leftHip]!.y +
+          pose.landmarks[PoseLandmarkType.rightHip]!.y;
+      middleY = middleY / 4;
+
       ret = RotatedBox(
         quarterTurns: characterTurn,
         child: Container(
@@ -168,6 +190,8 @@ class _MovementFollowState extends State<MovementFollow> {
             child: Stack(
               children: [
                 _body(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.leftShoulder],
                   pose.landmarks[PoseLandmarkType.rightShoulder],
                   pose.landmarks[PoseLandmarkType.leftHip],
@@ -175,46 +199,64 @@ class _MovementFollowState extends State<MovementFollow> {
                   images[0],
                 ),
                 _leg(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.leftHip],
                   pose.landmarks[PoseLandmarkType.leftKnee],
                   images[5],
                 ), //왼쪽 다리 1
                 _leg(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.leftKnee],
                   pose.landmarks[PoseLandmarkType.leftAnkle],
                   images[6],
                 ), //왼쪽 다리 2
                 _leg(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.rightHip],
                   pose.landmarks[PoseLandmarkType.rightKnee],
                   images[7],
                 ), //오른쪽 다리 1
                 _leg(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.rightKnee],
                   pose.landmarks[PoseLandmarkType.rightAnkle],
                   images[8],
                 ), //오른쪽 다리 2
                 _arm(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.leftShoulder],
                   pose.landmarks[PoseLandmarkType.leftElbow],
                   images[1],
                 ), //왼쪽 팔 1
                 _arm(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.rightElbow],
                   pose.landmarks[PoseLandmarkType.rightShoulder],
                   images[3],
                 ), //오른쪽 팔 1
                 _face(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.rightEyeOuter],
                   pose.landmarks[PoseLandmarkType.leftEyeOuter],
                   face,
                 ),
                 _arm(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.leftElbow],
                   pose.landmarks[PoseLandmarkType.leftThumb],
                   images[2],
                 ), //왼쪽 팔 2
                 _arm(
+                  middleX,
+                  middleY,
                   pose.landmarks[PoseLandmarkType.rightThumb],
                   pose.landmarks[PoseLandmarkType.rightElbow],
                   images[4],
