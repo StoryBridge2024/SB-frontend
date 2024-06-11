@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/homePage.dart';
-import 'package:frontend/services/db/firebase.dart';
 
 import 'firebase_options.dart';
 
@@ -17,12 +16,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  var fireStore = FireStore();
-  await fireStore.create();
-  print("Firebase: created document in collection 'cars'");
-  var ReadedData = await fireStore.read();
-  print("Firebase: read data from collection 'cars'");
-  print(ReadedData);
   cameras = await availableCameras();
   runApp(
     const MyApp(),

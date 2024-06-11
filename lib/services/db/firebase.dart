@@ -12,14 +12,8 @@ class FireStore {
 
   static final FirebaseFirestore _dbManager = FirebaseFirestore.instance;
 
-  Future<void> create() async {
-    await _dbManager.collection("cars").doc().set(
-      {
-        "brand": "Genesis",
-        "name": "G70",
-        "price": 5000,
-      },
-    );
+  Future<void> create(a) async {
+    await _dbManager.collection("FairyTail").doc().set(a);
   }
 
   Future<List<Map<String, dynamic>>> read() async {
