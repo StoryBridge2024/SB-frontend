@@ -84,7 +84,21 @@ class _CameraViewState extends State<CameraView> {
     required String assetPath,
     required int index,
   }) {
-    if (useDummy) return Container();
+    if (useDummy) {
+      if (animals[index].isEmpty) return Container();
+
+      return Positioned(
+        left: left,
+        top: top,
+        child: (animalName == animals[index][0])
+            ? Image.asset(
+                assetPath,
+                height: 150,
+                width: 150,
+              )
+            : Container(),
+      );
+    }
 
     if (gSceneModel == null ||
         gSceneModel!.scriptModelList.length <= index ||
@@ -94,8 +108,8 @@ class _CameraViewState extends State<CameraView> {
     return Positioned(
       left: left,
       top: top,
-      child: animalName ==
-              gSceneModel!.scriptModelList[index].animals_from_animal_list[0]
+      child: gSceneModel!.scriptModelList[index].animals_from_animal_list
+              .contains(animalName)
           ? Image.asset(
               assetPath,
               height: 150,
@@ -183,18 +197,18 @@ class _CameraViewState extends State<CameraView> {
               index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX7.elementAt(clr_index.value),
-              top: locY7.elementAt(clr_index.value),
+              left: locX7.elementAt(clr_index.value - 1),
+              top: locY7.elementAt(clr_index.value - 1),
               animalName: "사자",
               assetPath: 'assets/animal/lion.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             createPositionedAnimal(
-              left: locX8.elementAt(clr_index.value),
-              top: locY8.elementAt(clr_index.value),
+              left: locX8.elementAt(clr_index.value - 1),
+              top: locY8.elementAt(clr_index.value - 1),
               animalName: "강아지",
               assetPath: 'assets/animal/puppy.png',
-              index: clr_index.value,
+              index: clr_index.value - 1,
             ),
             _liveFeedBody(),
             Positioned(
