@@ -202,6 +202,9 @@ class _DrawBoxState extends State<DrawBox> {
         tooltip: "Clear",
         onPressed: notifier.clear,
       ),
+      Container(
+        width: 50,
+      ),
       FloatingActionButton(
         backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
         shape: CircleBorder(),
@@ -312,27 +315,6 @@ class _DrawBoxState extends State<DrawBox> {
     return byteData!.buffer.asUint8List();
   }
 
-  void _showJson(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Sketch as JSON"),
-        content: SizedBox.expand(
-          child: SelectableText(
-            jsonEncode(notifier.currentSketch.toJson()),
-            autofocus: true,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: Navigator.of(context).pop,
-            child: const Text("Close"),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _buildStrokeToolbar(BuildContext context) {
     return ValueListenableBuilder<ScribbleState>(
       valueListenable: notifier,
@@ -384,21 +366,6 @@ class _DrawBoxState extends State<DrawBox> {
       ),
     );
   }
-  //
-  // Widget _buildColorToolbar(BuildContext context) {
-  //   return Row(
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     mainAxisAlignment: MainAxisAlignment.start,
-  //     children: [
-  //       _buildColorButton(context, color: Colors.black),
-  //       _buildColorButton(context, color: Colors.red),
-  //       _buildColorButton(context, color: Colors.green),
-  //       _buildColorButton(context, color: Colors.blue),
-  //       _buildColorButton(context, color: Colors.yellow),
-  //       _buildEraserButton(context),
-  //     ],
-  //   );
-  // }
 
   Widget _buildColorToolbar(BuildContext context) {
     return Row(
