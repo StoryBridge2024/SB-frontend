@@ -8,8 +8,8 @@ AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
 
 SceneModel? gSceneModel;
 
-List<double> humanLocX = [100, 100, 100, 100, 100, 100, 100, 100, 100];
-List<double> humanLocY = [100, 100, 100, 100, 100, 100, 100, 100, 100];
+List<double> humanLocX = [100, 100, 100, 100, 100, 100, 100, 100, 80];
+List<double> humanLocY = [100, 100, 100, 100, 100, 100, 100, 100, 180];
 List<double> tigerLocX = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> tigerLocY = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> monkeyLocX = [100, 100, 100, 100, 100, 100, 100, 100];

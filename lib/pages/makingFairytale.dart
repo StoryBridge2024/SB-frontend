@@ -195,19 +195,21 @@ class _TmpFairytaleState extends State<TmpFairytale> {
         Positioned(
           left: locX.elementAt(index),
           top: locY.elementAt(index),
-          child: Container(
-            width: 150,
-            height: 150,
-            color: Color(0x00FFFFFF),
-            child: GestureDetector(
-              onScaleUpdate: (touch) {
-                setStateCallback(() {
-                  locX[index] += touch.focalPointDelta.dx;
-                  locY[index] += touch.focalPointDelta.dy;
-                });
-              },
-            ),
-          ),
+          child: animals[index].contains(animalName)
+              ? Container(
+                  width: 150,
+                  height: 150,
+                  color: Color(0x00FFFFFF),
+                  child: GestureDetector(
+                    onScaleUpdate: (touch) {
+                      setStateCallback(() {
+                        locX[index] += touch.focalPointDelta.dx;
+                        locY[index] += touch.focalPointDelta.dy;
+                      });
+                    },
+                  ),
+                )
+              : Container(),
         ),
       ];
     }
@@ -235,19 +237,22 @@ class _TmpFairytaleState extends State<TmpFairytale> {
       Positioned(
         left: locX.elementAt(index),
         top: locY.elementAt(index),
-        child: Container(
-          width: 150,
-          height: 150,
-          color: Color(0x00FFFFFF),
-          child: GestureDetector(
-            onScaleUpdate: (touch) {
-              setStateCallback(() {
-                locX[index] += touch.focalPointDelta.dx;
-                locY[index] += touch.focalPointDelta.dy;
-              });
-            },
-          ),
-        ),
+        child: gSceneModel!.scriptModelList[index].animals_from_animal_list
+                .contains(animalName)
+            ? Container(
+                width: 150,
+                height: 150,
+                color: Color(0x00FFFFFF),
+                child: GestureDetector(
+                  onScaleUpdate: (touch) {
+                    setStateCallback(() {
+                      locX[index] += touch.focalPointDelta.dx;
+                      locY[index] += touch.focalPointDelta.dy;
+                    });
+                  },
+                ),
+              )
+            : Container(),
       ),
     ];
   }
@@ -267,6 +272,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     child: (useDummy)
                         ? Image.asset(
                             imgs[index],
+                            height: 600,
+                            width: 600,
                           )
                         : Image.memory(
                             base64Decode(
@@ -373,19 +380,23 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Flexible(
                     flex: 3,
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: (useDummy)
                           ? Text(
                               texts[index],
+                              style: TextStyle(
+                                fontSize: 35,
+                                fontFamily: 'DDO',
+                              ),
                             )
                           : Text(
                               gSceneModel!
                                   .scriptModelList[index].scene_contents,
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 35,
                                 fontFamily: 'DDO',
                               ),
                             ),

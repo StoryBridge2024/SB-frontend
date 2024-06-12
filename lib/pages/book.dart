@@ -499,7 +499,7 @@ class BookHomePage extends StatelessWidget {
                           style: TextStyle(fontSize: 25),
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => HomePage(),

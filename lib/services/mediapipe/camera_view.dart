@@ -161,55 +161,69 @@ class _CameraViewState extends State<CameraView> {
         width: 600,
         child: Stack(
           children: [
-            createPositionedAnimal(
-              left: tigerLocX.elementAt(clr_index.value - 1),
-              top: tigerLocY.elementAt(clr_index.value - 1),
-              animalName: "호랑이",
-              assetPath: 'assets/animal/tiger.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: monkeyLocX.elementAt(clr_index.value - 1),
-              top: monkeyLocY.elementAt(clr_index.value - 1),
-              animalName: "원숭이",
-              assetPath: 'assets/animal/monkey.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: giraffeLocX.elementAt(clr_index.value - 1),
-              top: giraffeLocY.elementAt(clr_index.value - 1),
-              animalName: "기린",
-              assetPath: 'assets/animal/giraffe.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: koalaLocX.elementAt(clr_index.value - 1),
-              top: koalaLocY.elementAt(clr_index.value - 1),
-              animalName: "코알라",
-              assetPath: 'assets/animal/koala.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: elephantLocX.elementAt(clr_index.value - 1),
-              top: elephantLocY.elementAt(clr_index.value - 1),
-              animalName: "코끼리",
-              assetPath: 'assets/animal/elephant.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: lionLocX.elementAt(clr_index.value - 1),
-              top: lionLocY.elementAt(clr_index.value - 1),
-              animalName: "사자",
-              assetPath: 'assets/animal/lion.png',
-              index: clr_index.value - 1,
-            ),
-            createPositionedAnimal(
-              left: puppyLocX.elementAt(clr_index.value - 1),
-              top: puppyLocY.elementAt(clr_index.value - 1),
-              animalName: "강아지",
-              assetPath: 'assets/animal/puppy.png',
-              index: clr_index.value - 1,
-            ),
+            (!isPageMovementRunning)
+                ? createPositionedAnimal(
+                    left: tigerLocX.elementAt(clr_index.value - 1),
+                    top: tigerLocY.elementAt(clr_index.value - 1),
+                    animalName: "호랑이",
+                    assetPath: 'assets/animal/tiger.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            (!isPageMovementRunning)
+                ? createPositionedAnimal(
+                    left: monkeyLocX.elementAt(clr_index.value - 1),
+                    top: monkeyLocY.elementAt(clr_index.value - 1),
+                    animalName: "원숭이",
+                    assetPath: 'assets/animal/monkey.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            !isPageMovementRunning
+                ? createPositionedAnimal(
+                    left: giraffeLocX.elementAt(clr_index.value - 1),
+                    top: giraffeLocY.elementAt(clr_index.value - 1),
+                    animalName: "기린",
+                    assetPath: 'assets/animal/giraffe.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            !isPageMovementRunning
+                ? createPositionedAnimal(
+                    left: koalaLocX.elementAt(clr_index.value - 1),
+                    top: koalaLocY.elementAt(clr_index.value - 1),
+                    animalName: "코알라",
+                    assetPath: 'assets/animal/koala.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            !isPageMovementRunning
+                ? createPositionedAnimal(
+                    left: elephantLocX.elementAt(clr_index.value - 1),
+                    top: elephantLocY.elementAt(clr_index.value - 1),
+                    animalName: "코끼리",
+                    assetPath: 'assets/animal/elephant.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            !isPageMovementRunning
+                ? createPositionedAnimal(
+                    left: lionLocX.elementAt(clr_index.value - 1),
+                    top: lionLocY.elementAt(clr_index.value - 1),
+                    animalName: "사자",
+                    assetPath: 'assets/animal/lion.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
+            !isPageMovementRunning
+                ? createPositionedAnimal(
+                    left: puppyLocX.elementAt(clr_index.value - 1),
+                    top: puppyLocY.elementAt(clr_index.value - 1),
+                    animalName: "강아지",
+                    assetPath: 'assets/animal/puppy.png',
+                    index: clr_index.value - 1,
+                  )
+                : Container(),
             _liveFeedBody(),
             Positioned(
               bottom: 0,
