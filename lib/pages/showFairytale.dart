@@ -56,7 +56,10 @@ class ShowFairytale extends StatelessWidget {
                 child: (useDummy)
                     ? Text(
                         texts[i],
-                        style: TextStyle(fontSize: 40, fontFamily: 'DDO'),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontFamily: 'DDO',
+                        ),
                       )
                     : Text(
                         gSceneModel != null
