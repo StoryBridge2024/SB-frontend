@@ -18,8 +18,14 @@ class $FairytailModelTable extends FairytailModel
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _contentMeta =
+      const VerificationMeta('content');
   @override
-  List<GeneratedColumn> get $columns => [id];
+  late final GeneratedColumn<String> content = GeneratedColumn<String>(
+      'content', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, content];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -33,6 +39,12 @@ class $FairytailModelTable extends FairytailModel
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
+    if (data.containsKey('content')) {
+      context.handle(_contentMeta,
+          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
     return context;
   }
 
@@ -44,6 +56,8 @@ class $FairytailModelTable extends FairytailModel
     return FairytailModelData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      content: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}content'])!,
     );
   }
 
@@ -56,17 +70,20 @@ class $FairytailModelTable extends FairytailModel
 class FairytailModelData extends DataClass
     implements Insertable<FairytailModelData> {
   final int id;
-  const FairytailModelData({required this.id});
+  final String content;
+  const FairytailModelData({required this.id, required this.content});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['content'] = Variable<String>(content);
     return map;
   }
 
   FairytailModelCompanion toCompanion(bool nullToAbsent) {
     return FairytailModelCompanion(
       id: Value(id),
+      content: Value(content),
     );
   }
 
@@ -75,6 +92,7 @@ class FairytailModelData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FairytailModelData(
       id: serializer.fromJson<int>(json['id']),
+      content: serializer.fromJson<String>(json['content']),
     );
   }
   @override
@@ -82,47 +100,58 @@ class FairytailModelData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'content': serializer.toJson<String>(content),
     };
   }
 
-  FairytailModelData copyWith({int? id}) => FairytailModelData(
+  FairytailModelData copyWith({int? id, String? content}) => FairytailModelData(
         id: id ?? this.id,
+        content: content ?? this.content,
       );
   @override
   String toString() {
     return (StringBuffer('FairytailModelData(')
-          ..write('id: $id')
+          ..write('id: $id, ')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => Object.hash(id, content);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FairytailModelData && other.id == this.id);
+      (other is FairytailModelData &&
+          other.id == this.id &&
+          other.content == this.content);
 }
 
 class FairytailModelCompanion extends UpdateCompanion<FairytailModelData> {
   final Value<int> id;
+  final Value<String> content;
   const FairytailModelCompanion({
     this.id = const Value.absent(),
+    this.content = const Value.absent(),
   });
   FairytailModelCompanion.insert({
     this.id = const Value.absent(),
-  });
+    required String content,
+  }) : content = Value(content);
   static Insertable<FairytailModelData> custom({
     Expression<int>? id,
+    Expression<String>? content,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (content != null) 'content': content,
     });
   }
 
-  FairytailModelCompanion copyWith({Value<int>? id}) {
+  FairytailModelCompanion copyWith({Value<int>? id, Value<String>? content}) {
     return FairytailModelCompanion(
       id: id ?? this.id,
+      content: content ?? this.content,
     );
   }
 
@@ -132,13 +161,17 @@ class FairytailModelCompanion extends UpdateCompanion<FairytailModelData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
+    if (content.present) {
+      map['content'] = Variable<String>(content.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FairytailModelCompanion(')
-          ..write('id: $id')
+          ..write('id: $id, ')
+          ..write('content: $content')
           ..write(')'))
         .toString();
   }
@@ -158,10 +191,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$FairytailModelTableInsertCompanionBuilder = FairytailModelCompanion
     Function({
   Value<int> id,
+  required String content,
 });
 typedef $$FairytailModelTableUpdateCompanionBuilder = FairytailModelCompanion
     Function({
   Value<int> id,
+  Value<String> content,
 });
 
 class $$FairytailModelTableTableManager extends RootTableManager<
@@ -186,15 +221,19 @@ class $$FairytailModelTableTableManager extends RootTableManager<
               $$FairytailModelTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
+            Value<String> content = const Value.absent(),
           }) =>
               FairytailModelCompanion(
             id: id,
+            content: content,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
+            required String content,
           }) =>
               FairytailModelCompanion.insert(
             id: id,
+            content: content,
           ),
         ));
 }
@@ -218,6 +257,11 @@ class $$FairytailModelTableFilterComposer
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get content => $state.composableBuilder(
+      column: $state.table.content,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
 class $$FairytailModelTableOrderingComposer
@@ -225,6 +269,11 @@ class $$FairytailModelTableOrderingComposer
   $$FairytailModelTableOrderingComposer(super.$state);
   ColumnOrderings<int> get id => $state.composableBuilder(
       column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get content => $state.composableBuilder(
+      column: $state.table.content,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
