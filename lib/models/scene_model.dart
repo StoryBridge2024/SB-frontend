@@ -25,6 +25,7 @@ class SceneModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "theme": theme,
       "primary_character": primary_character,
       "scenes": scriptModelList.map((e) => e.toJson()).toList(),
       "b64_images": b64_images,
