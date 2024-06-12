@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:frontend/models/script_model.dart';
 
@@ -6,7 +7,7 @@ class SceneModel {
   late final String primary_character;
   late final List<ScriptModel> scriptModelList;
   late final List<String> b64_images;
-  late final List<File> audioSource;
+  late final List<Uint8List> audioSource;
 
   SceneModel({
     required Map<String, dynamic> content,
@@ -25,17 +26,15 @@ class SceneModel {
       "primary_character": primary_character,
       "scenes": scriptModelList.map((e) => e.toJson()).toList(),
       "b64_images": b64_images,
-      "audioSource": audioSource.map((file) async {
-        await file.readAsBytes();
-      }).toList(),
+      "audioSource": audioSource,
     };
   }
 
-  SceneModel.copy(SceneModel other)
-      : primary_character = other.primary_character,
-        scriptModelList = other.scriptModelList
-            .map((script) => ScriptModel.fromJson(script.toJson()))
+  SceneModel.fromJson(Map<String, dynamic> json)
+      : primary_character = json['primary_character'],
+        scriptModelList = (json['scenes'] as List)
+            .map((e) => ScriptModel.fromJson(e))
             .toList(),
-        b64_images = List<String>.from(other.b64_images),
-        audioSource = List<File>.from(other.audioSource);
+        b64_images = List<String>.from(json['b64_images']),
+        audioSource = (json['audioSource'] as List<Uint8List>);
 }
