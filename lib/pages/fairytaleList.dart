@@ -16,7 +16,6 @@ class TablePage extends StatefulWidget {
 }
 
 class _TablePageState extends State<TablePage> {
-  // 데이터 리스트
   List<String> items = [];
 
   @override
@@ -30,12 +29,12 @@ class _TablePageState extends State<TablePage> {
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 가로 2칸
-                mainAxisSpacing: 30.0, // 세로 간격
-                crossAxisSpacing: 30.0, // 가로 간격
-                childAspectRatio: 2, // 각 셀의 가로세로 비율을 설정
+                crossAxisCount: 2,
+                mainAxisSpacing: 30.0,
+                crossAxisSpacing: 30.0,
+                childAspectRatio: 2,
               ),
-              padding: EdgeInsets.all(30.0), // 그리드 전체의 패딩
+              padding: EdgeInsets.all(30.0),
               itemCount: items.length,
               itemBuilder: (context, index) {
                 return Container(
@@ -54,7 +53,6 @@ class _TablePageState extends State<TablePage> {
             child: ElevatedButton(
               onPressed: () {
                 setState(() {
-                  // 새로운 아이템을 추가
                   items.add('Item ${items.length + 1}');
                 });
               },
