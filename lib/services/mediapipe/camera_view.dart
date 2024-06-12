@@ -163,8 +163,8 @@ class _CameraViewState extends State<CameraView> {
           children: [
             (!isPageMovementRunning)
                 ? createPositionedAnimal(
-                    left: locX2.elementAt(clr_index.value - 1),
-                    top: locY2.elementAt(clr_index.value - 1),
+                    left: tigerLocX.elementAt(clr_index.value - 1),
+                    top: tigerLocY.elementAt(clr_index.value - 1),
                     animalName: "호랑이",
                     assetPath: 'assets/animal/tiger.png',
                     index: clr_index.value - 1,
@@ -172,8 +172,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             (!isPageMovementRunning)
                 ? createPositionedAnimal(
-                    left: locX3.elementAt(clr_index.value - 1),
-                    top: locY3.elementAt(clr_index.value - 1),
+                    left: monkeyLocX.elementAt(clr_index.value - 1),
+                    top: monkeyLocY.elementAt(clr_index.value - 1),
                     animalName: "원숭이",
                     assetPath: 'assets/animal/monkey.png',
                     index: clr_index.value - 1,
@@ -181,8 +181,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             !isPageMovementRunning
                 ? createPositionedAnimal(
-                    left: locX4.elementAt(clr_index.value - 1),
-                    top: locY4.elementAt(clr_index.value - 1),
+                    left: giraffeLocX.elementAt(clr_index.value - 1),
+                    top: giraffeLocY.elementAt(clr_index.value - 1),
                     animalName: "기린",
                     assetPath: 'assets/animal/giraffe.png',
                     index: clr_index.value - 1,
@@ -190,8 +190,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             !isPageMovementRunning
                 ? createPositionedAnimal(
-                    left: locX5.elementAt(clr_index.value - 1),
-                    top: locY5.elementAt(clr_index.value - 1),
+                    left: koalaLocX.elementAt(clr_index.value - 1),
+                    top: koalaLocY.elementAt(clr_index.value - 1),
                     animalName: "코알라",
                     assetPath: 'assets/animal/koala.png',
                     index: clr_index.value - 1,
@@ -199,8 +199,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             !isPageMovementRunning
                 ? createPositionedAnimal(
-                    left: locX6.elementAt(clr_index.value - 1),
-                    top: locY6.elementAt(clr_index.value - 1),
+                    left: elephantLocX.elementAt(clr_index.value - 1),
+                    top: elephantLocY.elementAt(clr_index.value - 1),
                     animalName: "코끼리",
                     assetPath: 'assets/animal/elephant.png',
                     index: clr_index.value - 1,
@@ -208,8 +208,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             !isPageMovementRunning
                 ? createPositionedAnimal(
-                    left: locX7.elementAt(clr_index.value - 1),
-                    top: locY7.elementAt(clr_index.value - 1),
+                    left: lionLocX.elementAt(clr_index.value - 1),
+                    top: lionLocY.elementAt(clr_index.value - 1),
                     animalName: "사자",
                     assetPath: 'assets/animal/lion.png',
                     index: clr_index.value - 1,
@@ -217,8 +217,8 @@ class _CameraViewState extends State<CameraView> {
                 : Container(),
             !isPageMovementRunning
                 ? createPositionedAnimal(
-                    left: locX8.elementAt(clr_index.value - 1),
-                    top: locY8.elementAt(clr_index.value - 1),
+                    left: puppyLocX.elementAt(clr_index.value - 1),
+                    top: puppyLocY.elementAt(clr_index.value - 1),
                     animalName: "강아지",
                     assetPath: 'assets/animal/puppy.png',
                     index: clr_index.value - 1,

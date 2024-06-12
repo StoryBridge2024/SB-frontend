@@ -281,8 +281,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                           ),
                   ),
                   Positioned(
-                    left: locX1.elementAt(index),
-                    top: locY1.elementAt(index),
+                    left: humanLocX.elementAt(index),
+                    top: humanLocY.elementAt(index),
                     child: Image.asset(
                       'assets/image/img.png',
                       height: 300,
@@ -290,8 +290,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     ),
                   ),
                   Positioned(
-                    left: locX1.elementAt(index),
-                    top: locY1.elementAt(index),
+                    left: humanLocX.elementAt(index),
+                    top: humanLocY.elementAt(index),
                     child: Container(
                       width: 300,
                       height: 300,
@@ -300,8 +300,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                         onScaleUpdate: (touch) {
                           setState(
                             () {
-                              locX1[index] += touch.focalPointDelta.dx;
-                              locY1[index] += touch.focalPointDelta.dy;
+                              humanLocX[index] += touch.focalPointDelta.dx;
+                              humanLocY[index] += touch.focalPointDelta.dy;
                             },
                           );
                         },
@@ -311,56 +311,56 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   ...createPositionedAnimal(
                     animalName: "호랑이",
                     assetPath: 'assets/animal/tiger.png',
-                    locX: locX2,
-                    locY: locY2,
+                    locX: tigerLocX,
+                    locY: tigerLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "원숭이",
                     assetPath: 'assets/animal/monkey.png',
-                    locX: locX3,
-                    locY: locY3,
+                    locX: monkeyLocX,
+                    locY: monkeyLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "기린",
                     assetPath: 'assets/animal/giraffe.png',
-                    locX: locX4,
-                    locY: locY4,
+                    locX: giraffeLocX,
+                    locY: giraffeLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "코알라",
                     assetPath: 'assets/animal/koala.png',
-                    locX: locX5,
-                    locY: locY5,
+                    locX: koalaLocX,
+                    locY: koalaLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "코끼리",
                     assetPath: 'assets/animal/elephant.png',
-                    locX: locX6,
-                    locY: locY6,
+                    locX: elephantLocX,
+                    locY: elephantLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "사자",
                     assetPath: 'assets/animal/lion.png',
-                    locX: locX7,
-                    locY: locY7,
+                    locX: lionLocX,
+                    locY: lionLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
                   ...createPositionedAnimal(
                     animalName: "강아지",
                     assetPath: 'assets/animal/puppy.png',
-                    locX: locX8,
-                    locY: locY8,
+                    locX: puppyLocX,
+                    locY: puppyLocY,
                     index: index,
                     setStateCallback: setState,
                   ),
