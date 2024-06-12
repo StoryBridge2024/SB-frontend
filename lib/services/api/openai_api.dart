@@ -191,9 +191,9 @@ class OpenAI {
     //================================================================================================
     Map<String, dynamic> map = sceneModel.toJson();
     String str = jsonEncode(map);
-    await database
-        .into(database.fairytailModel)
-        .insert(FairytailModelCompanion.insert(content: str));
+    // await database
+    //     .into(database.fairytailModel)
+    //     .insert(FairytailModelCompanion.insert(content: str));
     //================================================================================================
 
     return sceneModel;

@@ -13,8 +13,24 @@ part 'database_manager.g.dart';
 
 class FairytailModel extends Table {
   IntColumn get id => integer().autoIncrement()();
-
-  TextColumn get content => text()();
+  TextColumn get sceneModel => text()();
+  TextColumn get image => text()();
+  TextColumn get humanLocX => text()();
+  TextColumn get humanLocY => text()();
+  TextColumn get tigerLocX => text()();
+  TextColumn get tigerLocY => text()();
+  TextColumn get monkeyLocX => text()();
+  TextColumn get monkeyLocY => text()();
+  TextColumn get giraffeLocX => text()();
+  TextColumn get giraffeLocY => text()();
+  TextColumn get koalaLocX => text()();
+  TextColumn get koalaLocY => text()();
+  TextColumn get elephantLocX => text()();
+  TextColumn get elephantLocY => text()();
+  TextColumn get lionLocX => text()();
+  TextColumn get lionLocY => text()();
+  TextColumn get puppyLocX => text()();
+  TextColumn get puppyLocY => text()();
 }
 
 @DriftDatabase(tables: [FairytailModel])
