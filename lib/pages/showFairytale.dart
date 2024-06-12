@@ -49,14 +49,17 @@ class ShowFairytale extends StatelessWidget {
             Flexible(
               flex: 8,
               child: Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 height: double.infinity,
                 width: double.infinity,
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
                         texts[i],
-                        style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontFamily: 'DDO',
+                        ),
                       )
                     : Text(
                         gSceneModel != null
@@ -64,15 +67,11 @@ class ShowFairytale extends StatelessWidget {
                                 ''
                             : '',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 40,
                           fontFamily: 'DDO',
                         ),
                       ),
               ),
-            ),
-            Flexible(
-              flex: 2,
-              child: Container(),
             ),
           ],
         ),

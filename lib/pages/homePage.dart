@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/fairytaleList.dart';
 import 'getMessage.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,6 +28,13 @@ class HomePage extends StatelessWidget {
               scale: 6,
             ),
           ),
+          Positioned(
+            left: 40,
+            bottom: 40,
+            child: Container(
+              child: CallFromDB(context),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,31 +47,73 @@ class HomePage extends StatelessWidget {
                       fontFamily: 'JJI'),
                 ),
               ),
-              TextButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(40)),
-                  backgroundColor: MaterialStateProperty.all(
-                    Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                  ),
-                ),
-                child: Text(
-                  '동화 제작하기',
-                  style: TextStyle(
-                    fontSize: 35,
-                    color: Color.fromARGB(0xFF, 0x4B, 0x4A, 0x53),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GetMessage(),
-                    ),
-                  );
-                },
-              ),
+              RequestFairytale(context),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  RequestFairytale(context) {
+    return TextButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.all(40)),
+        backgroundColor: MaterialStateProperty.all(
+          Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
+        ),
+      ),
+      child: Text(
+        '동화 제작하기',
+        style: TextStyle(
+          fontSize: 35,
+          color: Color.fromARGB(0xFF, 0x4B, 0x4A, 0x53),
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GetMessage(),
+          ),
+        );
+      },
+    );
+  }
+
+  CallFromDB(context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        elevation: MaterialStateProperty.all(0),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: BorderSide(color: Colors.transparent),
+          ),
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FairytaleList(),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Image.asset(
+            'assets/image/동화책.png',
+            height: 130,
+          ),
+          Text(
+            '저장한 동화 보기',
+            style: TextStyle(
+              fontSize: 23,
+              color: Color.fromARGB(0xFF, 0x4B, 0x4A, 0x53),
+            ),
+          )
         ],
       ),
     );

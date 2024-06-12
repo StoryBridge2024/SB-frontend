@@ -193,7 +193,7 @@ class _DrawBoxState extends State<DrawBox> {
         onPressed: notifier.clear,
       ),
       Container(
-        width: 50,
+        width: 20,
       ),
       FloatingActionButton(
         backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),

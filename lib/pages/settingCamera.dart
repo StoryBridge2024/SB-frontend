@@ -110,7 +110,7 @@ class Content extends StatelessWidget {
                       doStampRunning = false;
                       doPageMovementRunning = true;
 
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         (context),
                         MaterialPageRoute(
                             builder: (context) =>
