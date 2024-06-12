@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
@@ -19,7 +20,7 @@ class TTS {
     return _instance;
   }
 
-  Future<File> createSpeech(String input) async {
+  Future<Uint8List> createSpeech(String input) async {
     //compose prompt with input
     var ttsPrompt = deepCopy(TTS_PROMPT);
     ttsPrompt['input'] = input;
@@ -39,17 +40,6 @@ class TTS {
       throw Exception('Failed to load TTS response');
     }
 
-    // Get the directory for the app's temporary files.
-    Directory tempDirectory = await getTemporaryDirectory();
-
-    // Create a file path with timestamp so that multiple files do not overwrite each other.
-    String filePath =
-        '${tempDirectory.path}/audio_${DateTime.now().millisecondsSinceEpoch}.mp3';
-
-    // Write the file.
-    var file = File(filePath);
-    await file.writeAsBytes(response.bodyBytes);
-
-    return file;
+    return response.bodyBytes;
   }
 }
