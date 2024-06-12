@@ -14,20 +14,22 @@ void main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   //================================================================================================
-  final database = AppDatabase();
-  Map<String, dynamic> map;
-  map = {"A": 'a', 'B': 'b'};
-  String str=jsonEncode(map);
-  await database
-      .into(database.fairytailModel)
-      .insert(FairytailModelCompanion.insert(content: str));
-  await database
-      .into(database.fairytailModel)
-      .insert(FairytailModelCompanion.insert(content: str));
-  List<FairytailModelData> allItems =
-      await database.select(database.fairytailModel).get();
-
-  print('items in database: $allItems');
+  // final database = AppDatabase();
+  // Map<String, dynamic> map;
+  // map = {"A": 'a', 'B': 'b'};
+  // String str=jsonEncode(map);
+  // await database
+  //     .into(database.fairytailModel)
+  //     .insert(FairytailModelCompanion.insert(content: str));
+  // await database
+  //     .into(database.fairytailModel)
+  //     .insert(FairytailModelCompanion.insert(content: str));
+  // List<FairytailModelData> allItems =
+  //     await database.select(database.fairytailModel).get();
+  //
+  // print('items in database: $allItems');
+  // FairytailModelData a=allItems[0];
+  // print(a.content);
   //================================================================================================
   cameras = await availableCameras();
   runApp(

@@ -9,6 +9,7 @@ import 'package:frontend/constants/animal_list.dart';
 import '../constants/action_list.dart';
 import '../constants/fairytaleConstants.dart';
 import '../services/api/tts.dart';
+import '../services/db/database_manager/database_manager.dart';
 import 'makingCharacter.dart';
 
 class MakeFairytale extends StatelessWidget {

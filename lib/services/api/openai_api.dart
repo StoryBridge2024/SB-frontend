@@ -9,9 +9,12 @@ import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
+import '../db/database_manager/database_manager.dart';
 import '../util.dart';
 
 class OpenAI {
+  final database = AppDatabase();
+
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
 
   OpenAI._privateConstructor();
@@ -181,6 +184,16 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    return SceneModel(content: content, images: images, audioSource: audios);
+    SceneModel sceneModel = SceneModel(content: content, images: images, audioSource: audios);
+
+    //================================================================================================
+    Map<String, dynamic> map = sceneModel.toJson();
+    String str = jsonEncode(map);
+    await database
+        .into(database.fairytailModel)
+        .insert(FairytailModelCompanion.insert(content: str));
+    //================================================================================================
+
+    return sceneModel;
   }
 }
