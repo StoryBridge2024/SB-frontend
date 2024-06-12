@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 // These additional imports are necessary to open the sqlite3 database
 import 'dart:io';
 import 'package:drift/native.dart';
+import 'package:frontend/constants/const.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
@@ -12,6 +13,8 @@ part 'database_manager.g.dart';
 
 class FairytailModel extends Table {
   IntColumn get id => integer().autoIncrement()();
+
+  TextColumn get content => text()();
 }
 
 @DriftDatabase(tables: [FairytailModel])
@@ -20,6 +23,19 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(beforeOpen: (openingDetails) async {
+      if (IS_DEBUG_MODE) {
+        final m = Migrator(this);
+        for (final table in allTables) {
+          await m.deleteTable(table.actualTableName);
+          await m.createTable(table);
+        }
+      }
+    });
+  }
 }
 
 LazyDatabase _openConnection() {

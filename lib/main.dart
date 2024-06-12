@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,10 +15,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //================================================================================================
   final database = AppDatabase();
+  Map<String, dynamic> map;
+  map = {"A": 'a', 'B': 'b'};
+  String str=jsonEncode(map);
   await database
       .into(database.fairytailModel)
-      .insert(FairytailModelCompanion.insert());
-  List<FairytailModelData> allItems = await database.select(database.fairytailModel).get();
+      .insert(FairytailModelCompanion.insert(content: str));
+  await database
+      .into(database.fairytailModel)
+      .insert(FairytailModelCompanion.insert(content: str));
+  List<FairytailModelData> allItems =
+      await database.select(database.fairytailModel).get();
 
   print('items in database: $allItems');
   //================================================================================================

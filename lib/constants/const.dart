@@ -6,3 +6,4 @@ const RANDOM_SELECT_R = 3;
 const TYPE_OF_DALLE = "dall-e-2";
 const LIMIT_OF_ITERATION = 3;
 const AUDIO_PATH = "assets/audio";
+const IS_DEBUG_MODE = true;
