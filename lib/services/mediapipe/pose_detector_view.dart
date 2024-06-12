@@ -76,8 +76,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           ),
         ),
         Positioned(
-          left: locX1.elementAt(clr_index.value - 1) - 80,
-          top: locY1.elementAt(clr_index.value - 1) - 240,
+          left: humanLocX.elementAt(clr_index.value - 1) - 50,
+          top: humanLocY.elementAt(clr_index.value - 1) - 200,
           child: Container(
             width: 600,
             child: RotatedBox(
@@ -137,7 +137,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if (useDummy) {
             _playTTS(audios[index]);
           } else if (!useDummy) {
-            _playTTS(gSceneModel!.audioSource[index]);
+            //_playTTS(gSceneModel!.audioSource[index]);
           }
         }
 

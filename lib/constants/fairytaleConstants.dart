@@ -8,22 +8,22 @@ AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
 
 SceneModel? gSceneModel;
 
-List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX3 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY3 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX4 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY4 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX5 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY5 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX6 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY6 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX7 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY7 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locX8 = [100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY8 = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> humanLocX = [100, 100, 100, 100, 100, 100, 100, 100, 100];
+List<double> humanLocY = [100, 100, 100, 100, 100, 100, 100, 100, 100];
+List<double> tigerLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> tigerLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> monkeyLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> monkeyLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> giraffeLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> giraffeLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> koalaLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> koalaLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> elephantLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> elephantLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> lionLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> lionLocY = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> puppyLocX = [100, 100, 100, 100, 100, 100, 100, 100];
+List<double> puppyLocY = [100, 100, 100, 100, 100, 100, 100, 100];
 
 int characterTurn = 0;
 int cameraTurn = 0;

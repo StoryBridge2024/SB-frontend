@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/const.dart';
@@ -9,9 +10,12 @@ import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
+import '../db/database_manager/database_manager.dart';
 import '../util.dart';
 
 class OpenAI {
+  final database = AppDatabase();
+
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
 
   OpenAI._privateConstructor();
@@ -167,7 +171,7 @@ class OpenAI {
 
     print("createScene2");
     final List<Future<String>> imageFutures = [];
-    final List<Future<String>> audioSources = [];
+    final List<Future<File>> audioSources = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
       imageFutures.add(
           createImage(content["scenes"][i]["description_of_illustration"]));
@@ -177,10 +181,20 @@ class OpenAI {
 
     print("createScene3");
     List<String> images = await Future.wait(imageFutures);
-    List<String> audios = await Future.wait(audioSources);
+    List<File> audios = await Future.wait(audioSources);
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    return SceneModel(content: content, images: images, audioSource: audios);
+    SceneModel sceneModel = SceneModel(content: content, images: images, audioSource: audios);
+
+    //================================================================================================
+    Map<String, dynamic> map = sceneModel.toJson();
+    String str = jsonEncode(map);
+    await database
+        .into(database.fairytailModel)
+        .insert(FairytailModelCompanion.insert(content: str));
+    //================================================================================================
+
+    return sceneModel;
   }
 }
