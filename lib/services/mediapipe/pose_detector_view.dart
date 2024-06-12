@@ -137,7 +137,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if (useDummy) {
             _playTTS(audios[index]);
           } else if (!useDummy) {
-            _playTTS(gSceneModel!.audioSource[index]);
+            //_playTTS(gSceneModel!.audioSource[index]);
           }
         }
 
