@@ -237,22 +237,22 @@ class _TmpFairytaleState extends State<TmpFairytale> {
       Positioned(
         left: locX.elementAt(index),
         top: locY.elementAt(index),
-        child: Container(
-          width: 150,
-          height: 150,
-          color: Color(0x00FFFFFF),
-          child: gSceneModel!.scriptModelList[index].animals_from_animal_list
-                  .contains(animalName)
-              ? GestureDetector(
+        child: gSceneModel!.scriptModelList[index].animals_from_animal_list
+                .contains(animalName)
+            ? Container(
+                width: 150,
+                height: 150,
+                color: Color(0x00FFFFFF),
+                child: GestureDetector(
                   onScaleUpdate: (touch) {
                     setStateCallback(() {
                       locX[index] += touch.focalPointDelta.dx;
                       locY[index] += touch.focalPointDelta.dy;
                     });
                   },
-                )
-              : Container(),
-        ),
+                ),
+              )
+            : Container(),
       ),
     ];
   }
