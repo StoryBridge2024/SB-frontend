@@ -188,7 +188,7 @@ class OpenAI {
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
     SceneModel sceneModel =
-        SceneModel(content: content, images: images, audioSource: audios);
+        SceneModel(theme: theme,content: content, images: images, audioSource: audios);
 
     //insert into database
     //================================================================================================

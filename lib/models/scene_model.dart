@@ -4,12 +4,14 @@ import 'dart:typed_data';
 import 'package:frontend/models/script_model.dart';
 
 class SceneModel {
+  late final String theme;
   late final String primary_character;
   late final List<ScriptModel> scriptModelList;
   late final List<String> b64_images;
   late final List<Uint8List> audioSource;
 
   SceneModel({
+    required this.theme,
     required Map<String, dynamic> content,
     required List<String> images,
     required this.audioSource,
