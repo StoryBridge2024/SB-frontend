@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:frontend/models/script_model.dart';
 
 class SceneModel {
   late final String primary_character;
   late final List<ScriptModel> scriptModelList;
   late final List<String> b64_images;
-  late final List<String> audioSource;
+  late final List<File> audioSource;
 
   SceneModel({
     required Map<String, dynamic> content,
@@ -23,7 +25,9 @@ class SceneModel {
       "primary_character": primary_character,
       "scenes": scriptModelList.map((e) => e.toJson()).toList(),
       "b64_images": b64_images,
-      "audioSource": audioSource,
+      "audioSource": audioSource.map((file) async {
+        await file.readAsBytes();
+      }).toList(),
     };
   }
 
@@ -33,5 +37,5 @@ class SceneModel {
             .map((script) => ScriptModel.fromJson(script.toJson()))
             .toList(),
         b64_images = List<String>.from(other.b64_images),
-        audioSource = List<String>.from(other.audioSource);
+        audioSource = List<File>.from(other.audioSource);
 }

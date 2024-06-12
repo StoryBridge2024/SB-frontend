@@ -19,7 +19,7 @@ class TTS {
     return _instance;
   }
 
-  Future<String> createSpeech(String input) async {
+  Future<File> createSpeech(String input) async {
     //compose prompt with input
     var ttsPrompt = deepCopy(TTS_PROMPT);
     ttsPrompt['input'] = input;
@@ -50,6 +50,6 @@ class TTS {
     var file = File(filePath);
     await file.writeAsBytes(response.bodyBytes);
 
-    return file.path;
+    return file;
   }
 }
