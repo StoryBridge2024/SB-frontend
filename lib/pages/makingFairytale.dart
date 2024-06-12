@@ -377,19 +377,23 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                   Flexible(
                     flex: 3,
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: (useDummy)
                           ? Text(
                               texts[index],
+                              style: TextStyle(
+                                fontSize: 35,
+                                fontFamily: 'DDO',
+                              ),
                             )
                           : Text(
                               gSceneModel!
                                   .scriptModelList[index].scene_contents,
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 35,
                                 fontFamily: 'DDO',
                               ),
                             ),

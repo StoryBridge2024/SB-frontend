@@ -46,7 +46,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
           AndroidUiSettings(
               toolbarTitle: '이미지를 얼굴 크기에 맞게 자르고 체크표시를 눌러주세요!',
               // 타이틀바 제목
-              toolbarColor: Colors.black,
+              toolbarColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
               // 타이틀바 배경색
               toolbarWidgetColor: Colors.black,
               // 타이틀바 단추색
