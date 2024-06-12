@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/const.dart';
+import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
 import 'package:frontend/constants/animal_list.dart';
@@ -19,8 +20,11 @@ class MakeFairytale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (useDummy) {
+      return PlacingCharacter();
+    }
+
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
-    final Future<dynamic> tts = TTS().createSpeech("hello my name is juyoung.");
 
     return MaterialApp(
       home: Scaffold(
@@ -127,7 +131,7 @@ class _PlacingCharacterState extends State<PlacingCharacter> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xB9, 0xEE, 0xFF),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
@@ -137,6 +141,7 @@ class _PlacingCharacterState extends State<PlacingCharacter> {
                 '동화 만들기',
                 style: TextStyle(
                     fontSize: 60,
+                    fontWeight: FontWeight.w600,
                     color: Color.fromARGB(0xFF, 0x13, 0x13, 0x13)),
               ),
             ),
@@ -166,7 +171,7 @@ class TmpFairytale extends StatefulWidget {
 class _TmpFairytaleState extends State<TmpFairytale> {
   int index = 0;
 
-  Widget createPositionedAnimal({
+  List<Widget> createPositionedAnimal({
     required String animalName,
     required String assetPath,
     required List<double> locX,
@@ -174,19 +179,12 @@ class _TmpFairytaleState extends State<TmpFairytale> {
     required int index,
     required Function setStateCallback,
   }) {
-    if (gSceneModel == null ||
-        gSceneModel!.scriptModelList.length <= index ||
-        gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
-      return Container(); // 조건에 맞지 않으면 빈 컨테이너 반환
-    }
-    return Stack(
-      children: [
+    if (useDummy) {
+      return [
         Positioned(
           left: locX.elementAt(index),
           top: locY.elementAt(index),
-          child: animalName ==
-                  gSceneModel!
-                      .scriptModelList[index].animals_from_animal_list[0]
+          child: animals[index].contains(animalName)
               ? Image.asset(
                   assetPath,
                   height: 150,
@@ -211,18 +209,51 @@ class _TmpFairytaleState extends State<TmpFairytale> {
             ),
           ),
         ),
-      ],
-    );
+      ];
+    }
+
+    if (gSceneModel == null ||
+        gSceneModel!.scriptModelList.length <= index ||
+        gSceneModel!.scriptModelList[index].animals_from_animal_list.isEmpty) {
+      return [
+        Container(),
+      ]; // 조건에 맞지 않으면 빈 컨테이너 반환
+    }
+    return [
+      Positioned(
+        left: locX.elementAt(index),
+        top: locY.elementAt(index),
+        child: gSceneModel!.scriptModelList[index].animals_from_animal_list
+                .contains(animalName)
+            ? Image.asset(
+                assetPath,
+                height: 150,
+                width: 150,
+              )
+            : Container(),
+      ),
+      Positioned(
+        left: locX.elementAt(index),
+        top: locY.elementAt(index),
+        child: Container(
+          width: 150,
+          height: 150,
+          color: Color(0x00FFFFFF),
+          child: GestureDetector(
+            onScaleUpdate: (touch) {
+              setStateCallback(() {
+                locX[index] += touch.focalPointDelta.dx;
+                locY[index] += touch.focalPointDelta.dy;
+              });
+            },
+          ),
+        ),
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-    print("hehehehehehehehe");
-    print(humanLocX.elementAt(index));
-    print(humanLocY.elementAt(index));
-    print(index);
-    print(clr_index);
-    print("gegege");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -233,11 +264,17 @@ class _TmpFairytaleState extends State<TmpFairytale> {
               child: Stack(
                 children: [
                   Center(
-                    child: Image.memory(
-                      base64Decode(gSceneModel!.b64_images.elementAt(index)),
-                      height: 500,
-                      width: 500,
-                    ),
+                    child: (useDummy)
+                        ? Image.asset(
+                            imgs[index],
+                          )
+                        : Image.memory(
+                            base64Decode(
+                              gSceneModel!.b64_images.elementAt(index),
+                            ),
+                            height: 600,
+                            width: 600,
+                          ),
                   ),
                   Positioned(
                     left: humanLocX.elementAt(index),
@@ -267,7 +304,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       ),
                     ),
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "호랑이",
                     assetPath: 'assets/animal/tiger.png',
                     locX: tigerLocX,
@@ -275,7 +312,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "원숭이",
                     assetPath: 'assets/animal/monkey.png',
                     locX: monkeyLocX,
@@ -283,7 +320,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "기린",
                     assetPath: 'assets/animal/giraffe.png',
                     locX: giraffeLocX,
@@ -291,7 +328,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "코알라",
                     assetPath: 'assets/animal/koala.png',
                     locX: koalaLocX,
@@ -299,7 +336,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "코끼리",
                     assetPath: 'assets/animal/elephant.png',
                     locX: elephantLocX,
@@ -307,7 +344,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "사자",
                     assetPath: 'assets/animal/lion.png',
                     locX: lionLocX,
@@ -315,7 +352,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     index: index,
                     setStateCallback: setState,
                   ),
-                  createPositionedAnimal(
+                  ...createPositionedAnimal(
                     animalName: "강아지",
                     assetPath: 'assets/animal/puppy.png',
                     locX: puppyLocX,
@@ -340,13 +377,18 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                       height: double.infinity,
                       width: double.infinity,
                       alignment: Alignment.center,
-                      child: Text(
-                        gSceneModel!.scriptModelList[index].scene_contents,
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontFamily: 'DDO',
-                        ),
-                      ),
+                      child: (useDummy)
+                          ? Text(
+                              texts[index],
+                            )
+                          : Text(
+                              gSceneModel!
+                                  .scriptModelList[index].scene_contents,
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontFamily: 'DDO',
+                              ),
+                            ),
                     ),
                   ),
                   Flexible(
@@ -361,26 +403,30 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                               padding: EdgeInsets.all(30),
                               height: double.infinity,
                               width: double.infinity,
-                              child: TextButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    Color.fromARGB(0x75, 0x91, 0xB6, 0xFF),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (index > 0) {
-                                    setState(
-                                      () {
-                                        index -= 1;
+                              child: (index == 0)
+                                  ? Container()
+                                  : TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          Color.fromARGB(
+                                              0x75, 0x91, 0xB6, 0xFF),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (index > 0) {
+                                          setState(
+                                            () {
+                                              index -= 1;
+                                            },
+                                          );
+                                        }
                                       },
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  '이전',
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                              ),
+                                      child: Text(
+                                        '이전',
+                                        style: TextStyle(fontSize: 30),
+                                      ),
+                                    ),
                             ),
                           ),
                           Flexible(
@@ -410,10 +456,15 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                     );
                                   }
                                 },
-                                child: Text(
-                                  '다음',
-                                  style: TextStyle(fontSize: 30),
-                                ),
+                                child: (index == 7)
+                                    ? Text(
+                                        '배치하기 종료',
+                                        style: TextStyle(fontSize: 30),
+                                      )
+                                    : Text(
+                                        '다음',
+                                        style: TextStyle(fontSize: 30),
+                                      ),
                               ),
                             ),
                           ),

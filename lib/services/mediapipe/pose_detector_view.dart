@@ -83,7 +83,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
             child: RotatedBox(
               quarterTurns: 3,
               child: Transform.scale(
-                scale: 0.8,
+                scale: 1.1,
                 child: Container(
                   alignment: Alignment.center,
                   width: 600,
