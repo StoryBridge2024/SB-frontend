@@ -8,8 +8,8 @@ AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
 
 SceneModel? gSceneModel;
 
-List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
-List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100, 100];
+List<double> locX1 = [100, 100, 100, 100, 100, 100, 100, 100, 80];
+List<double> locY1 = [100, 100, 100, 100, 100, 100, 100, 100, 180];
 List<double> locX2 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locY2 = [100, 100, 100, 100, 100, 100, 100, 100];
 List<double> locX3 = [100, 100, 100, 100, 100, 100, 100, 100];
