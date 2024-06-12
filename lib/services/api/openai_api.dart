@@ -7,12 +7,12 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/script_model.dart';
 import 'package:frontend/services/api/tts.dart';
 import 'package:http/http.dart';
-import '../../constants/animal_list.dart';
-import '../../constants/prompt.dart';
-import '../../models/image_model.dart';
-import '../../models/scene_model.dart';
-import '../db/database_manager/database_manager.dart';
-import '../util.dart';
+import 'package:frontend/constants/animal_list.dart';
+import 'package:frontend/constants/prompt.dart';
+import 'package:frontend/models/image_model.dart';
+import 'package:frontend/models/scene_model.dart';
+import 'package:frontend/services/db/database_manager/database_manager.dart';
+import 'package:frontend/services/util.dart';
 
 class OpenAI {
   final database = AppDatabase();
@@ -187,8 +187,8 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    SceneModel sceneModel =
-        SceneModel(theme: theme,content: content, images: images, audioSource: audios);
+    SceneModel sceneModel = SceneModel(
+        theme: theme, content: content, images: images, audioSource: audios);
 
     //insert into database
     //================================================================================================
@@ -220,7 +220,8 @@ class OpenAI {
 
     //select from database
     //================================================================================================
-    List<FairytailModelData> list = await database.select(database.fairytailModel).get();
+    List<FairytailModelData> list =
+        await database.select(database.fairytailModel).get();
     print("list: $list");
     print("list[0]: ${list[0]}");
     print("list[0].sceneModel: ${list[0].sceneModel}");

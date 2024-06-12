@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
-import 'getImage.dart';
+// import 'getImage.dart';
+
+// import 'dart:convert';
+// import 'dart:io';
+// import 'dart:typed_data';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:frontend/constants/action_list.dart';
+// import 'package:frontend/constants/const.dart';
+// import 'package:frontend/models/script_model.dart';
+// import 'package:frontend/services/api/tts.dart';
+// import 'package:http/http.dart';
+// import 'package:frontend/constants/animal_list.dart';
+// import 'package:frontend/constants/prompt.dart';
+// import 'package:frontend/models/image_model.dart';
+// import 'package:frontend/models/scene_model.dart';
+import 'package:frontend/services/db/database_manager/database_manager.dart';
+// import 'package:frontend/services/util.dart';
 
 class FairytaleList extends StatelessWidget {
   const FairytaleList({super.key});
@@ -16,7 +32,21 @@ class TablePage extends StatefulWidget {
 }
 
 class _TablePageState extends State<TablePage> {
-  List<String> items = [];
+  final database = AppDatabase();
+  List<FairytailModelData> items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFairytales();
+  }
+
+  Future<void> _loadFairytales() async {
+    List<FairytailModelData> list = await getFairytale();
+    setState(() {
+      items = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,30 +67,35 @@ class _TablePageState extends State<TablePage> {
               padding: EdgeInsets.all(30.0),
               itemCount: items.length,
               itemBuilder: (context, index) {
+                final item = items[index];
                 return Container(
                   color: Colors.blueAccent,
                   alignment: Alignment.center,
-                  child: Text(
-                    items[index],
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Scene: ${item.sceneModel}',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Text(
+                        'ID: ${item.id}',
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                    ],
                   ),
                 );
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  items.add('Item ${items.length + 1}');
-                });
-              },
-              child: Text('Add Item'),
-            ),
-          ),
         ],
       ),
     );
+  }
+
+  Future<List<FairytailModelData>> getFairytale() async {
+    List<FairytailModelData> list =
+        await database.select(database.fairytailModel).get();
+    return list;
   }
 }
