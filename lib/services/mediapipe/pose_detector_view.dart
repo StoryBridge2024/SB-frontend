@@ -137,7 +137,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           if (useDummy) {
             _playTTS(audios[index]);
           } else if (!useDummy) {
-            //_playTTS(gSceneModel!.audioSource[index]);
+            _playTTS(gSceneModel!.audioSource[index]);
           }
         }
 
@@ -189,13 +189,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
     }
   }
 
-  Future<void> _playTTS(String path) async {
+  Future<void> _playTTS(var audioBytes) async {
     try {
       print('Attempting to play TTS...');
       if (!useDummy) {
-        await _ttsAudioPlayer.play(DeviceFileSource(path)); // TTS 재생
+        await _ttsAudioPlayer.play(BytesSource(audioBytes)); // TTS 재생
       } else {
-        await _ttsAudioPlayer.play(AssetSource(path));
+        await _ttsAudioPlayer.play(AssetSource(audioBytes));
       }
       print('TTS playing...');
       _ttsAudioPlayer.onPlayerComplete.listen(
