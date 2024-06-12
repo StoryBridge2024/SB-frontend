@@ -8,15 +8,16 @@ import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
-part 'database.g.dart';
+part 'database_manager.g.dart';
 
-class FairyTailModel extends Table {
+class FairytailModel extends Table {
   IntColumn get id => integer().autoIncrement()();
 }
 
-@DriftDatabase(tables: [FairyTailModel])
+@DriftDatabase(tables: [FairytailModel])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
+
   @override
   int get schemaVersion => 1;
 }

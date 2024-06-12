@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database.dart';
+part of 'database_manager.dart';
 
 // ignore_for_file: type=lint
-class $FairyTailModelTable extends FairyTailModel
-    with TableInfo<$FairyTailModelTable, FairyTailModelData> {
+class $FairytailModelTable extends FairytailModel
+    with TableInfo<$FairytailModelTable, FairytailModelData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $FairyTailModelTable(this.attachedDatabase, [this._alias]);
+  $FairytailModelTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -24,9 +24,9 @@ class $FairyTailModelTable extends FairyTailModel
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'fairy_tail_model';
+  static const String $name = 'fairytail_model';
   @override
-  VerificationContext validateIntegrity(Insertable<FairyTailModelData> instance,
+  VerificationContext validateIntegrity(Insertable<FairytailModelData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -39,24 +39,24 @@ class $FairyTailModelTable extends FairyTailModel
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FairyTailModelData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FairytailModelData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FairyTailModelData(
+    return FairytailModelData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
     );
   }
 
   @override
-  $FairyTailModelTable createAlias(String alias) {
-    return $FairyTailModelTable(attachedDatabase, alias);
+  $FairytailModelTable createAlias(String alias) {
+    return $FairytailModelTable(attachedDatabase, alias);
   }
 }
 
-class FairyTailModelData extends DataClass
-    implements Insertable<FairyTailModelData> {
+class FairytailModelData extends DataClass
+    implements Insertable<FairytailModelData> {
   final int id;
-  const FairyTailModelData({required this.id});
+  const FairytailModelData({required this.id});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -64,16 +64,16 @@ class FairyTailModelData extends DataClass
     return map;
   }
 
-  FairyTailModelCompanion toCompanion(bool nullToAbsent) {
-    return FairyTailModelCompanion(
+  FairytailModelCompanion toCompanion(bool nullToAbsent) {
+    return FairytailModelCompanion(
       id: Value(id),
     );
   }
 
-  factory FairyTailModelData.fromJson(Map<String, dynamic> json,
+  factory FairytailModelData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FairyTailModelData(
+    return FairytailModelData(
       id: serializer.fromJson<int>(json['id']),
     );
   }
@@ -85,12 +85,12 @@ class FairyTailModelData extends DataClass
     };
   }
 
-  FairyTailModelData copyWith({int? id}) => FairyTailModelData(
+  FairytailModelData copyWith({int? id}) => FairytailModelData(
         id: id ?? this.id,
       );
   @override
   String toString() {
-    return (StringBuffer('FairyTailModelData(')
+    return (StringBuffer('FairytailModelData(')
           ..write('id: $id')
           ..write(')'))
         .toString();
@@ -101,18 +101,18 @@ class FairyTailModelData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FairyTailModelData && other.id == this.id);
+      (other is FairytailModelData && other.id == this.id);
 }
 
-class FairyTailModelCompanion extends UpdateCompanion<FairyTailModelData> {
+class FairytailModelCompanion extends UpdateCompanion<FairytailModelData> {
   final Value<int> id;
-  const FairyTailModelCompanion({
+  const FairytailModelCompanion({
     this.id = const Value.absent(),
   });
-  FairyTailModelCompanion.insert({
+  FairytailModelCompanion.insert({
     this.id = const Value.absent(),
   });
-  static Insertable<FairyTailModelData> custom({
+  static Insertable<FairytailModelData> custom({
     Expression<int>? id,
   }) {
     return RawValuesInsertable({
@@ -120,8 +120,8 @@ class FairyTailModelCompanion extends UpdateCompanion<FairyTailModelData> {
     });
   }
 
-  FairyTailModelCompanion copyWith({Value<int>? id}) {
-    return FairyTailModelCompanion(
+  FairytailModelCompanion copyWith({Value<int>? id}) {
+    return FairytailModelCompanion(
       id: id ?? this.id,
     );
   }
@@ -137,7 +137,7 @@ class FairyTailModelCompanion extends UpdateCompanion<FairyTailModelData> {
 
   @override
   String toString() {
-    return (StringBuffer('FairyTailModelCompanion(')
+    return (StringBuffer('FairytailModelCompanion(')
           ..write('id: $id')
           ..write(')'))
         .toString();
@@ -147,82 +147,82 @@ class FairyTailModelCompanion extends UpdateCompanion<FairyTailModelData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
-  late final $FairyTailModelTable fairyTailModel = $FairyTailModelTable(this);
+  late final $FairytailModelTable fairytailModel = $FairytailModelTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [fairyTailModel];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [fairytailModel];
 }
 
-typedef $$FairyTailModelTableInsertCompanionBuilder = FairyTailModelCompanion
+typedef $$FairytailModelTableInsertCompanionBuilder = FairytailModelCompanion
     Function({
   Value<int> id,
 });
-typedef $$FairyTailModelTableUpdateCompanionBuilder = FairyTailModelCompanion
+typedef $$FairytailModelTableUpdateCompanionBuilder = FairytailModelCompanion
     Function({
   Value<int> id,
 });
 
-class $$FairyTailModelTableTableManager extends RootTableManager<
+class $$FairytailModelTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $FairyTailModelTable,
-    FairyTailModelData,
-    $$FairyTailModelTableFilterComposer,
-    $$FairyTailModelTableOrderingComposer,
-    $$FairyTailModelTableProcessedTableManager,
-    $$FairyTailModelTableInsertCompanionBuilder,
-    $$FairyTailModelTableUpdateCompanionBuilder> {
-  $$FairyTailModelTableTableManager(
-      _$AppDatabase db, $FairyTailModelTable table)
+    $FairytailModelTable,
+    FairytailModelData,
+    $$FairytailModelTableFilterComposer,
+    $$FairytailModelTableOrderingComposer,
+    $$FairytailModelTableProcessedTableManager,
+    $$FairytailModelTableInsertCompanionBuilder,
+    $$FairytailModelTableUpdateCompanionBuilder> {
+  $$FairytailModelTableTableManager(
+      _$AppDatabase db, $FairytailModelTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           filteringComposer:
-              $$FairyTailModelTableFilterComposer(ComposerState(db, table)),
+              $$FairytailModelTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
-              $$FairyTailModelTableOrderingComposer(ComposerState(db, table)),
+              $$FairytailModelTableOrderingComposer(ComposerState(db, table)),
           getChildManagerBuilder: (p) =>
-              $$FairyTailModelTableProcessedTableManager(p),
+              $$FairytailModelTableProcessedTableManager(p),
           getUpdateCompanionBuilder: ({
             Value<int> id = const Value.absent(),
           }) =>
-              FairyTailModelCompanion(
+              FairytailModelCompanion(
             id: id,
           ),
           getInsertCompanionBuilder: ({
             Value<int> id = const Value.absent(),
           }) =>
-              FairyTailModelCompanion.insert(
+              FairytailModelCompanion.insert(
             id: id,
           ),
         ));
 }
 
-class $$FairyTailModelTableProcessedTableManager extends ProcessedTableManager<
+class $$FairytailModelTableProcessedTableManager extends ProcessedTableManager<
     _$AppDatabase,
-    $FairyTailModelTable,
-    FairyTailModelData,
-    $$FairyTailModelTableFilterComposer,
-    $$FairyTailModelTableOrderingComposer,
-    $$FairyTailModelTableProcessedTableManager,
-    $$FairyTailModelTableInsertCompanionBuilder,
-    $$FairyTailModelTableUpdateCompanionBuilder> {
-  $$FairyTailModelTableProcessedTableManager(super.$state);
+    $FairytailModelTable,
+    FairytailModelData,
+    $$FairytailModelTableFilterComposer,
+    $$FairytailModelTableOrderingComposer,
+    $$FairytailModelTableProcessedTableManager,
+    $$FairytailModelTableInsertCompanionBuilder,
+    $$FairytailModelTableUpdateCompanionBuilder> {
+  $$FairytailModelTableProcessedTableManager(super.$state);
 }
 
-class $$FairyTailModelTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $FairyTailModelTable> {
-  $$FairyTailModelTableFilterComposer(super.$state);
+class $$FairytailModelTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $FairytailModelTable> {
+  $$FairytailModelTableFilterComposer(super.$state);
   ColumnFilters<int> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 }
 
-class $$FairyTailModelTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $FairyTailModelTable> {
-  $$FairyTailModelTableOrderingComposer(super.$state);
+class $$FairytailModelTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $FairytailModelTable> {
+  $$FairytailModelTableOrderingComposer(super.$state);
   ColumnOrderings<int> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
@@ -232,6 +232,6 @@ class $$FairyTailModelTableOrderingComposer
 class _$AppDatabaseManager {
   final _$AppDatabase _db;
   _$AppDatabaseManager(this._db);
-  $$FairyTailModelTableTableManager get fairyTailModel =>
-      $$FairyTailModelTableTableManager(_db, _db.fairyTailModel);
+  $$FairytailModelTableTableManager get fairytailModel =>
+      $$FairytailModelTableTableManager(_db, _db.fairytailModel);
 }
