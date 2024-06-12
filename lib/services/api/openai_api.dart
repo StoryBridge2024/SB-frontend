@@ -71,7 +71,8 @@ class OpenAI {
       scriptPrompt["messages"].add(
         {"role": "system", "content": ""},
       );
-      print("randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
+      print(
+          "randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
     }
     print("=============================================");
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
@@ -186,8 +187,10 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    SceneModel sceneModel = SceneModel(content: content, images: images, audioSource: audios);
+    SceneModel sceneModel =
+        SceneModel(content: content, images: images, audioSource: audios);
 
+    //insert into database
     //================================================================================================
     Map<String, dynamic> map = sceneModel.toJson();
     String str = jsonEncode(map);
@@ -196,6 +199,13 @@ class OpenAI {
     //     .insert(FairytailModelCompanion.insert(content: str));
     //================================================================================================
 
+    // //select from database
+    // //================================================================================================
+    // List<FairytailModelData> list = await database.select(database.fairytailModel).get();
+    // print("list: $list");
+    // print("list[0]: ${list[0]}");
+    // print("list[0].sceneModel: ${list[0].sceneModel}");
+    // //================================================================================================
     return sceneModel;
   }
 }
