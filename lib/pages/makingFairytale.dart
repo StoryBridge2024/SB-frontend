@@ -272,6 +272,8 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                     child: (useDummy)
                         ? Image.asset(
                             imgs[index],
+                            height: 600,
+                            width: 600,
                           )
                         : Image.memory(
                             base64Decode(
