@@ -194,18 +194,37 @@ class OpenAI {
     //================================================================================================
     Map<String, dynamic> map = sceneModel.toJson();
     String str = jsonEncode(map);
-    // await database
-    //     .into(database.fairytailModel)
-    //     .insert(FairytailModelCompanion.insert(content: str));
+    await database
+        .into(database.fairytailModel)
+        .insert(FairytailModelCompanion.insert(
+          sceneModel: str,
+          image: "aaa",
+          humanLocX: "aaa",
+          humanLocY: "aaa",
+          tigerLocX: "aaa",
+          tigerLocY: "aaa",
+          monkeyLocX: "aaa",
+          monkeyLocY: "aaa",
+          giraffeLocX: "aaa",
+          giraffeLocY: "aaa",
+          koalaLocX: "aaa",
+          koalaLocY: "aaa",
+          elephantLocX: "aaa",
+          elephantLocY: "aaa",
+          lionLocX: "aaa",
+          lionLocY: "aaa",
+          puppyLocX: "aaa",
+          puppyLocY: "aaa",
+        ));
     //================================================================================================
 
-    // //select from database
-    // //================================================================================================
-    // List<FairytailModelData> list = await database.select(database.fairytailModel).get();
-    // print("list: $list");
-    // print("list[0]: ${list[0]}");
-    // print("list[0].sceneModel: ${list[0].sceneModel}");
-    // //================================================================================================
+    //select from database
+    //================================================================================================
+    List<FairytailModelData> list = await database.select(database.fairytailModel).get();
+    print("list: $list");
+    print("list[0]: ${list[0]}");
+    print("list[0].sceneModel: ${list[0].sceneModel}");
+    //================================================================================================
     return sceneModel;
   }
 }
