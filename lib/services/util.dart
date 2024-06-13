@@ -1,7 +1,8 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
-Map<String, dynamic> deepCopy(Map<String, dynamic> source) {
+LinkedHashMap<String, dynamic> deepCopy(Map<String, dynamic> source) {
   return json.decode(json.encode(source));
 }
 
