@@ -1,6 +1,6 @@
 class ScriptModel {
   final String scene_contents, description_of_illustration;
-  String action_used_in_action_list;
+  String? action_used_in_action_list;
   final List<String> animals_from_animal_list;
 
   ScriptModel.fromJson(Map<String, dynamic> json)
