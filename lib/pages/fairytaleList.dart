@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 // import 'getImage.dart';
 
 import 'package:frontend/constants/fairytaleConstants.dart';
@@ -163,12 +164,14 @@ class _TablePageState extends State<TablePage> {
                             ),
                           ],
                         ),
-                        BackdropFilter(
-                          filter: ImageFilter.blur(
-                              sigmaX: 4, sigmaY: 4), // 흐림 효과를 적용합니다.
-                          child: Container(
-                            color: Colors
-                                .transparent, // 필터를 적용할 때 반드시 투명색으로 설정해야 합니다.
+                        Positioned(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 4, sigmaY: 4), // 흐림 효과를 적용합니다.
+                            child: Container(
+                              color: Colors
+                                  .transparent, // 필터를 적용할 때 반드시 투명색으로 설정해야 합니다.
+                            ),
                           ),
                         ),
                         Positioned(

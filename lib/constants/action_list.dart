@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 List<String> ACTION_LIST = [
   "왼손 번쩍",
   "오른손 번쩍",
