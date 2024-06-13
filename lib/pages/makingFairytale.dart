@@ -278,6 +278,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                             ),
                             height: 600,
                             width: 600,
+                            gaplessPlayback: true,
                           ),
                   ),
                   Positioned(
