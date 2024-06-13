@@ -13,23 +13,28 @@ class PoseArrange extends Object {
   int frameIdx = 0;
 
   void updatePositionChangeList(List<double> list, double newPosition) {
-    if (list.length > 10) list.removeAt(0);
+    if (list.length > 15) list.removeAt(0);
     list.add(newPosition);
   }
 
   bool detectWaving(List<double> changes) {
-    if (changes.length < 10) return false;
+    if (changes.length < 15) return false;
     double max =
         changes.reduce((value, element) => value > element ? value : element);
     double min =
         changes.reduce((value, element) => value < element ? value : element);
-    return max - min > 30; // Waving threshold: change of 50 pixels
+    return max - min > 20; // Waving threshold: change of 50 pixels
   }
 
   String updatePoseCount(
       List<int> count, int index, String newPose, String currentPose) {
     count[index]++;
-    if (count[index] > 20) {
+    if (index == 6 || index == 7) {
+      if (count[index] > 5) {
+        count[index] = 0;
+        currentPose = newPose;
+      }
+    } else if (count[index] > 20) {
       count[index] = 0;
       currentPose = newPose;
     }

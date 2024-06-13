@@ -165,16 +165,6 @@ class _TablePageState extends State<TablePage> {
                           ],
                         ),
                         Positioned(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                                sigmaX: 4, sigmaY: 4), // 흐림 효과를 적용합니다.
-                            child: Container(
-                              color: Colors
-                                  .transparent, // 필터를 적용할 때 반드시 투명색으로 설정해야 합니다.
-                            ),
-                          ),
-                        ),
-                        Positioned(
                           child: Container(
                             alignment: Alignment.center,
                             child: Container(
