@@ -87,7 +87,7 @@ const List<Map<String, dynamic>> EXAMPLE_REQUEST = [
   {
     "role": "user",
     "content":
-        "The theme is 사랑은 이루어지지 않을 수도 있어. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 인어공주. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
