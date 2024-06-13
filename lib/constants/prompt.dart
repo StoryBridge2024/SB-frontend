@@ -97,27 +97,27 @@ const List<Map<String, dynamic>> EXAMPLE_REQUEST = [
   {
     "role": "user",
     "content":
-        "The theme is 오즈의 마법사를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 모든 건 마음 먹기에 달렸다. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 거짓말쟁이 양치기 소년을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 거짓말 하지 말자. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 임금님 귀는 당나귀 귀를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 타인과 다른 점은 부끄러운 게 아니며 장점이 될 수 있다. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 피노키오를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 정직, 책임감, 희생정신. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 황금 달걀을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 욕심 부리지 말자. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
 ];
 
@@ -515,7 +515,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "도로시와 그녀의 강아지 토토는 시골의 작은 농장에서 살고 있습니다. 갑자기 거대한 토네이도가 그들의 집을 강타하고, 도로시와 토토는 집과 함께 하늘로 솟구쳐 올라갑니다. 도로시가 놀라 양손을 번쩍 들었습니다.",
+            "도로시와 그녀의 강아지 토토는 시골의 작은 농장에서 살고 있었어요. 갑자기 거대한 토네이도가 그들의 집을 강타하고, 도로시와 토토는 집과 함께 하늘로 솟구쳐 올라갔어요. 도로시가 놀라 양손을 번쩍 들었습니다.",
         "description_of_illustration":
             "A small farmhouse caught in a massive tornado.",
         "action_used_in_action_list": "양손 번쩍",
@@ -523,7 +523,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "토네이도가 잦아들고, 도로시와 강아지 토토는 오즈의 마법 나라에 도착합니다. 그들은 먼치킨 땅에 착륙하고, 먼치킨들과 북쪽의 선한 마녀 글린다를 만납니다.",
+            "토네이도가 잦아들고, 도로시와 강아지 토토는 오즈의 마법 나라에 도착했어요. 그들은 먼치킨 땅에 착륙하고, 먼치킨들과 북쪽의 선한 마녀 글린다를 만났습니다.",
         "description_of_illustration":
             "The magical land and the good witch who lives there",
         "action_used_in_action_list": "",
@@ -531,7 +531,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "글린다는 도로시에게 오즈의 마법사를 만나러 에메랄드 시티로 가라고 조언합니다. 그녀는 마법사가 도로시가 고향으로 돌아갈 수 있도록 도와줄 것이라고 말합니다. 도로시를 팔을 흔들며 마녀에게 인사합니다.",
+            "글린다는 도로시에게 오즈의 마법사를 만나러 에메랄드 시티로 가라고 조언했어요. 그녀는 마법사가 도로시가 고향으로 돌아갈 수 있도록 도와줄 것이라고 말했습니다. 도로시를 팔을 흔들며 마녀에게 인사했어요.",
         "description_of_illustration":
             "A sparkling road leading to a distant, emerald-green city.",
         "action_used_in_action_list": "오른손 흔들기",
@@ -539,7 +539,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "도로시와 강아지 토토는 노란 벽돌길을 따라 가면서 허수아비, 양철 나무꾼, 겁쟁이 사자를 만납니다. 그들은 모두 자신들의 소원을 이루기 위해 도로시의 여정에 합류합니다.",
+            "도로시와 강아지 토토는 노란 벽돌길을 따라 가면서 허수아비, 양철 나무꾼, 겁쟁이 사자를 만났어요. 그들은 모두 자신들의 소원을 이루기 위해 도로시의 여정에 합류했어요.",
         "description_of_illustration":
             "Scarecrow and Tin Woodman Standing on One Side of the Yellow Brick Road.",
         "action_used_in_action_list": "",
@@ -547,7 +547,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "에메랄드 시티에 도착한 도로시와 친구들, 오즈의 마법사는 그들의 소원을 들어주기 전에 서쪽의 악한 마녀를 물리치라고 요구합니다. 도로시와 그녀의 친구들은 두려움을 무릅쓰고 마녀의 성으로 향하기로 마음을 먹습니다. 도로시는 의지를 불태우며 손을 하늘로 뻗었습니다.",
+            "에메랄드 시티에 도착한 도로시와 친구들, 오즈의 마법사는 그들의 소원을 들어주기 전에 서쪽의 악한 마녀를 물리치라고 요구했어요. 도로시와 그녀의 친구들은 두려움을 무릅쓰고 마녀의 성으로 향하기로 마음을 먹습니다. 도로시는 의지를 불태우며 손을 하늘로 뻗었습니다.",
         "description_of_illustration":
             "A grand gate opening to the magnificent Emerald City.",
         "action_used_in_action_list": "오른손 번쩍",
@@ -555,7 +555,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "도로시가 실수로 물을 마녀에게 쏟아붓게 되고, 마녀는 녹아 없어집니다. 그들은 마녀의 지팡이를 가지고 에메랄드 시티로 돌아와 마법사에게 보고합니다.",
+            "도로시가 실수로 물을 마녀에게 쏟아붓게 되고, 마녀는 녹아 없어졌어요. 그들은 마녀의 지팡이를 가지고 에메랄드 시티로 돌아와 마법사에게 보고했어요.",
         "description_of_illustration":
             "An evil witch who lives in a dark forest melts away in the water.",
         "action_used_in_action_list": "",
@@ -563,7 +563,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "오즈의 마법사는 사실 마법사가 아니었음을 고백합니다. 그는 평범한 사람이었지만, 도로시와 그녀의 친구들의 마음 속에 그들이 원하는 것을 이미 갖고 있음을 깨닫게 해주었어요. 모두는 기쁜 마음에 박수를 쳤습니다.",
+            "오즈의 마법사는 사실 마법사가 아니었음을 고백했어요. 그는 평범한 사람이었지만, 도로시와 그녀의 친구들의 마음 속에 그들이 원하는 것을 이미 갖고 있음을 깨닫게 해주었어요. 모두는 기쁜 마음에 박수를 쳤습니다.",
         "description_of_illustration":
             "The Scarecrow and the Tin Woodman, who realized that the important thing already exists in the mind, applaud.",
         "action_used_in_action_list": "박수치기",
@@ -649,21 +649,21 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "어느 왕국에 임금님이 계셨습니다. 이 임금님에게는 아무에게도 말할 수 없는 비밀이 하나 있었습니다. 그의 귀는 당나귀 귀였습니다.",
+            "어느 왕국에 임금님이 계셨어요. 이 임금님에게는 아무에게도 말할 수 없는 비밀이 하나 있었어요. 그의 귀는 당나귀 귀였어요.",
         "description_of_illustration": "A majestic throne room.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "임금님은 자신의 비밀을 감추기 위해 매일 아침 이발사를 불러 자신의 머리를 다듬게 했습니다. 이발사는 매번 임금님의 귀를 보고도 아무 말도 하지 않았습니다.",
-        "description_of_illustration": "a barber shop.",
+            "임금님은 자신의 비밀을 감추기 위해 매일 아침 이발사를 불러 자신의 머리를 다듬게 했어요. 이발사는 매번 임금님의 귀를 보고도 아무 말도 하지 않았어요.",
+        "description_of_illustration": "a barber in the palace.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "임금님은 이발사에게 절대로 자신의 귀에 대해 말하지 말라고 오른손을 흔들며 경고했습니다. 이발사는 맹세를 하고 비밀을 지키겠다고 약속했습니다. 하지만 비밀은 그의 마음을 무겁게 짓눌렀습니다.",
+            "임금님은 이발사에게 절대로 자신의 귀에 대해 말하지 말라고 오른손을 흔들며 경고했어요. 이발사는 맹세를 하고 비밀을 지키겠다고 약속했어요. 하지만 비밀은 그의 마음을 무겁게 짓눌렀어요.",
         "description_of_illustration":
             "The barber bowing deeply, a look of worry on his face.",
         "action_used_in_action_list": "오른손 흔들기",
@@ -671,22 +671,22 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "이발사는 결국 비밀을 더 이상 감추지 못하고 숲으로 가서 큰 나무 구멍에 대고 '임금님의 귀는 당나귀 귀입니다'라고 속삭였습니다. 그는 그렇게 하고 나서야 마음이 가벼워졌습니다.",
+            "이발사는 결국 비밀을 더 이상 감추지 못하고 숲으로 가서 큰 나무 구멍에 대고 '임금님의 귀는 당나귀 귀입니다'라고 속삭였어요. 그는 그렇게 하고 나서야 마음이 가벼워졌어요.",
         "description_of_illustration":
             "a large hollow tree in a dense, secluded forest.",
-        "action_used_in_action_list": "양손 번쩍",
+        "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "하지만 숲에서 불어온 바람이 이발사의 말을 마을로 퍼뜨렸습니다. 나무를 통해 바람이 말을 듣고, 마을 사람들에게 소문이 퍼지기 시작했습니다.",
+            "하지만 숲에서 불어온 바람이 이발사의 말을 마을로 퍼뜨렸어요. 나무를 통해 바람이 말을 듣고, 마을 사람들에게 소문이 퍼지기 시작했어요.",
         "description_of_illustration": "Leaves rustling in the wind.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "소문은 점점 더 많은 사람들에게 퍼졌고, 결국 임금님의 귀가 당나귀 귀라는 이야기가 온 왕국에 알려지게 되었습니다. 임금님은 이 사실을 알고 양손을 번쩍 들며 크게 당황했습니다.",
+            "소문은 점점 더 많은 사람들에게 퍼졌고, 결국 임금님의 귀가 당나귀 귀라는 이야기가 온 왕국에 알려지게 되었어요. 임금님은 이 사실을 알고 양손을 번쩍 들며 크게 당황했어요.",
         "description_of_illustration":
             "Villagers gossiping in the market square, animated and curious.",
         "action_used_in_action_list": "양손 번쩍",
@@ -694,15 +694,14 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "임금님은 자신의 비밀이 밝혀진 것을 받아들이고, 결국 왕국 사람들 앞에서 오른손 번쩍을 하며 자신의 귀를 공개했습니다. 사람들은 처음에 놀랐지만, 점차 임금님을 받아들였습니다.",
-        "description_of_illustration":
-            "Villagers surprise in the market square, animated and curious.",
+            "임금님은 자신의 비밀이 밝혀진 것을 받아들이고, 결국 왕국 사람들 앞에서 오른손 번쩍을 하며 자신의 귀를 공개했어요. 사람들은 오히려 시민들의 이야기를 잘 들을 수 있다며 칭찬했어요.",
+        "description_of_illustration": "Villagers praise in the village.",
         "action_used_in_action_list": "오른손 번쩍",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "임금님은 자신의 당나귀 귀를 받아들임으로써 더 겸손하고 지혜로운 통치자가 되었습니다. 왕국 사람들은 그의 용기와 솔직함을 존경하게 되었습니다.",
+            "임금님은 자신의 당나귀 귀를 받아들임으로써 더 겸손하고 지혜로운 통치자가 되었어요. 왕국 사람들은 그의 용기와 솔직함을 존경하게 되었답니다.",
         "description_of_illustration": "a sacred throne.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
@@ -714,7 +713,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "목수 제페토는 나무 인형 피노키오를 만듭니다. 그는 피노키오가 진짜 아이처럼 움직이고 말할 수 있기를 바랍니다. 제페토는 밤에 별에게 소원을 빕니다.",
+            "목수 제페토는 나무 인형 피노키오를 만들었어요. 그는 피노키오가 진짜 아이처럼 움직이고 말할 수 있기를 바랐어요. 제페토는 밤에 별에게 소원을 빌었어요.",
         "description_of_illustration":
             "A cozy woodshop with Geppetto carving a wooden puppet.",
         "action_used_in_action_list": "",
@@ -722,7 +721,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "소원이 이루어져 피노키오는 생명을 얻고 말을 시작합니다. 제페토는 놀라움을 금치 못합니다. 피노키오는 처음으로 걸음마를 시도합니다.",
+            "소원이 이루어져 피노키오는 생명을 얻고 말을 시작했어요. 제페토는 놀라움을 금치 못했습니다. 피노키오는 처음으로 걸음마를 시도했어요.",
         "description_of_illustration":
             "a grandfather who is surprised at the woodwork.",
         "action_used_in_action_list": "",
@@ -730,42 +729,41 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "피노키오는 학교에 가기 위해 집을 떠나지만, 원숭이와 코끼리에게 속아 서커스단에 팔려갑니다. 그는 자신의 처지를 슬퍼하며 오른손 흔들기를 하며 도움을 청합니다.",
+            "피노키오는 학교에 가기 위해 집을 떠나지만, 원숭이와 코끼리에게 속아 서커스단에 팔려갔어요. 그는 자신의 처지를 슬퍼하며 오른손 흔들기를 하며 도움을 청했어요.",
         "description_of_illustration": "a quiet road in the village.",
         "action_used_in_action_list": "오른손 흔들기",
         "animals_from_animal_list": ["원숭이", "코끼리"]
       },
       {
         "scene_contents":
-            "서커스에서 피노키오는 공연을 하며 다양한 트릭을 배웁니다. 하지만 그는 여전히 자유를 갈망하며 집으로 돌아가기를 원합니다.",
-        "description_of_illustration": "a circus venue.",
+            "제페토가 피노키오를 구하러 가다 고래에게 삼켜졌어요. 피노키오는 제페토를 구하기 위해 모험을 시작했어요.",
+        "description_of_illustration": "Grandpa Eaten by a Whale.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "피노키오는 결국 도망쳐 동화 나라로 향합니다. 그 곳에서는 아이들이 하루 종일 놀기만 해도 된다고 합니다. 그러나 그곳은 사실 아이들을 나귀로 변하게 하는 함정이었습니다.",
-        "description_of_illustration": "a fantasy land in a fairy tale.",
+            "모험 중 장난감 나라에서 즐거운 시간을 보냈어요. 하지만 피노키오는 거짓말을 하다 큰 잘못을 저질렀고 거짓말을 할 때마다 코가 길어지는 저주를 받게 됐어요.",
+        "description_of_illustration": "a fantasy land in a toy.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "피노키오는 나귀 귀가 자라나기 시작하는 것을 발견하고 공포에 휩싸입니다. 그는 진정한 자신을 찾기 위해 도망칩니다.",
-        "description_of_illustration": "a fantasy land in a fairy tale.",
+            "피노키오는 거짓말의 결과를 깨닫게 되었어요. 이때 요정이 나타나 피노키오에게 '착한 아이가 되었구나' 라고 하며 제페토가 있는 곳을 알려줬어요.",
+        "description_of_illustration": "a fairy wielding a magic stick.",
+        "action_used_in_action_list": "",
+        "animals_from_animal_list": []
+      },
+      {
+        "scene_contents": "피노키오는 고래의 배 속에서 제페토를 찾아냈어요. 두 사람은 함께 탈출 계획을 세웠어요.",
+        "description_of_illustration": "a grandfather in a whale's belly",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "피노키오는 바다로 도망치다 거대한 고래에게 삼켜집니다. 그 안에서 그는 제페토를 만나고, 두 사람은 함께 탈출 계획을 세웁니다.",
-        "description_of_illustration": "the belly of a whale.",
-        "action_used_in_action_list": "",
-        "animals_from_animal_list": []
-      },
-      {
-        "scene_contents":
-            "피노키오와 제페토는 성공적으로 고래를 탈출하고, 피노키오는 용기와 희생의 행동으로 인해 진짜 소년이 됩니다. 그는 제페토와 행복하게 살아갑니다.",
+            "피노키오와 제페토는 성공적으로 고래를 탈출하고, 피노키오는 용기와 희생의 행동으로 인해 진짜 소년이 되었어요. 그는 양손을 번쩍 들며 깨달은게 많다고 외치며 행복하게 웃었어요.",
         "description_of_illustration":
             "A happy grandfather is at the carpentry.",
         "action_used_in_action_list": "양손 번쩍",
@@ -778,14 +776,14 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "한 가난한 농부가 숲에서 거위를 발견했습니다. 그는 거위를 집으로 데려가 돌보기로 결심했습니다. 농부는 거위가 특별해 보이길 바랐지만, 특별한 점을 발견하지 못했습니다.",
+            "한 가난한 농부가 숲에서 거위를 발견했어요. 그는 거위를 집으로 데려가 돌보기로 결심했어요. 농부는 거위가 특별해 보이길 바랐지만, 특별한 점을 발견하지 못했어요.",
         "description_of_illustration": "A simple farmhouse.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "어느 날 아침, 농부는 거위가 황금 달걀를 낳은 것을 발견했습니다. 그는 놀라움과 기쁨을 감추지 못했습니다. 농부는 이 달걀을 팔아 가난에서 벗어날 수 있을 것이라고 생각했습니다.",
+            "어느 날 아침, 농부는 거위가 황금 달걀를 낳은 것을 발견했어요. 그는 놀라움과 기쁨을 감추지 못했어요. 농부는 이 달걀을 팔아 가난에서 벗어날 수 있을 것이라고 생각했어요.",
         "description_of_illustration":
             "A shiny golden egg nestled among regular eggs in a nest.",
         "action_used_in_action_list": "양손 번쩍",
@@ -793,7 +791,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "이후로 거위는 매일 황금 달걀를 하나씩 낳았습니다. 농부는 점점 더 부자가 되었고, 많은 사람들이 그의 부를 부러워했습니다. 하지만 그 부는 농부의 욕심을 더욱 자극했습니다.",
+            "이후로 거위는 매일 황금 달걀를 하나씩 낳았어요. 농부는 점점 더 부자가 되었고, 많은 사람들이 그의 부를 부러워했어요. 하지만 그 부는 농부의 욕심을 더욱 자극했어요.",
         "description_of_illustration":
             "A shiny golden egg nestled among regular eggs in a nest.",
         "action_used_in_action_list": "박수치기",
@@ -801,14 +799,14 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "농부는 자신의 욕심을 충족시키기 위해 더 많은 황금 달걀을 얻고자 거위를 과도하게 돌보기 시작했습니다. 그는 거위에게 특별한 먹이를 주고, 거위의 건강을 지나치게 걱정하기 시작했습니다.",
+            "농부는 자신의 욕심을 충족시키기 위해 더 많은 황금 달걀을 얻고자 거위를 과도하게 돌보기 시작했어요. 그는 거위에게 특별한 먹이를 주고, 거위의 건강을 지나치게 걱정하기 시작했어요.",
         "description_of_illustration": "Happy Goose in the Nest.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "거위는 불안해하며 황금 달걀 낳기를 멈추었습니다. 농부는 불안과 화를 느끼며 자신의 행동을 후회하기 시작했습니다.",
+            "거위는 불안해하며 황금 달걀 낳기를 멈추었어요. 농부는 불안과 화를 느끼며 자신의 행동을 후회하기 시작했어요.",
         "description_of_illustration":
             "The goose looking distressed and not laying any eggs.",
         "action_used_in_action_list": "",
@@ -816,14 +814,14 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "농부는 결국 욕심을 이기지 못하고 거위의 배를 갈라 그 안에 더 많은 달걀이 있는지 확인하려 했습니다. 그는 단검을 들고 거위에게 다가갔습니다.",
+            "농부는 결국 욕심을 이기지 못하고 거위의 배를 갈라 그 안에 더 많은 달걀이 있는지 확인하려 했어요. 그는 단검을 들고 거위에게 다가갔어요.",
         "description_of_illustration": "a goose whose stomach is splitting.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "농부의 욕심으로 인해 거위는 죽고 말았습니다. 그의 손에는 아무것도 남지 않았습니다. 황금 달걀도, 거위도, 그의 행복도 모두 사라졌습니다.",
+            "농부의 욕심으로 인해 거위는 죽고 말았어요. 그의 손에는 아무것도 남지 않았어요. 황금 달걀도, 거위도, 그의 행복도 모두 사라졌어요.",
         "description_of_illustration":
             "The dead goose lying on the ground, no golden eggs to be found.",
         "action_used_in_action_list": "",
@@ -831,7 +829,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "농부는 자신의 행동을 후회하며 무너진 채 앉아 있었습니다. 그는 자신의 욕심이 가져온 결과를 깨닫고, 다시는 그런 실수를 반복하지 않겠다고 다짐했습니다.",
+            "농부는 자신의 행동을 후회하며 무너진 채 앉아 있었어요. 그는 자신의 욕심이 가져온 결과를 깨닫고, 다시는 그런 실수를 반복하지 않겠다고 다짐했어요.",
         "description_of_illustration": "an empty nest in an old barn",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
