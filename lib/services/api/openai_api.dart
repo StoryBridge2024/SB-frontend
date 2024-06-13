@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
@@ -7,16 +6,15 @@ import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/script_model.dart';
 import 'package:frontend/services/api/tts.dart';
 import 'package:http/http.dart';
-import '../../constants/animal_list.dart';
-import '../../constants/prompt.dart';
-import '../../models/image_model.dart';
-import '../../models/scene_model.dart';
-import '../db/database_manager/database_manager.dart';
-import '../util.dart';
+import 'package:frontend/constants/animal_list.dart';
+import 'package:frontend/constants/prompt.dart';
+import 'package:frontend/models/image_model.dart';
+import 'package:frontend/models/scene_model.dart';
+import 'package:frontend/services/db/database_manager/database_manager.dart';
+import 'package:frontend/services/util.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 class OpenAI {
-  final database = AppDatabase();
-
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
 
   OpenAI._privateConstructor();
@@ -64,6 +62,9 @@ class OpenAI {
     List<int> randomSelect = [];
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
       int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      while(randomSelect.contains(randomInt)) {
+        randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      }
       randomSelect.add(randomInt);
       scriptPrompt["messages"].add(
         deepCopy(EXAMPLE_REQUEST[randomInt]),
@@ -71,7 +72,8 @@ class OpenAI {
       scriptPrompt["messages"].add(
         {"role": "system", "content": ""},
       );
-      print("randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
+      print(
+          "randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
     }
     print("=============================================");
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
@@ -186,16 +188,45 @@ class OpenAI {
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    SceneModel sceneModel = SceneModel(content: content, images: images, audioSource: audios);
+    SceneModel sceneModel = SceneModel(
+        theme: theme, content: content, images: images, audioSource: audios);
 
+    //insert into database
     //================================================================================================
     Map<String, dynamic> map = sceneModel.toJson();
     String str = jsonEncode(map);
     await database
         .into(database.fairytailModel)
-        .insert(FairytailModelCompanion.insert(content: str));
+        .insert(FairytailModelCompanion.insert(
+          sceneModel: str,
+          image: "aaa",
+          humanLocX: "aaa",
+          humanLocY: "aaa",
+          tigerLocX: "aaa",
+          tigerLocY: "aaa",
+          monkeyLocX: "aaa",
+          monkeyLocY: "aaa",
+          giraffeLocX: "aaa",
+          giraffeLocY: "aaa",
+          koalaLocX: "aaa",
+          koalaLocY: "aaa",
+          elephantLocX: "aaa",
+          elephantLocY: "aaa",
+          lionLocX: "aaa",
+          lionLocY: "aaa",
+          puppyLocX: "aaa",
+          puppyLocY: "aaa",
+        ));
     //================================================================================================
 
+    //select from database
+    //================================================================================================
+    List<FairytailModelData> list =
+        await database.select(database.fairytailModel).get();
+    print("list: $list");
+    print("list[0]: ${list[0]}");
+    print("list[0].sceneModel: ${list[0].sceneModel}");
+    //================================================================================================
     return sceneModel;
   }
 }
