@@ -67,27 +67,27 @@ const List<Map<String, dynamic>> EXAMPLE_REQUEST = [
   {
     "role": "user",
     "content":
-        "The theme is 선녀와 나무꾼을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 나쁜 행동을 하면 결국 돌려받는다. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 신데렐라를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 착한 사람은 결국에 보상받는다. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 잭과 콩나무를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 착한 마음은 결국 보상받는다. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 벌거벗은 임금님을 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 주변 사람들에게 휘둘리지 말아라. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
     "content":
-        "The theme is 인어공주를 각색해줘. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
+        "The theme is 사랑은 이루어지지 않을 수도 있어. Ensure each scene smoothly integrates actions that are appropriate for the storyline and have the main character perform those actions."
   },
   {
     "role": "user",
@@ -127,7 +127,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "나무꾼이 산속 깊은 곳에서 나무를 하고 있어요. 그는 오늘도 열심히 일을 하며 가족을 생각하고 있습니다. 나무꾼은 호랑이를 만나지 않을까 걱정합니다.",
+            "나무꾼이 산속 깊은 곳에서 나무를 하고 있었어요. 나무꾼은 호랑이를 만나지 않을까 걱정했어요.",
         "description_of_illustration": "a deep, lush forest with tall trees",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
@@ -141,44 +141,45 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "호랑이를 피해 숲속 깊숙한 곳으로 도망친 나무꾼은 우연히 선녀가 목욕하는 모습을 목격합니다. 선녀는 우아하게 계곡의 물가에서 옷을 벗고 있었습니다. 나무꾼은 숨어서 그 모습을 조용히 지켜봅니다.",
-        "description_of_illustration": "a pond in the woods",
+            "호랑이를 피해 숲속 깊숙한 곳으로 도망친 나무꾼은 우연히 선녀가 목욕하는 모습을 목격합니다. 나무꾼은 숨어서 그 모습을 조용히 지켜봅니다.",
+        "description_of_illustration": "a woman taking a bath by the stream",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
-        "scene_contents": "나무꾼이 선녀의 옷을 몰래 가져가 숨깁니다. 선녀는 옷을 찾아 허둥지둥합니다.",
-        "description_of_illustration":
-            "a forest clearing with a pond where clothes are hidden",
+        "scene_contents": "나무꾼이 선녀의 옷을 몰래 가져가 숨겼어요. 선녀는 옷을 찾아 허둥지둥했어요.",
+        "description_of_illustration": "winged clothes hidden in the forest",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "나무꾼이 왼손 흔들기를 하며 선녀에게 옷을 돌려주겠다고 제안합니다. 선녀는 불안한 마음으로 나무꾼을 바라보며 고민합니다. 결국, 그녀는 나무꾼을 믿기로 하고 함께 마을로 향합니다.",
-        "description_of_illustration": "a path in the forest",
+            "나무꾼이 왼손 흔들기를 하며 선녀에게 옷을 돌려주겠다고 제안했어요. 선녀는 불안한 마음으로 나무꾼을 바라보며 고민했어요. 결국, 그녀는 나무꾼을 믿기로 하고 함께 마을로 향합니다.",
+        "description_of_illustration":
+            "a woman walking from the forest to the village",
         "action_used_in_action_list": "왼손 흔들기",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "나무꾼과 선녀가 함께 살면서 평화롭게 지내기 시작합니다. 그들은 서로를 더 잘 알게 되고 마을 사람들과도 친해집니다.",
+            "나무꾼과 선녀가 함께 살면서 평화롭게 지내기 시작했어요. 그들은 아이도 낳아 함께 살아 갑니다.",
         "description_of_illustration": "a quaint village road with",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "시간이 흘러 나무꾼과 선녀는 서로 사랑하게 되고, 아이들에게도 사랑 가득한 이야기를 들려줍니다. 그들은 행복하게 오래오래 살았습니다.",
-        "description_of_illustration": "inside a house in the village",
-        "action_used_in_action_list": "",
+            "나무꾼은 이제 선녀에게 옷을 돌려 주어도 선녀가 떠나지 않을 것이라 생각합니다. 나무꾼은 선녀에게 옷을 돌려줄 것임을 다짐하고 오른손을 번쩍 들어올립니다.",
+        "description_of_illustration": "the clothes of a fairy in a closet",
+        "action_used_in_action_list": "오른손 번쩍",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "선녀가 마침내 자신의 옷을 찾아 하늘로 돌아갑니다. 나무꾼은 선녀가 사라지는 모습을 멀리서 보며 오른손 흔들기를 합니다. 그녀의 떠나는 모습을 오래도록 바라보았습니다.",
-        "description_of_illustration": "sky",
-        "action_used_in_action_list": "오른손 흔들기",
+            "선녀는 옷을 받자 자신의 아이들과 함께 하늘로 돌아갑니다. 나무꾼은 떠나지 말라고 애원하였지만 선녀는 뒤도 돌아보지 않고 떠났습니다.",
+        "description_of_illustration":
+            "an angel carrying a child flying into the sky",
+        "action_used_in_action_list": "",
         "animals_from_animal_list": []
       }
     ]
@@ -188,21 +189,21 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "신데렐라는 불친절한 계모와 언니들과 함께 살고 있습니다. 그녀는 매일 집안일을 하며 가족을 돌보지만, 종종 꿈을 꾸며 더 나은 미래를 상상합니다.",
+            "신데렐라는 불친절한 계모와 언니들과 함께 살고 있습니다. 계모와 언니들은 그녀에게 모든 일을 넘겼어요. 하지만 신데렐라는 착한 마음씨로 모든 일을 성실하게 도맡아했어요.",
         "description_of_illustration": "a cozy, slightly cluttered kitchen",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "왕궁에서 무도회 초대장이 도착합니다. 신데렐라는 무도회에 참석할 수 없음을 알고 슬퍼합니다. 하지만 그녀는 비밀리에 춤 연습을 계속합니다.",
+            "어느날 왕궁에서 무도회 초대장이 도착했어요. 계모와 언니들의 방해로 신데렐라는 무도회에 참석할 수 없음을 알고 슬퍼헀어요. 하지만 그녀는 오른손을 흔들며 비밀리에 춤 연습을 계속합니다.",
         "description_of_illustration": "Dance practice room",
-        "action_used_in_action_list": "",
+        "action_used_in_action_list": "오른손 흔들기",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "무도회 날이 되었지만 신데렐라는 집에 남겨집니다. 그녀는 혼자 울며 자신도 무도회에 갈 수 있었으면 좋겠다고 소망합니다.",
+            "무도회 날, 계모와 언니들은 드레스를 입고 무도회에 참여했어요. 하지만 마음씨 착한 신데렐라는 집에 남겨졌어요. 그녀는 혼자 울며 자신도 무도회에 갈 수 있었으면 좋겠다고 소망합니다.",
         "description_of_illustration": "the interior of a room",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
@@ -250,28 +251,28 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "잭과 그의 엄마는 가난한 생활을 하고 있습니다. 어느 날, 잭의 엄마는 잭에게 마지막 소를 시장에 팔러 가라고 지시합니다.",
+            "잭과 그의 엄마는 가난한 생활을 하고 있었어요. 어느 날, 잭의 엄마는 잭에게 마지막 소를 시장에 팔러 가라고 심부름을 시켰어요.",
         "description_of_illustration": "a cow on a farm in a poor house",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "잭은 시장에 가는 길에 신비로운 남자를 만나고, 소를 마법의 콩 몇 알로 바꾸게 됩니다. 잭은 기대감에 차서 집으로 돌아갑니다.",
+            "잭은 시장에 가는 길에 신비로운 남자를 만나고, 소를 마법의 콩 몇 알로 바꾸었습니다. 잭은 기대감에 차서 집으로 돌아갔습니다.",
         "description_of_illustration": "magic beans",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "잭이 마법의 콩을 가져오자, 엄마는 화를 내며 콩을 창밖으로 던져 버립니다. 그녀는 잭이 어리석었다고 생각합니다.",
+            "잭이 마법의 콩을 가져오자, 엄마는 화를 내며 콩을 창밖으로 던져 버렸어요. 그녀는 잭이 어리석었다고 생각했어요.",
         "description_of_illustration": "beans thrown out the window",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "다음 날 아침, 잭은 집 밖에서 하늘 높이 솟은 거대한 콩나무를 발견합니다. 그는 호기심을 참지 못하고 콩나무를 타기 시작합니다.",
+            "다음 날 아침, 잭은 집 밖에서 하늘 높이 솟은 거대한 콩나무를 발견했어요. 그는 호기심을 참지 못하고 콩나무를 타기 시작합니다.",
         "description_of_illustration":
             "giant beanstalk reaching into the clouds",
         "action_used_in_action_list": "",
@@ -279,29 +280,31 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "잭은 콩나무를 타고 구름 위에 있는 거인의 성에 도착합니다. 그는 조심스럽게 성 안으로 들어가 보물을 찾기 시작합니다.",
+            "잭은 콩나무를 타고 구름 위에 있는 거인의 성에 도착했어요. 그는 조심스럽게 성 안으로 들어가 성을 둘러봅니다.",
         "description_of_illustration": "giant's castle above the clouds",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "거인의 집에서 잭은 거인이 코알라를 키우는 것을 목격하며 숨어 있습니다. 그는 거인이 졸고 있는 동안 황금알을 낳는 거위를 발견합니다.",
-        "description_of_illustration": "giant sleeps nearby",
+            "거인은 집에서 코알라를 괴롭히면서 키우는 것을 목격하며 숨어 있었어요. 그러던 중, 잭은 거인이 졸고 있는 동안 쇠사슬에 묶여 있는 거위를 발견합니다.",
+        "description_of_illustration":
+            "A sleeping giant and a goose bound in a chain of iron",
         "action_used_in_action_list": "",
         "animals_from_animal_list": ["코알라"]
       },
       {
         "scene_contents":
-            "잭은 거위를 들고 조용히 콩나무를 타고 내려갑니다. 그는 거인의 추적을 피하기 위해 빠르게 움직입니다.",
+            "잭은 거위가 불쌍해 거위를 들고 조용히 콩나무를 타고 내려 갔어요. 그때 깨어난 거인이 잭의 뒤를 쫓아옵니다.",
         "description_of_illustration": "castle above the clouds",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "잭은 안전하게 집에 도착하고, 그의 엄마는 잭의 성공을 자랑스럽게 생각합니다. 둘은 이제 부유하게 살 수 있게 되었습니다. 행복해서 둘 다 양손을 들어 만세를 합니다.",
-        "description_of_illustration": "a poor house",
+            "잭은 안전하게 집에 도착했어요. 알고 보니 거위는 황금알을 낳는 거위였어요. 그의 엄마는 잭의 성공을 자랑스럽게 생각합니다. 둘은 이제 부유하게 살 수 있게 되었어요. 행복해서 둘 다 양손을 들어 만세를 합니다.",
+        "description_of_illustration":
+            "The Goose and the Gold and Gold that Lay Their Eggs",
         "action_used_in_action_list": "양손 번쩍",
         "animals_from_animal_list": []
       }
@@ -312,7 +315,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "임금님은 아름다운 옷을 사랑하고, 항상 최신 패션을 입으려고 합니다. 그는 옷에 많은 돈을 쓰며 자신의 외모를 국가 운영보다 중요하게 생각합니다.",
+            "임금님은 아름다운 옷을 사랑하고, 항상 최신 패션을 입으려고 했어요. 그는 옷에 많은 돈을 쓰며 자신의 외모를 국가 운영보다 중요하게 생각합니다.",
         "description_of_illustration":
             "A vast wardrobe filled with luxurious garments.",
         "action_used_in_action_list": "",
@@ -320,7 +323,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "두 명의 사기꾼이 나타나 임금님에게 접근합니다. 그들은 보이지 않는 특별한 옷을 짜 주겠다고 제안하며, 이 옷은 바보나 직무에 부적합한 사람에게만 보이지 않는다고 주장합니다.",
+            "두 명의 사기꾼이 나타나 임금님에게 접근했어요. 그들은 똑똑한 사람에게만 보이는 특별한 옷을 짜 주겠다고 제안하며, 이 옷은 바보에게만 보이지 않는다고 말했어요.",
         "description_of_illustration":
             "'Invisible' fabric displayed by swindlers.",
         "action_used_in_action_list": "",
@@ -328,22 +331,22 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "임금님은 자신이 어리석지 않음을 증명하고자 이 옷을 주문합니다. 그는 눈에 보이지 않는 옷을 입고 자신의 모습을 상상하며 흥분합니다.",
+            "임금님은 옷이 보이지 않았지만, 자신은 옷이 보인다고 거짓말 하면서 옷을 주문했어요. 그는 눈에 보이지 않는 옷을 입고 자신의 모습을 상상하며 흥분합니다.",
         "description_of_illustration": "An empty loom with colorful threads.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "사기꾼들은 임금님에게 '옷'을 보여 주며 임금님은 실제로 아무 것도 보이지 않지만 감탄을 합니다. 그는 자신의 판단을 의심하지 않으려고 합니다.",
+            "사실 옷은 보이지 않는게 아니라 없는 것이었어요. 사기꾼들은 옷이 보이는 척을 하면서 아무것도 입지 않은 임금님을 보며 감탄하는 연기를 했어요. 왕은 자신만만해져서 양손을 번쩍 들었어요.",
         "description_of_illustration":
             "An ornate, empty throne next to an empty loom.",
-        "action_used_in_action_list": "",
+        "action_used_in_action_list": "양손 번쩍",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "임금님은 대대적인 행진을 위해 '새 옷'을 입고 나타납니다. 그는 사람들이 자신의 화려한 복장에 감탄할 것이라 기대합니다.",
+            "임금님은 대대적인 행진을 위해 '새 옷'을 입고 나타났어요. 임금님은 사람들이 자신의 화려한 복장에 감탄할 것이라 기대하며 거리로 나갔어요.",
         "description_of_illustration":
             "A bustling street lined with spectators.",
         "action_used_in_action_list": "왼손 흔들기",
@@ -351,7 +354,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "행진 도중 어린 아이가 임금님이 벌거벗었다고 외칩니다. 사람들은 속삭이기 시작하며 진실을 깨닫습니다.",
+            "행진 도중 어린 아이가 임금님이 벌거벗었다고 외쳤어요. 사람들은 속삭이기 시작하며 진실을 깨닫습니다.",
         "description_of_illustration":
             "Crowd murmuring among themselves, looking puzzled.",
         "action_used_in_action_list": "",
@@ -359,7 +362,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "임금님은 처음엔 당황하지만, 점점 자신이 속았음을 인정하게 됩니다. 그러나 그는 계속 걸으며 행진을 마칩니다.",
+            "임금님은 처음엔 당황하지만, 점점 자신이 속았음을 인정했어요. 그러나 그는 계속 걸으며 행진을 마쳤어요.",
         "description_of_illustration":
             "A long parade route with a crowd watching solemnly.",
         "action_used_in_action_list": "",
@@ -367,7 +370,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "행진이 끝난 후 임금님은 어린 아이에게 진실을 말한 것에 대해 감사를 표합니다. 임금님은 이 경험을 통해 더 지혜로운 리더가 되겠다고 다짐합니다.",
+            "행진이 끝난 후 임금님은 어린 아이에게 진실을 말한 것에 대해 감사를 표했어요. 임금님은 이 경험을 통해 더 지혜로운 리더가 되겠다고 다짐하며 오른손을 번쩍 합니다.",
         "description_of_illustration": "A peaceful city square in the evening.",
         "action_used_in_action_list": "오른손 번쩍",
         "animals_from_animal_list": []
@@ -379,39 +382,37 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
     "scenes": [
       {
         "scene_contents":
-            "인어공주는 바다 왕국에서 다섯 자매와 함께 살고 있습니다. 그녀는 자신의 생일에 바다 위로 수면을 넘어 인간 세계를 볼 수 있는 기회를 갖습니다.",
+            "인어공주는 바다 왕국에서 다섯 자매와 함께 살고 있었어요. 그녀는 자신의 생일에 바다 위로 수면을 넘어 인간 세계를 볼 수 있는 기회를 가졌어요. 인어공주는 기쁜 마음에 양손을 번쩍했어요",
         "description_of_illustration":
             "A beautiful underwater castle surrounded by colorful coral reefs.",
-        "action_used_in_action_list": "",
+        "action_used_in_action_list": "양손 번쩍",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "인어공주는 바다 위로 올라와 아름다운 선박을 발견하고, 선박 위의 멋진 왕자를 처음 보게 됩니다. 왕자의 생일 축하 행사가 선박 위에서 열리고 있었습니다.",
+            "인어공주는 바다 위로 올라와 아름다운 선박을 발견하고, 선박 위의 멋진 왕자를 처음 보게 되었어요. 왕자의 생일 축하 행사가 선박 위에서 열리고 있었어요.",
         "description_of_illustration":
             "A majestic ship sailing on the calm sea at sunset.",
-        "action_used_in_action_list": "왼손 번쩍",
-        "animals_from_animal_list": []
-      },
-      {
-        "scene_contents":
-            "갑자기 폭풍이 몰아치고 인어공주는 왕자가 바다에 빠지는 것을 보게 됩니다. 그녀는 망설임 없이 왕자를 구하기 위해 물속으로 뛰어듭니다.",
-        "description_of_illustration":
-            "Dark clouds and high waves during a storm at sea.",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "인어공주는 의식을 잃은 왕자를 해변까지 데리고 가서 목숨을 구합니다. 왕자는 공주를 보지 못하고 다른 사람이 자신을 구한 것으로 생각합니다.",
-        "description_of_illustration":
-            "A serene beach at dawn with gentle waves lapping the shore.",
+            "갑자기 폭풍이 몰아치고 인어공주는 왕자가 바다에 빠지는 것을 보게 됩니다. 그녀는 망설임 없이 왕자를 구하기 위해 물속으로 들어갔어요.",
+        "description_of_illustration": "a ship broken by a storm on the sea",
         "action_used_in_action_list": "",
         "animals_from_animal_list": []
       },
       {
         "scene_contents":
-            "인어공주는 사랑에 빠져 인간이 되기를 원합니다. 그녀는 자신의 목소리를 잃는 대가로 바다 마녀에게서 인간이 될 수 있는 묘약을 받습니다. 인어공주는 기뻐 박수치기를 합니다.",
+            "인어공주는 의식을 잃은 왕자를 해변까지 데리고 가서 목숨을 구합니다. 왕자는 공주를 보지 못하고 다른 사람이 자신을 구한 것으로 생각했어요.",
+        "description_of_illustration": "The prince lying on the calm beach.",
+        "action_used_in_action_list": "",
+        "animals_from_animal_list": []
+      },
+      {
+        "scene_contents":
+            "인어공주는 왕자에게 사랑에 빠져 인간이 되기를 원했어요. 그녀는 자신의 목소리를 잃는 대가로 바다 마녀에게서 인간이 될 수 있는 묘약을 받았어요. 인어공주는 기뻐 박수를 쳤어요.",
         "description_of_illustration":
             "A dark, eerie underwater cave with mysterious glowing plants.",
         "action_used_in_action_list": "박수치기",
@@ -419,7 +420,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "인간이 된 인어공주는 왕자의 궁전으로 가서 그와 함께 시간을 보냅니다. 그러나 왕자는 다른 공주와 결혼하겠다고 발표합니다.",
+            "인간이 된 인어공주는 왕자의 궁전으로 가서 그와 함께 시간을 보냅니다. 그러나 왕자는 다른 공주와 이미 결혼하기로 한 상태였어요.",
         "description_of_illustration":
             "A lavish palace garden filled with guests during a royal celebration.",
         "action_used_in_action_list": "",
@@ -427,7 +428,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "인어공주의 자매들은 그녀에게 바다 마녀로부터 받은 칼로 왕자를 해치면 자신의 목소리를 되찾고 다시 인어가 될 수 있다고 말합니다. 그러나 인어공주는 왕자를 사랑하여 그를 해칠 수 없습니다.",
+            "인어공주의 자매들은 그녀에게 바다 마녀로부터 받은 칼로 왕자를 해치면 자신의 목소리를 되찾고 다시 인어가 될 수 있다고 말해주었어요. 그렇게 하지 않으면 인어공주는 거품이 되어 사라질 운명이었어요.",
         "description_of_illustration":
             "A moonlit beach with a sharp, gleaming knife on the sand.",
         "action_used_in_action_list": "",
@@ -435,7 +436,7 @@ const List<Map<String, dynamic>> EXAMPLE_RESPONSE = [
       },
       {
         "scene_contents":
-            "인어공주는 왕자와 다른 공주의 결혼식 날, 바다로 돌아가 거품이 되어 사라집니다. 그녀는 자신의 희생을 통해 바다의 일원이 되고, 하늘의 별이 됩니다.",
+            "인어공주는 왕자를 사랑했기에 그릴 해칠 수 없었어요. 왕자와 다른 공주의 결혼식 날, 바다로 돌아가 거품이 되어 사라졌어요. 그녀는 자신의 희생을 통해 바다의 일원이 되고, 하늘의 별이 되었어요.",
         "description_of_illustration":
             "The sea at sunrise with gentle waves and a faint trace of foam.",
         "action_used_in_action_list": "",
