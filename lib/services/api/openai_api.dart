@@ -13,10 +13,9 @@ import 'package:frontend/models/image_model.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/db/database_manager/database_manager.dart';
 import 'package:frontend/services/util.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
 class OpenAI {
-  final database = AppDatabase();
-
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
 
   OpenAI._privateConstructor();

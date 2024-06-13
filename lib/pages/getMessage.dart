@@ -73,7 +73,7 @@ class _GetMessageState extends State<GetMessage> {
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => MakeFairytale(tec.text),

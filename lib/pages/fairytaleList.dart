@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'getImage.dart';
 
+import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:frontend/models/scene_model.dart';
+import 'package:frontend/pages/makingFairytale.dart';
 // import 'dart:convert';
 // import 'dart:io';
 // import 'dart:typed_data';
@@ -32,8 +38,7 @@ class TablePage extends StatefulWidget {
 }
 
 class _TablePageState extends State<TablePage> {
-  final database = AppDatabase();
-  List<FairytailModelData> items = [];
+  List<SceneModel> items = [];
 
   @override
   void initState() {
@@ -42,7 +47,7 @@ class _TablePageState extends State<TablePage> {
   }
 
   Future<void> _loadFairytales() async {
-    List<FairytailModelData> list = await getFairytale();
+    List<SceneModel> list = await getFairytale();
     setState(() {
       items = list;
     });
@@ -51,8 +56,10 @@ class _TablePageState extends State<TablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: Text('완성된 동화들'),
+        title: Text('완성된 동화들이에요.'),
+        backgroundColor: Color(0xFFFFFFFF),
       ),
       body: Column(
         children: [
@@ -69,20 +76,125 @@ class _TablePageState extends State<TablePage> {
               itemBuilder: (context, index) {
                 final item = items[index];
                 return Container(
-                  color: Colors.blueAccent,
+                  padding: EdgeInsets.all(5),
+                  color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
                   alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Scene: ${item.sceneModel}',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      Text(
-                        'ID: ${item.id}',
-                        style: TextStyle(color: Colors.white, fontSize: 12),
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      gSceneModel = item;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlacingCharacter(),
+                        ),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(0)),
+                                      fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 잘라집니다.
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(1)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(2)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(3)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(4)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(5)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(6)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.memory(
+                                      base64Decode(
+                                          item.b64_images.elementAt(7)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        BackdropFilter(
+                          filter: ImageFilter.blur(
+                              sigmaX: 4, sigmaY: 4), // 흐림 효과를 적용합니다.
+                          child: Container(
+                            color: Colors
+                                .transparent, // 필터를 적용할 때 반드시 투명색으로 설정해야 합니다.
+                          ),
+                        ),
+                        Positioned(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  20, 10, 20, 10), // 패딩을 추가합니다.
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(
+                                    0xFF, 0xD1, 0xEB, 0xFF), // 배경색 설정합니다.
+                                borderRadius:
+                                    BorderRadius.circular(20), // 둥근 테두리를 추가합니다.
+                              ),
+                              child: Text(
+                                '${item.theme}',
+                                style: TextStyle(
+                                  color: Color.fromARGB(0xFF, 0x22, 0x1A, 0x7E),
+                                  fontSize: 40,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -93,9 +205,17 @@ class _TablePageState extends State<TablePage> {
     );
   }
 
-  Future<List<FairytailModelData>> getFairytale() async {
+  Future<List<SceneModel>> getFairytale() async {
     List<FairytailModelData> list =
         await database.select(database.fairytailModel).get();
-    return list;
+
+    List<SceneModel> gslist = [];
+    for (int i = 0; i < list.length; i++) {
+      print(jsonDecode(list[i].sceneModel).runtimeType);
+      SceneModel sm = SceneModel.fromJson(jsonDecode(list[i].sceneModel));
+      gslist.add(sm);
+    }
+
+    return gslist;
   }
 }

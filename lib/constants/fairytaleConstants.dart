@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:frontend/services/db/database_manager/database_manager.dart';
 
 AudioCache audioPlayer = AudioCache(prefix: "audio.aac");
+
+final database = AppDatabase();
 
 SceneModel? gSceneModel;
 
