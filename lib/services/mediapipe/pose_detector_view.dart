@@ -150,9 +150,16 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
               missionClear(_kindOfPose);
             }
           } else if (!useDummy) {
-            if (_kindOfPose.replaceAll(" ", "") ==
-                gSceneModel!.scriptModelList[index].action_used_in_action_list!
-                    .replaceAll(" ", "")) {
+            if ((gSceneModel!.scriptModelList[index].action_used_in_action_list!
+                        .replaceAll(" ", "") ==
+                    null) ||
+                (gSceneModel!.scriptModelList[index].action_used_in_action_list!
+                        .replaceAll(" ", "") ==
+                    "null") ||
+                (_kindOfPose.replaceAll(" ", "") ==
+                    gSceneModel!
+                        .scriptModelList[index].action_used_in_action_list!
+                        .replaceAll(" ", ""))) {
               doMissionChecking = false;
               doStampRunning = true;
               missionClear(_kindOfPose);
