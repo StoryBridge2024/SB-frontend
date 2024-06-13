@@ -53,14 +53,14 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
 
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '캐릭터 제작하기',
+                '캐릭터를 만들어봐요!',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,

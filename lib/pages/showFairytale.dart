@@ -24,8 +24,9 @@ class ShowFairytale extends StatelessWidget {
         child: Column(
           children: [
             Flexible(
-              flex: 2,
+              flex: 3,
               child: Container(
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
@@ -33,8 +34,11 @@ class ShowFairytale extends StatelessWidget {
                         style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
                       )
                     : Text(
-                        gSceneModel!
-                            .scriptModelList[i].action_used_in_action_list!,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i]
+                                    .action_used_in_action_list ??
+                                ''
+                            : '',
                         style: TextStyle(
                           fontSize: 60,
                           fontFamily: 'MOVE',
@@ -45,27 +49,29 @@ class ShowFairytale extends StatelessWidget {
             Flexible(
               flex: 8,
               child: Container(
-                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 height: double.infinity,
                 width: double.infinity,
                 alignment: Alignment.center,
                 child: (useDummy)
                     ? Text(
                         texts[i],
-                        style: TextStyle(fontSize: 30, fontFamily: 'DDO'),
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontFamily: 'DDO',
+                        ),
                       )
                     : Text(
-                        gSceneModel!.scriptModelList[i].scene_contents,
+                        gSceneModel != null
+                            ? gSceneModel!.scriptModelList[i].scene_contents ??
+                                ''
+                            : '',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 40,
                           fontFamily: 'DDO',
                         ),
                       ),
               ),
-            ),
-            Flexible(
-              flex: 1,
-              child: Container(),
             ),
           ],
         ),
@@ -161,7 +167,35 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
     var images = widget.images;
     var face = widget.face;
 
-    ValueNotifier(clr_index);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          flex: 1,
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: _characterAndCamera(),
+          ),
+        ),
+        Flexible(
+          flex: 1,
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: _stamp(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _characterAndCamera() {
+    var images = widget.images;
+    var face = widget.face;
     return ValueListenableBuilder<int>(
       valueListenable: clr_index,
       builder: (context, value, _) {
@@ -171,60 +205,38 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
         if (clr_index.value - 1 == NUMBER_OF_SCENE) {
           return Container();
         }
-
         return Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 600,
-                    height: 600,
-                    child: Transform.scale(
-                      scale: 1,
-                      child: PoseDetectorView(images: images, face: face),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  child: ValueListenableBuilder<bool>(
-                    valueListenable: ValueNotifier<bool>(_showStamp),
-                    builder: (context, value, _) {
-                      if (!_showStamp) return Container();
-                      return AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Transform.scale(
-                            scale: _scaleAnimation.value,
-                            child: child,
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            'assets/image/stamp.png',
-                            width: 350,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+          width: 600,
+          height: 600,
+          child: Transform.scale(
+            scale: 1,
+            child: PoseDetectorView(images: images, face: face),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _stamp() {
+    return ValueListenableBuilder(
+      valueListenable: ValueNotifier<bool>(_showStamp),
+      builder: (context, value, _) {
+        if (!_showStamp) return Container();
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _scaleAnimation.value,
+              child: child,
+            );
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              'assets/image/stamp.png',
+              width: 350,
+            ),
           ),
         );
       },
@@ -236,7 +248,7 @@ class _StoryState extends State<Story> with SingleTickerProviderStateMixin {
       _showStamp = true;
     });
     _controller.forward(from: 0).then((_) {
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(milliseconds: 200), () {
         setState(() {
           _showStamp = false;
         });

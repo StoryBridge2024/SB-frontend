@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
 import 'package:frontend/constants/const.dart';
@@ -9,9 +11,12 @@ import '../../constants/animal_list.dart';
 import '../../constants/prompt.dart';
 import '../../models/image_model.dart';
 import '../../models/scene_model.dart';
+import '../db/database_manager/database_manager.dart';
 import '../util.dart';
 
 class OpenAI {
+  final database = AppDatabase();
+
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
 
   OpenAI._privateConstructor();
@@ -43,7 +48,9 @@ class OpenAI {
     var content =
         json.decode(response.body)["choices"][0]["message"]["content"];
     content = jsonDecode(content);
-    if (content["human"] == "yes" || content["text"] == "yes"|| content["animal"] == "yes") {
+    if (content["human"] == "yes" ||
+        content["text"] == "yes" ||
+        content["animal"] == "yes") {
       throw Exception('Invalid image');
     }
     return;
@@ -54,12 +61,23 @@ class OpenAI {
     var scriptPrompt = deepCopy(SCRIPT_PROMPT);
 
     //compose prompt with example responses
-    EXAMPLE_REQUEST.forEach((ELEMENT) {
-      var element= deepCopy(ELEMENT);
-      scriptPrompt["messages"].add(element);
-    });
-    for(int i = 0; i < NUMBER_OF_EXAMPLE_PROMPT; i++) {
-      scriptPrompt["messages"][i*2+2]["content"] = jsonEncode(EXAMPLE_RESPONSE[i]);
+    List<int> randomSelect = [];
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      randomSelect.add(randomInt);
+      scriptPrompt["messages"].add(
+        deepCopy(EXAMPLE_REQUEST[randomInt]),
+      );
+      scriptPrompt["messages"].add(
+        {"role": "system", "content": ""},
+      );
+      print("randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
+    }
+    print("=============================================");
+    for (int i = 0; i < RANDOM_SELECT_R; i++) {
+      scriptPrompt["messages"][i * 2 + 1]["content"] =
+          jsonEncode(deepCopy(EXAMPLE_RESPONSE[randomSelect[i]]));
+      print("content: ${EXAMPLE_RESPONSE[randomSelect[i]]}");
     }
 
     //compose prompt with theme
@@ -154,18 +172,30 @@ class OpenAI {
 
     print("createScene2");
     final List<Future<String>> imageFutures = [];
+    final List<Future<Uint8List>> audioSources = [];
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
-      imageFutures
-          .add(createImage(content["scenes"][i]["description_of_illustration"]));
+      imageFutures.add(
+          createImage(content["scenes"][i]["description_of_illustration"]));
+      audioSources
+          .add(TTS().createSpeech(content["scenes"][i]["scene_contents"]));
     }
 
     print("createScene3");
     List<String> images = await Future.wait(imageFutures);
+    List<Uint8List> audios = await Future.wait(audioSources);
     DateTime et = DateTime.now();
     Duration d = et.difference(st);
     print("createScene: $d초 걸림");
-    String audioSource = await TTS().createSpeech("안녕하세요 저는 김주영입니다.");
-    return SceneModel(
-        content: content, images: images, audioSource: audioSource);
+    SceneModel sceneModel = SceneModel(content: content, images: images, audioSource: audios);
+
+    //================================================================================================
+    Map<String, dynamic> map = sceneModel.toJson();
+    String str = jsonEncode(map);
+    await database
+        .into(database.fairytailModel)
+        .insert(FairytailModelCompanion.insert(content: str));
+    //================================================================================================
+
+    return sceneModel;
   }
 }

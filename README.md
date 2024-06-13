@@ -8,9 +8,13 @@
 1. 최상위 디렉토리에 '.env'파일 생성
 2. 디스코드 Settings 채널에 올려둔 내용을 위 파일에 기입
 
-- **주의** 
-    - dotenv파일에는 apiKey처럼 공개되면 안되는 내용이 들어가는거라 github에 올라가면 안됌
+## firebase
+1. 아래 디렉토리에 google-services.json파일 추가
+
+- **주의**
+    - dotenv, google-services.json 파일에는 apiKey처럼 공개되면 안되는 내용이 들어가는거라 github에 올라가면 안됌
     - push하기 전에 항상 dotenv파일 올라가지 않는지 확인하기
+    - 사실 .gitignore로 빠지긴 할텐데 혹시 모르니 확인
 
 # 가이드라인
 

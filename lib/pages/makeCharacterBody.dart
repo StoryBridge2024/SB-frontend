@@ -39,14 +39,14 @@ class MakeCharacterBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(0xFF, 0xD1, 0xF7, 0xFA),
+        color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         child: Column(
           children: [
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: Text(
-                '캐릭터 제작하기',
+                '캐릭터를 만들어봐요!',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.w600,
@@ -67,41 +67,31 @@ class MakeCharacterBody extends StatelessWidget {
                       child: Container(),
                     ),
                     Flexible(
-                        flex: 11,
-                        child: Stack(
-                          children: [
-                            DrawBox(face: file),
-                            Center(
-                              child: IgnorePointer(
-                                ignoring: true,
-                                child: Container(
-                                  child: Image.asset(
-                                    "assets/image/human_shape_no_head.png",
-                                    scale: 0.85,
-                                  ),
+                      flex: 11,
+                      child: Stack(
+                        children: [
+                          DrawBox(face: file),
+                          Center(
+                            child: IgnorePointer(
+                              ignoring: true,
+                              child: Container(
+                                child: Image.asset(
+                                  "assets/image/human_shape_no_head.png",
+                                  scale: 0.85,
                                 ),
                               ),
                             ),
-                            Container(
-                                alignment: Alignment.topCenter,
-                                child: SizedBox(
-                                  // width: 100,
-                                  height: 130,
-                                  child: file,
-                                )),
-                            // Positioned( // 주영이 태블릿에 맞게 재설정
-                            //
-                            //   top: 50.0,
-                            //   left: 400,
-                            //   // right: 0,
-                            //   child: SizedBox(
-                            //     // width: 100,
-                            //     height: 150,
-                            //     child: file,
-                            //   ),
-                            // ),
-                          ],
-                        )),
+                          ),
+                          Container(
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              height: 130,
+                              child: file,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Flexible(
                       flex: 1,
                       child: Container(),
@@ -139,7 +129,7 @@ class _DrawBoxState extends State<DrawBox> {
     var face = widget.face;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 64),
         child: Column(
@@ -201,6 +191,9 @@ class _DrawBoxState extends State<DrawBox> {
         icon: const Icon(Icons.clear),
         tooltip: "Clear",
         onPressed: notifier.clear,
+      ),
+      Container(
+        width: 20,
       ),
       FloatingActionButton(
         backgroundColor: Color.fromARGB(0xFF, 0x3B, 0x2F, 0xCA),
@@ -312,27 +305,6 @@ class _DrawBoxState extends State<DrawBox> {
     return byteData!.buffer.asUint8List();
   }
 
-  void _showJson(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Sketch as JSON"),
-        content: SizedBox.expand(
-          child: SelectableText(
-            jsonEncode(notifier.currentSketch.toJson()),
-            autofocus: true,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: Navigator.of(context).pop,
-            child: const Text("Close"),
-          )
-        ],
-      ),
-    );
-  }
-
   Widget _buildStrokeToolbar(BuildContext context) {
     return ValueListenableBuilder<ScribbleState>(
       valueListenable: notifier,
@@ -384,21 +356,6 @@ class _DrawBoxState extends State<DrawBox> {
       ),
     );
   }
-  //
-  // Widget _buildColorToolbar(BuildContext context) {
-  //   return Row(
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     mainAxisAlignment: MainAxisAlignment.start,
-  //     children: [
-  //       _buildColorButton(context, color: Colors.black),
-  //       _buildColorButton(context, color: Colors.red),
-  //       _buildColorButton(context, color: Colors.green),
-  //       _buildColorButton(context, color: Colors.blue),
-  //       _buildColorButton(context, color: Colors.yellow),
-  //       _buildEraserButton(context),
-  //     ],
-  //   );
-  // }
 
   Widget _buildColorToolbar(BuildContext context) {
     return Row(

@@ -44,18 +44,18 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
         uiSettings: [
           // 안드로이드 UI 설정
           AndroidUiSettings(
-              toolbarTitle: '이미지 자르기/회전하기',
+              toolbarTitle: '이미지를 얼굴 크기에 맞게 자르고 체크표시를 눌러주세요!',
               // 타이틀바 제목
               toolbarColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
               // 타이틀바 배경색
-              toolbarWidgetColor: Colors.white,
+              toolbarWidgetColor: Colors.black,
               // 타이틀바 단추색
               initAspectRatio: CropAspectRatioPreset.original,
               // 이미지 크로퍼 시작 시 원하는 가로 세로 비율
               lockAspectRatio: false), // 고정 값으로 자르기 (기본값 : 사용안함)
           // iOS UI 설정
           IOSUiSettings(
-            title: '이미지 자르기/회전하기', // 보기 컨트롤러의 맨 위에 나타나는 제목
+            title: '이미지를 얼굴 크기에 맞게 자르고 체크표시를 눌러주세요!', // 보기 컨트롤러의 맨 위에 나타나는 제목
           ),
           // Web UI 설정
           WebUiSettings(
@@ -119,7 +119,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Image Picker"),
+        title: const Text("오른쪽 사진 버튼을 눌러주세요"),
         actions: [
           IconButton(onPressed: _pickImage, icon: const Icon(Icons.image))
         ],
@@ -137,7 +137,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
               : const Icon(
                   Icons.image,
                   size: 50,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
         ),
       ),
@@ -182,18 +182,19 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
         uiSettings: [
           // 안드로이드 UI 설정
           AndroidUiSettings(
-              toolbarTitle: '이미지 자르기/회전하기',
+              toolbarTitle: '이미지를 얼굴 크기에 맞게 네모낳게 자르고 체크를 눌러주세요!',
               // 타이틀바 제목
               toolbarColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
               // 타이틀바 배경색
-              toolbarWidgetColor: Colors.white,
+              toolbarWidgetColor: Colors.black,
               // 타이틀바 단추색
               initAspectRatio: CropAspectRatioPreset.original,
               // 이미지 크로퍼 시작 시 원하는 가로 세로 비율
               lockAspectRatio: false), // 고정 값으로 자르기 (기본값 : 사용안함)
           // iOS UI 설정
           IOSUiSettings(
-            title: '이미지 자르기/회전하기', // 보기 컨트롤러의 맨 위에 나타나는 제목
+            title:
+                '이미지를 얼굴 크기에 맞게 네모낳게 자르고 체크를 눌러주세요!', // 보기 컨트롤러의 맨 위에 나타나는 제목
           ),
           // Web UI 설정
           WebUiSettings(
@@ -257,7 +258,7 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Image Picker"),
+        title: const Text("오른쪽 사진 버튼을 눌러주세요"),
         actions: [
           IconButton(onPressed: _pickImage, icon: const Icon(Icons.image))
         ],
@@ -275,7 +276,7 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
               : const Icon(
                   Icons.image,
                   size: 50,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
         ),
       ),

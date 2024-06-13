@@ -8,10 +8,21 @@ class ScriptModel {
             (throw ArgumentError('scene_contents cannot be null')),
         description_of_illustration = json['description_of_illustration'] ??
             (throw ArgumentError('description_of_illustration cannot be null')),
-        action_used_in_action_list = json['action_used_in_action_list']==""?null:json['action_used_in_action_list'],
+        action_used_in_action_list = json['action_used_in_action_list'] == ""
+            ? null
+            : json['action_used_in_action_list'],
         animals_from_animal_list = (json['animals_from_animal_list'] != null)
             ? List<String>.from(json['animals_from_animal_list'])
             : (throw ArgumentError('animals_from_animal_list cannot be null'));
+
+  Map<String, dynamic> toJson() {
+    return {
+      'scene_contents': scene_contents,
+      'description_of_illustration': description_of_illustration,
+      'action_used_in_action_list': action_used_in_action_list,
+      'animals_from_animal_list': animals_from_animal_list,
+    };
+  }
 }
 
 class ScriptResponse {
