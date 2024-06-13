@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/homePage.dart';
-import 'package:frontend/services/db/database_manager/database_manager.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -44,6 +41,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }

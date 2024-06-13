@@ -1,16 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/api/openai_api.dart';
-import 'package:frontend/constants/animal_list.dart';
-import '../constants/action_list.dart';
+
 import '../constants/fairytaleConstants.dart';
-import '../services/api/tts.dart';
-import '../services/db/database_manager/database_manager.dart';
 import 'makingCharacter.dart';
 
 class MakeFairytale extends StatelessWidget {
@@ -27,6 +23,7 @@ class MakeFairytale extends StatelessWidget {
     final Future<SceneModel> sceneModel = OpenAI().createScene(text);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
         body: FutureBuilder(
