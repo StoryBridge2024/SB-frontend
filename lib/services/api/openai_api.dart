@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
@@ -63,6 +62,9 @@ class OpenAI {
     List<int> randomSelect = [];
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
       int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      while(randomSelect.contains(randomInt)) {
+        randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
+      }
       randomSelect.add(randomInt);
       scriptPrompt["messages"].add(
         deepCopy(EXAMPLE_REQUEST[randomInt]),
