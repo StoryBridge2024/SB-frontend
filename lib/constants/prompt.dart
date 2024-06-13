@@ -1,4 +1,6 @@
 //6 sentences를 1로 바꿈, 수정하자
+import 'dart:collection';
+
 import 'package:frontend/constants/const.dart';
 
 const String baseScriptUrl = 'https://api.openai.com/v1/chat/completions';

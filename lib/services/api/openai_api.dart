@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,7 +57,7 @@ class OpenAI {
 
   Future<Map<String, dynamic>> createCompletion(String theme) async {
     //set prompt
-    var scriptPrompt = deepCopy(SCRIPT_PROMPT);
+    LinkedHashMap<String, dynamic> scriptPrompt = deepCopy(SCRIPT_PROMPT);
 
     //compose prompt with example responses
     List<int> randomSelect = [];
@@ -198,7 +199,7 @@ class OpenAI {
     await database
         .into(database.fairytailModel)
         .insert(FairytailModelCompanion.insert(
-          sceneModel: str,
+          sceneModel: "str",
           image: "aaa",
           humanLocX: "aaa",
           humanLocY: "aaa",
