@@ -1,19 +1,20 @@
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/constants/action_list.dart';
-import 'package:frontend/constants/const.dart';
-import 'package:frontend/models/script_model.dart';
-import 'package:frontend/services/api/tts.dart';
-import 'package:http/http.dart';
 import 'package:frontend/constants/animal_list.dart';
+import 'package:frontend/constants/const.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/constants/prompt.dart';
 import 'package:frontend/models/image_model.dart';
 import 'package:frontend/models/scene_model.dart';
+import 'package:frontend/models/script_model.dart';
+import 'package:frontend/services/api/tts.dart';
 import 'package:frontend/services/db/database_manager/database_manager.dart';
 import 'package:frontend/services/util.dart';
-import 'package:frontend/constants/fairytaleConstants.dart';
+import 'package:http/http.dart';
 
 class OpenAI {
   final String? apiKey = dotenv.env['OPENAI_APIKEY'];
@@ -63,7 +64,7 @@ class OpenAI {
     List<int> randomSelect = [];
     for (int i = 0; i < RANDOM_SELECT_R; i++) {
       int randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
-      while(randomSelect.contains(randomInt)) {
+      while (randomSelect.contains(randomInt)) {
         randomInt = get_random_int(NUMBER_OF_EXAMPLE_PROMPT);
       }
       randomSelect.add(randomInt);
@@ -199,7 +200,7 @@ class OpenAI {
     await database
         .into(database.fairytailModel)
         .insert(FairytailModelCompanion.insert(
-          sceneModel: "str",
+          sceneModel: str,
           image: "aaa",
           humanLocX: "aaa",
           humanLocY: "aaa",
