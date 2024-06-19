@@ -69,11 +69,11 @@ class MakeCharacterBody extends StatelessWidget {
                             child: IgnorePointer(
                               ignoring: true,
                               child: Container(
-                                child: Image.asset(
-                                  "assets/image/human_shape_no_head.png",
-                                  scale: 0.85,
-                                ),
-                              ),
+                                  // child: Image.asset(
+                                  //   "assets/image/human_shape_no_head.png",
+                                  //   scale: 0.85,
+                                  // ),
+                                  ),
                             ),
                           ),
                           Container(
@@ -83,6 +83,47 @@ class MakeCharacterBody extends StatelessWidget {
                               child: file,
                             ),
                           ),
+                          IgnorePointer(
+                            ignoring: true,
+                            child: Row(
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: Container(),
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: Column(
+                                    children: [
+                                      Flexible(
+                                        flex: 1,
+                                        child: Container(),
+                                      ),
+                                      Flexible(
+                                        flex: 10,
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: Image.asset(
+                                            "assets/image/human_shape_no_head.png",
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 1,
+                                        child: Container(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Container(),
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -220,15 +261,15 @@ class _DrawBoxState extends State<DrawBox> {
                   await _resizeImageToMultipleOf92(imagedata);
 
               var temp = Future.wait([
-                _extractTile(imagedata, 41, 13, 12, 15), //0 몸통
-                _extractTile(imagedata, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
-                _extractTile(imagedata, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
-                _extractTile(imagedata, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
-                _extractTile(imagedata, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
-                _extractTile(imagedata, 41, 28, 6, 10), //5 왼다리 위
-                _extractTile(imagedata, 41, 38, 6, 10), //6 왼다리 아래
-                _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
-                _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
+                _extractTile(resizedImageData, 41, 13, 12, 15), //0 몸통
+                _extractTile(resizedImageData, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
+                _extractTile(resizedImageData, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
+                _extractTile(resizedImageData, 41, 28, 6, 10), //5 왼다리 위
+                _extractTile(resizedImageData, 41, 38, 6, 10), //6 왼다리 아래
+                _extractTile(resizedImageData, 47, 28, 6, 10), //7 오른 다리 위
+                _extractTile(resizedImageData, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
 
               clr_index.value = 9;
