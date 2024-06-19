@@ -1,18 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/settingCamera.dart';
-
-import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
 import 'package:value_notifier_tools/value_notifier_tools.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ShowImage extends StatefulWidget {
   var image;
@@ -219,8 +213,12 @@ class _DrawBoxState extends State<DrawBox> {
           height: 400,
           width: 400,
           child: FutureBuilder<List<Uint8List>>(
-            future: image.then((imgData) {
+            future: image.then((imgData) async {
               Uint8List imagedata = imgData.buffer.asUint8List();
+
+              Uint8List resizedImageData =
+                  await _resizeImageToMultipleOf92(imagedata);
+
               var temp = Future.wait([
                 _extractTile(imagedata, 41, 13, 12, 15), //0 몸통
                 _extractTile(imagedata, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
@@ -232,6 +230,7 @@ class _DrawBoxState extends State<DrawBox> {
                 _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
                 _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
+
               clr_index.value = 9;
               Navigator.push(
                 context,
@@ -271,6 +270,32 @@ class _DrawBoxState extends State<DrawBox> {
         ],
       ),
     );
+  }
+
+  Future<Uint8List> _resizeImageToMultipleOf92(Uint8List imageData) async {
+    final codec = await instantiateImageCodec(imageData);
+    final frame = await codec.getNextFrame();
+    final image = frame.image;
+
+    // Calculate new width and height as multiples of 92
+    int newWidth = (image.width / 92).ceil() * 92;
+    int newHeight = (image.height / 46).ceil() * 46;
+
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder);
+    final paint = Paint();
+
+    // Draw the resized image
+    canvas.drawImageRect(
+        image,
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+        Rect.fromLTWH(0, 0, newWidth.toDouble(), newHeight.toDouble()),
+        paint);
+
+    final picture = recorder.endRecording();
+    final resizedImage = await picture.toImage(newWidth, newHeight);
+    final byteData = await resizedImage.toByteData(format: ImageByteFormat.png);
+    return byteData!.buffer.asUint8List();
   }
 
   Future<Uint8List> _extractTile(Uint8List imageData, int startCol,
