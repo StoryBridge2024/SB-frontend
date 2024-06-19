@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:frontend/constants/const.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/services/mediapipe/movement_follow.dart';
@@ -12,9 +12,6 @@ import 'package:frontend/services/mediapipe/pose_arrange.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import 'camera_view.dart';
-
-import 'package:frontend/constants/fairytaleConstants.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 // 카메라에서 스켈레톤 추출하는 화면
 class PoseDetectorView extends StatefulWidget {
