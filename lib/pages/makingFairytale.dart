@@ -67,7 +67,7 @@ class MakeFairytale extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => PlacingCharacter(),
@@ -457,7 +457,7 @@ class _TmpFairytaleState extends State<TmpFairytale> {
                                       },
                                     );
                                   } else if (index == NUMBER_OF_SCENE - 1) {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => MakeCharacter(),

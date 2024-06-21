@@ -242,7 +242,7 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     );
     if (file != null && _croppedFile != null) {
       Future.delayed(
-        const Duration(milliseconds: 2000),
+        const Duration(milliseconds: 1000),
         () {
           Navigator.pushReplacement(
             context,

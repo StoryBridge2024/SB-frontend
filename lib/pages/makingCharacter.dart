@@ -72,7 +72,7 @@ class MakeCharacter extends StatelessWidget {
                                       width: 250,
                                     ),
                                     onPressed: () {
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
@@ -103,7 +103,7 @@ class MakeCharacter extends StatelessWidget {
                                       width: 300,
                                     ),
                                     onPressed: () {
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
