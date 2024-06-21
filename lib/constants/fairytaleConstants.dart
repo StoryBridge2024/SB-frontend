@@ -69,3 +69,5 @@ void toggle(bool toggle) {
 }
 
 List<Widget> pages = List<Widget>.filled(8, Container());
+
+String title = '';

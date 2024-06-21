@@ -347,7 +347,7 @@ class _DrawBoxState extends State<DrawBox> {
               ]);
 
               clr_index.value = 9;
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => SettingCam(body: images, face: face),
@@ -376,10 +376,7 @@ class _DrawBoxState extends State<DrawBox> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              print(image.runtimeType);
-            },
+            onPressed: () {},
             child: const Text("Close"),
           )
         ],
