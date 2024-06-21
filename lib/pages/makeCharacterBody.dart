@@ -69,11 +69,11 @@ class MakeCharacterBody extends StatelessWidget {
                             child: IgnorePointer(
                               ignoring: true,
                               child: Container(
-                                  // child: Image.asset(
-                                  //   "assets/image/human_shape_no_head.png",
-                                  //   scale: 0.85,
-                                  // ),
-                                  ),
+                                child: Image.asset(
+                                  "assets/image/human_shape_no_head.png",
+                                  scale: 0.85,
+                                ),
+                              ),
                             ),
                           ),
                           Container(
@@ -83,47 +83,6 @@ class MakeCharacterBody extends StatelessWidget {
                               child: file,
                             ),
                           ),
-                          IgnorePointer(
-                            ignoring: true,
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: Container(),
-                                ),
-                                Flexible(
-                                  flex: 2,
-                                  child: Column(
-                                    children: [
-                                      Flexible(
-                                        flex: 1,
-                                        child: Container(),
-                                      ),
-                                      Flexible(
-                                        flex: 10,
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          child: Image.asset(
-                                            "assets/image/human_shape_no_head.png",
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: Container(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Container(),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ),
