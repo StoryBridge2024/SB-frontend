@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'dart:async';
 
 class PoseArrange extends Object {
   PoseArrange(
@@ -48,40 +47,164 @@ class PoseArrange extends Object {
       // print(ppp[0]); // Debugging line, consider removing or replacing with a logger if needed
       //frameIdx += 1;
 
-      final leftWristY = pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0;
-      final rightWristY = pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0;
-      final leftWristX = pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0;
-      final rightWristX = pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0;
-      final noseY = pose.landmarks[PoseLandmarkType.nose]?.x ?? 0;
-      final leftShoulderY =
-          pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0;
-      final rightShoulderY =
-          pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0;
-      final leftShoulderX =
-          pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0;
-      final rightShoulderX =
-          pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0;
-      final leftElbowY = pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0;
-      final rightElbowY = pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0;
-      final leftElbowX = pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0;
-      final rightElbowX = pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0;
-      final leftHipY = pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0;
-      final rightHipY = pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0;
-      final leftHipX = pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0;
-      final rightHipX = pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0;
-      final leftIndexFingerTipX =
-          pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0;
-      final leftIndexFingerTipY =
-          pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0;
-      final rightIndexFingerTipX =
-          pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0;
-      final rightIndexFingerTipY =
-          pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0;
+      var leftWristY = 0.0;
+      var rightWristY = 0.0;
+      var leftWristX = 0.0;
+      var rightWristX = 0.0;
+      var noseY = 0.0;
+      var leftShoulderY = 0.0;
+      var rightShoulderY = 0.0;
+      var leftShoulderX = 0.0;
+      var rightShoulderX = 0.0;
+      var leftElbowY = 0.0;
+      var rightElbowY = 0.0;
+      var leftElbowX = 0.0;
+      var rightElbowX = 0.0;
+      var leftHipY = 0.0;
+      var rightHipY = 0.0;
+      var leftHipX = 0.0;
+      var rightHipX = 0.0;
+      var leftIndexFingerTipX = 0.0;
+      var leftIndexFingerTipY = 0.0;
+      var rightIndexFingerTipX = 0.0;
+      var rightIndexFingerTipY = 0.0;
 
-      final leftPalmCenterX = (leftWristX + leftIndexFingerTipX) / 2;
-      final leftPalmCenterY = (leftWristY + leftIndexFingerTipY) / 2;
-      final rightPalmCenterX = (rightWristX + rightIndexFingerTipX) / 2;
-      final rightPalmCenterY = (rightWristY + rightIndexFingerTipY) / 2;
+      var leftPalmCenterX = 0.0;
+      var leftPalmCenterY = 0.0;
+      var rightPalmCenterX = 0.0;
+      var rightPalmCenterY = 0.0;
+
+      if (characterTurn == 0) {
+        //카메라 안 돌아간 상태
+        leftWristY = pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0;
+        rightWristY = pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0;
+        leftWristX = pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0;
+        rightWristX = pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0;
+        noseY = pose.landmarks[PoseLandmarkType.nose]?.y ?? 0;
+        leftShoulderY = pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0;
+        rightShoulderY = pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0;
+        leftShoulderX = pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0;
+        rightShoulderX = pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0;
+        leftElbowY = pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0;
+        rightElbowY = pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0;
+        leftElbowX = pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0;
+        rightElbowX = pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0;
+        leftHipY = pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0;
+        rightHipY = pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0;
+        leftHipX = pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0;
+        rightHipX = pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0;
+        leftIndexFingerTipX =
+            pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0;
+        leftIndexFingerTipY =
+            pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0;
+        rightIndexFingerTipX =
+            pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0;
+        rightIndexFingerTipY =
+            pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0;
+      } else if (characterTurn == 1) {
+        //카메라 반시계로 돌아간 상태
+        leftWristY = (pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0) * -1;
+        rightWristY =
+            (pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0) * -1;
+        leftWristX = pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0;
+        rightWristX = pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0;
+        noseY = (pose.landmarks[PoseLandmarkType.nose]?.x ?? 0) * -1;
+        leftShoulderY =
+            (pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0) * -1;
+        rightShoulderY =
+            (pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0) * -1;
+        leftShoulderX = pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0;
+        rightShoulderX = pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0;
+        leftElbowY = (pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0) * -1;
+        rightElbowY =
+            (pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0) * -1;
+        leftElbowX = pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0;
+        rightElbowX = pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0;
+        leftHipY = (pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0) * -1;
+        rightHipY = (pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0) * -1;
+        leftHipX = pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0;
+        rightHipX = pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0;
+        leftIndexFingerTipX =
+            pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0;
+        leftIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0) * -1;
+        rightIndexFingerTipX =
+            pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0;
+        rightIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0) * -1;
+      } else if (characterTurn == 2) {
+        //카메라 180도 돌아간 상태
+        leftWristY = (pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0) * -1;
+        rightWristY =
+            (pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0) * -1;
+        leftWristX = (pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0) * -1;
+        rightWristX =
+            (pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0) * -1;
+        noseY = (pose.landmarks[PoseLandmarkType.nose]?.y ?? 0) * -1;
+        leftShoulderY =
+            (pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0) * -1;
+        rightShoulderY =
+            (pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0) * -1;
+        leftShoulderX =
+            (pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0) * -1;
+        rightShoulderX =
+            (pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0) * -1;
+        leftElbowY = (pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0) * -1;
+        rightElbowY =
+            (pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0) * -1;
+        leftElbowX = (pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0) * -1;
+        rightElbowX =
+            (pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0) * -1;
+        leftHipY = (pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0) * -1;
+        rightHipY = (pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0) * -1;
+        leftHipX = (pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0) * -1;
+        rightHipX = (pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0) * -1;
+        leftIndexFingerTipX =
+            (pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0) * -1;
+        leftIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0) * -1;
+        rightIndexFingerTipX =
+            (pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0) * -1;
+        rightIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0) * -1;
+      } else if (characterTurn == 3) {
+        //시계 방향으로 90도 돌아간 상태
+        leftWristY = (pose.landmarks[PoseLandmarkType.leftWrist]?.x ?? 0);
+        rightWristY = (pose.landmarks[PoseLandmarkType.rightWrist]?.x ?? 0);
+        leftWristX = (pose.landmarks[PoseLandmarkType.leftWrist]?.y ?? 0) * -1;
+        rightWristX =
+            (pose.landmarks[PoseLandmarkType.rightWrist]?.y ?? 0) * -1;
+        noseY = (pose.landmarks[PoseLandmarkType.nose]?.x ?? 0);
+        leftShoulderY = (pose.landmarks[PoseLandmarkType.leftShoulder]?.x ?? 0);
+        rightShoulderY =
+            (pose.landmarks[PoseLandmarkType.rightShoulder]?.x ?? 0);
+        leftShoulderX =
+            (pose.landmarks[PoseLandmarkType.leftShoulder]?.y ?? 0) * -1;
+        rightShoulderX =
+            (pose.landmarks[PoseLandmarkType.rightShoulder]?.y ?? 0 * -1);
+        leftElbowY = (pose.landmarks[PoseLandmarkType.leftElbow]?.x ?? 0);
+        rightElbowY = (pose.landmarks[PoseLandmarkType.rightElbow]?.x ?? 0);
+        leftElbowX = (pose.landmarks[PoseLandmarkType.leftElbow]?.y ?? 0) * -1;
+        rightElbowX =
+            (pose.landmarks[PoseLandmarkType.rightElbow]?.y ?? 0) * -1;
+        leftHipY = (pose.landmarks[PoseLandmarkType.leftHip]?.x ?? 0);
+        rightHipY = (pose.landmarks[PoseLandmarkType.rightHip]?.x ?? 0);
+        leftHipX = (pose.landmarks[PoseLandmarkType.leftHip]?.y ?? 0) * -1;
+        rightHipX = (pose.landmarks[PoseLandmarkType.rightHip]?.y ?? 0) * -1;
+        leftIndexFingerTipX =
+            (pose.landmarks[PoseLandmarkType.leftIndex]?.y ?? 0) * -1;
+        leftIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.leftIndex]?.x ?? 0);
+        rightIndexFingerTipX =
+            (pose.landmarks[PoseLandmarkType.rightIndex]?.y ?? 0) * -1;
+        rightIndexFingerTipY =
+            (pose.landmarks[PoseLandmarkType.rightIndex]?.x ?? 0);
+      }
+
+      leftPalmCenterX = (leftWristX + leftIndexFingerTipX) / 2;
+      leftPalmCenterY = (leftWristY + leftIndexFingerTipY) / 2;
+      rightPalmCenterX = (rightWristX + rightIndexFingerTipX) / 2;
+      rightPalmCenterY = (rightWristY + rightIndexFingerTipY) / 2;
 
       updatePositionChangeList(leftWristXChanges, leftWristX);
       updatePositionChangeList(rightWristXChanges, rightWristX);
