@@ -135,7 +135,7 @@ class _MakeCharacterFaceState extends State<MakeCharacterFace> {
                             size: 50,
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               (context),
                               MaterialPageRoute(
                                 builder: (context) => MakeCharacterBody(

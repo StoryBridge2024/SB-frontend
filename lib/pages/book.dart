@@ -176,7 +176,7 @@ class BookHomePage extends StatelessWidget {
                   alignment: Alignment.center,
                   color: color,
                   child: Text(
-                    tec.text,
+                    title,
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,

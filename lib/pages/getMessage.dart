@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'makingFairytale.dart';
+import 'package:frontend/constants/fairytaleConstants.dart';
 
-final TextEditingController tec = TextEditingController(text: '');
+TextEditingController tec = TextEditingController(text: '');
 
 class GetMessage extends StatefulWidget {
   const GetMessage({super.key});
@@ -13,6 +14,8 @@ class GetMessage extends StatefulWidget {
 class _GetMessageState extends State<GetMessage> {
   @override
   Widget build(BuildContext context) {
+    tec.text = '';
+
     return Scaffold(
       body: Container(
         color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
@@ -73,10 +76,11 @@ class _GetMessageState extends State<GetMessage> {
                             style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                           onPressed: () {
+                            title = tec.text;
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MakeFairytale(tec.text),
+                                builder: (context) => MakeFairytale(title),
                               ),
                             );
                           },

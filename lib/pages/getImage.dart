@@ -105,7 +105,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
       Future.delayed(
         const Duration(milliseconds: 1000),
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => MakeCharacterBody(
@@ -244,7 +244,7 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
       Future.delayed(
         const Duration(milliseconds: 2000),
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => MakeCharacterBody(
