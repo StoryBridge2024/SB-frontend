@@ -74,7 +74,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         ),
         Positioned(
           left: humanLocX.elementAt(clr_index.value - 1) - 130,
-          top: humanLocY.elementAt(clr_index.value - 1) - 180,
+          top: humanLocY.elementAt(clr_index.value - 1) - 360,
           child: Container(
             width: 600,
             child: Transform.scale(
