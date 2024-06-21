@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
@@ -65,22 +66,14 @@ class MakeCharacterBody extends StatelessWidget {
                       child: Stack(
                         children: [
                           DrawBox(face: file),
-                          Center(
-                            child: IgnorePointer(
-                              ignoring: true,
-                              child: Container(
-                                child: Image.asset(
-                                  "assets/image/human_shape_no_head.png",
-                                  scale: 0.85,
-                                ),
+                          IgnorePointer(
+                            ignoring: true,
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              child: SizedBox(
+                                height: 130,
+                                child: file,
                               ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topCenter,
-                            child: SizedBox(
-                              height: 130,
-                              child: file,
                             ),
                           ),
                         ],
@@ -129,14 +122,24 @@ class _DrawBoxState extends State<DrawBox> {
         child: Column(
           children: [
             Expanded(
-              child: Card(
-                clipBehavior: Clip.hardEdge,
-                margin: EdgeInsets.zero,
-                color: Colors.white,
-                surfaceTintColor: Colors.white,
-                child: Scribble(
-                  notifier: notifier,
-                  drawPen: true,
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Card(
+                  clipBehavior: Clip.hardEdge,
+                  margin: EdgeInsets.zero,
+                  color: Colors.white,
+                  surfaceTintColor: Colors.white,
+                  child: Stack(
+                    children: [
+                      Scribble(
+                        notifier: notifier,
+                        drawPen: true,
+                      ),
+                      IgnorePointer(
+                        child: CharacterShape(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -157,6 +160,118 @@ class _DrawBoxState extends State<DrawBox> {
           ],
         ),
       ),
+    );
+  }
+
+  CharacterShape() {
+    return Row(
+      children: [
+        Flexible(
+          flex: 23,
+          child: Container(),
+        ),
+        Flexible(
+          flex: 18,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(), // 투명한 컨테이너
+              ),
+              Flexible(
+                flex: 5,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 31,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 12,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 15,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 20,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Container(),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Container(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 18,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 5,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 31,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 23,
+          child: Container(),
+        ),
+      ],
     );
   }
 
@@ -217,14 +332,14 @@ class _DrawBoxState extends State<DrawBox> {
               Uint8List imagedata = imgData.buffer.asUint8List();
 
               Uint8List resizedImageData =
-                  await _resizeImageToMultipleOf92(imagedata);
+                  await _resizeImageToMultiple(imagedata);
 
               var temp = Future.wait([
                 _extractTile(resizedImageData, 41, 13, 12, 15), //0 몸통
-                _extractTile(resizedImageData, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
-                _extractTile(resizedImageData, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
-                _extractTile(resizedImageData, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
-                _extractTile(resizedImageData, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
+                _extractTile(resizedImageData, 32, 13, 9, 5), //1 왼팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 23, 13, 9, 5), //2 왼팔 손~팔꿈치
+                _extractTile(resizedImageData, 53, 13, 9, 5), //3 오른팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 62, 13, 9, 5), //4 오른팔 손~팔꿈치
                 _extractTile(resizedImageData, 41, 28, 6, 10), //5 왼다리 위
                 _extractTile(resizedImageData, 41, 38, 6, 10), //6 왼다리 아래
                 _extractTile(resizedImageData, 47, 28, 6, 10), //7 오른 다리 위
@@ -272,14 +387,14 @@ class _DrawBoxState extends State<DrawBox> {
     );
   }
 
-  Future<Uint8List> _resizeImageToMultipleOf92(Uint8List imageData) async {
+  Future<Uint8List> _resizeImageToMultiple(Uint8List imageData) async {
     final codec = await instantiateImageCodec(imageData);
     final frame = await codec.getNextFrame();
     final image = frame.image;
 
-    // Calculate new width and height as multiples of 92
-    int newWidth = (image.width / 92).ceil() * 92;
-    int newHeight = (image.height / 46).ceil() * 46;
+    // Calculate new width and height as multiples of 94
+    int newWidth = (image.width / 94).ceil() * 94;
+    int newHeight = (image.height / 49).ceil() * 49;
 
     final recorder = PictureRecorder();
     final canvas = Canvas(recorder);
@@ -304,7 +419,7 @@ class _DrawBoxState extends State<DrawBox> {
     final frame = await codec.getNextFrame();
     final image = frame.image;
 
-    final int tileWidth = image.width ~/ 92;
+    final int tileWidth = image.width ~/ 94;
     final int tileHeight = image.height ~/ 46;
 
     final recorder = PictureRecorder();
