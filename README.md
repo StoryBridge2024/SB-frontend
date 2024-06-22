@@ -55,6 +55,18 @@ Story Bridge는 생성형 AI를 이용하여 아이에게 맞춤형 동화를 �
 
    > SQL Lite를 통해 동화 내용과 삽화, TTS를 저장해두고 다시 불러올 수 있습니다.
 
+## 요구사항
+
+- apk실행
+   > android version - v17
+
+- 개발환경
+
+   > Android API 34
+   > Flutter 3.22.2
+   > Dart SDK 3.4.3
+   > Android Studio 2023.3.1
+
 ## 실행
 
 1. download `.apk` file on android device
@@ -85,17 +97,25 @@ Story Bridge는 생성형 AI를 이용하여 아이에게 맞춤형 동화를 �
 ![windows10](https://img.shields.io/badge/windows10-0078D6.svg?style=for-the-badge&logo=windows10&logoColor=white)
 ![ubuntu](https://img.shields.io/badge/ubuntu-E95420.svg?style=for-the-badge&logo=ubuntu&logoColor=white)
 
+### Device
+
+![android](https://img.shields.io/badge/android-34A853.svg?style=for-the-badge&logo=android&logoColor=white)
+
 ## 개발 환경 설정
 
 1. install _android studio_, _flutter_
 2. git clone
+
    ```git
    git clone https://github.com/StoryBridge2024/SB-frontend
    ```
+
 3. open repository as project on android studio
 4. add `.env` file on root of directory
+
    ```
    OPENAI_APIKEY=<Your Openai api key>
    ```
+
 5. select emulator
 6. run main.dart
