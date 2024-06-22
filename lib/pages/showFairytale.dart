@@ -42,11 +42,16 @@ class ShowFairytale extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 alignment: Alignment.center,
                 child: ValueListenableBuilder<bool>(
-                  valueListenable: ValueNotifier<bool>(doMissionChecking),
+                  valueListenable: doMissionOn,
                   builder: (context, value, _) {
                     return Text(
                       mission,
-                      style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
+                      style: TextStyle(
+                        fontSize: 60,
+                        fontFamily: 'MOVE',
+                        color:
+                            (doMissionOn.value) ? Colors.black : Colors.black12,
+                      ),
                     );
                   },
                 ),
