@@ -62,14 +62,15 @@ Story Bridge는 생성형 AI를 이용하여 아이에게 맞춤형 동화를 �
 ## 요구사항
 
 - apk실행
+   > device OS: only android  
    > android version - v17
 
 - 개발환경
 
-   > Android API 34
-   > Flutter 3.22.2
-   > Dart SDK 3.4.3
-   > Android Studio 2023.3.1
+   > Android API 34  
+   > Flutter 3.22.2  
+   > Dart SDK 3.4.3  
+   > Android Studio 2023.3.1  
 
 ## 실행
 
