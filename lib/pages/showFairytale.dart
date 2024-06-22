@@ -18,6 +18,19 @@ class ShowFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
+      String mission = '';
+      String content = '';
+      if (useDummy) {
+        mission = missions[i];
+        content = texts[i];
+      } else {
+        if (gSceneModel != null) {
+          mission =
+              gSceneModel!.scriptModelList[i].action_used_in_action_list ?? '';
+          content = gSceneModel!.scriptModelList[i].scene_contents ?? '';
+        }
+      }
+
       pages[i] = Container(
         width: double.infinity,
         height: double.infinity,
@@ -28,22 +41,15 @@ class ShowFairytale extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
                 alignment: Alignment.center,
-                child: (useDummy)
-                    ? Text(
-                        missions[i],
-                        style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
-                      )
-                    : Text(
-                        gSceneModel != null
-                            ? gSceneModel!.scriptModelList[i]
-                                    .action_used_in_action_list ??
-                                ''
-                            : '',
-                        style: TextStyle(
-                          fontSize: 60,
-                          fontFamily: 'MOVE',
-                        ),
-                      ),
+                child: ValueListenableBuilder<bool>(
+                  valueListenable: ValueNotifier<bool>(doMissionChecking),
+                  builder: (context, value, _) {
+                    return Text(
+                      mission,
+                      style: TextStyle(fontSize: 60, fontFamily: 'MOVE'),
+                    );
+                  },
+                ),
               ),
             ),
             Flexible(
@@ -53,24 +59,13 @@ class ShowFairytale extends StatelessWidget {
                 height: double.infinity,
                 width: double.infinity,
                 alignment: Alignment.center,
-                child: (useDummy)
-                    ? Text(
-                        texts[i],
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontFamily: 'DDO',
-                        ),
-                      )
-                    : Text(
-                        gSceneModel != null
-                            ? gSceneModel!.scriptModelList[i].scene_contents ??
-                                ''
-                            : '',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontFamily: 'DDO',
-                        ),
-                      ),
+                child: Text(
+                  content,
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontFamily: 'DDO',
+                  ),
+                ),
               ),
             ),
           ],
