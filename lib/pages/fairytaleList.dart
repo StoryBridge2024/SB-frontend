@@ -8,21 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/pages/makingFairytale.dart';
-// import 'dart:convert';
-// import 'dart:io';
-// import 'dart:typed_data';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:frontend/constants/action_list.dart';
-// import 'package:frontend/constants/const.dart';
-// import 'package:frontend/models/script_model.dart';
-// import 'package:frontend/services/api/tts.dart';
-// import 'package:http/http.dart';
-// import 'package:frontend/constants/animal_list.dart';
-// import 'package:frontend/constants/prompt.dart';
-// import 'package:frontend/models/image_model.dart';
-// import 'package:frontend/models/scene_model.dart';
 import 'package:frontend/services/db/database_manager/database_manager.dart';
-// import 'package:frontend/services/util.dart';
 
 class FairytaleList extends StatelessWidget {
   const FairytaleList({super.key});
@@ -39,19 +25,17 @@ class TablePage extends StatefulWidget {
 }
 
 class _TablePageState extends State<TablePage> {
-  List<SceneModel> items = [];
+  late Future<List<SceneModel>> _fairytalesFuture;
 
   @override
   void initState() {
     super.initState();
-    _loadFairytales();
+    _fairytalesFuture = _loadFairytales();
   }
 
-  Future<void> _loadFairytales() async {
+  Future<List<SceneModel>> _loadFairytales() async {
     List<SceneModel> list = await getFairytale();
-    setState(() {
-      items = list;
-    });
+    return list;
   }
 
   @override
@@ -62,10 +46,18 @@ class _TablePageState extends State<TablePage> {
         title: Text('완성된 동화들이에요.'),
         backgroundColor: Color(0xFFFFFFFF),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
+      body: FutureBuilder<List<SceneModel>>(
+        future: _fairytalesFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Text('동화를 불러오는 중이에요!'));
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('아직 만들어진 동화가 없어요.'));
+          } else {
+            List<SceneModel> items = snapshot.data!;
+            return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 30.0,
@@ -101,7 +93,7 @@ class _TablePageState extends State<TablePage> {
                                     child: Image.memory(
                                       base64Decode(
                                           item.b64_images.elementAt(0)),
-                                      fit: BoxFit.cover, // 이미지가 컨테이너에 맞게 잘라집니다.
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   Expanded(
@@ -168,13 +160,10 @@ class _TablePageState extends State<TablePage> {
                           child: Container(
                             alignment: Alignment.center,
                             child: Container(
-                              padding: EdgeInsets.fromLTRB(
-                                  20, 10, 20, 10), // 패딩을 추가합니다.
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                               decoration: BoxDecoration(
-                                color: Color.fromARGB(
-                                    0xFF, 0xD1, 0xEB, 0xFF), // 배경색 설정합니다.
-                                borderRadius:
-                                    BorderRadius.circular(20), // 둥근 테두리를 추가합니다.
+                                color: Color.fromARGB(0xFF, 0xD1, 0xEB, 0xFF),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
                                 '${item.theme}',
@@ -191,9 +180,9 @@ class _TablePageState extends State<TablePage> {
                   ),
                 );
               },
-            ),
-          ),
-        ],
+            );
+          }
+        },
       ),
     );
   }
