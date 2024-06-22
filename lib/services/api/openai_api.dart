@@ -72,7 +72,7 @@ class OpenAI {
         deepCopy(EXAMPLE_REQUEST[randomInt]),
       );
       scriptPrompt["messages"].add(
-        {"role": "system", "content": ""},
+        {"role": "assistant", "content": ""},
       );
       print(
           "randomInt: $randomInt theme: ${EXAMPLE_REQUEST[randomInt]["content"]}");
