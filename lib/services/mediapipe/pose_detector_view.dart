@@ -204,6 +204,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           setState(
             () {
               doMissionChecking = true;
+              doMissionOn.value = true;
             },
           );
         },

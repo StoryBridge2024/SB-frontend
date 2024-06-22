@@ -45,6 +45,7 @@ bool doTTSRunning = false;
 bool doMissionChecking = false;
 bool doStampRunning = false;
 bool doPageMovementRunning = false;
+ValueNotifier<bool> doMissionOn = ValueNotifier(false);
 
 bool isPageMovementRunning = false;
 
@@ -54,6 +55,7 @@ void toggle(bool toggle) {
   if (doPageMovementRunning && !isPageMovementRunning) {
     isPageMovementRunning = true;
     doPageMovementRunning = false;
+    doMissionOn.value = false;
 
     AudioPlayer().play(AssetSource('audio/pageTurn.mp3'));
     if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
