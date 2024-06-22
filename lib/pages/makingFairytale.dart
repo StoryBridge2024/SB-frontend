@@ -265,22 +265,6 @@ class _TmpFairytaleState extends State<TmpFairytale> {
               color: Colors.white,
               child: Stack(
                 children: [
-                  Center(
-                    child: (useDummy)
-                        ? Image.asset(
-                            imgs[index],
-                            height: 600,
-                            width: 600,
-                          )
-                        : Image.memory(
-                            base64Decode(
-                              gSceneModel!.b64_images.elementAt(index),
-                            ),
-                            height: 600,
-                            width: 600,
-                            gaplessPlayback: true,
-                          ),
-                  ),
                   Positioned(
                     left: humanLocX.elementAt(index),
                     top: humanLocY.elementAt(index),

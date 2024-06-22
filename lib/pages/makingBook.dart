@@ -7,17 +7,45 @@ import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/dummy_data.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/homePage.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:frontend/constants/const.dart';
 
-class Book extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return BookHomePage();
+bool _doTTSRunning = false;
+bool _doMissionChecking = false;
+bool _doStampRunning = false;
+bool _doPageMovementRunning = false;
+ValueNotifier<bool> doMissionOn = ValueNotifier(false);
+
+bool _isPageMovementRunning = false;
+
+ValueNotifier<bool> playButton = ValueNotifier(false);
+
+void toggle(bool toggle) {
+  if (_doPageMovementRunning && !_isPageMovementRunning) {
+    _isPageMovementRunning = true;
+    _doPageMovementRunning = false;
+    doMissionOn.value = false;
+
+    if (toggle && clr_index.value != NUMBER_OF_SCENE + 1) {
+      controllerF[clr_index.value].toggleCard();
+      controllerB[clr_index.value].toggleCard();
+      clr_index.value++;
+    } else if (!toggle && clr_index.value != 0) {
+      clr_index.value--;
+      controllerF[clr_index.value].toggleCard();
+      controllerB[clr_index.value].toggleCard();
+    }
   }
 }
 
-class BookHomePage extends StatelessWidget {
+class MakeBook extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MakeBookHomePage();
+  }
+}
+
+class MakeBookHomePage extends StatelessWidget {
   _renderContentFront(context, int index, color) {
     return Card(
       elevation: 0.0,
@@ -28,11 +56,11 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageMovementRunning = false;
+          _isPageMovementRunning = false;
           if (clr_index.value != 0 || clr_index.value != 9) {
-            doTTSRunning = true;
+            _doTTSRunning = true;
           } else {
-            doPageMovementRunning = true;
+            _doPageMovementRunning = true;
           }
         },
         front: Container(
@@ -56,7 +84,18 @@ class BookHomePage extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: (index != 0) ? pages[index - 1] : Container(),
+                  child: (index != 0)
+                      ? Text(
+                          (useDummy)
+                              ? 'wowwow'
+                              : gSceneModel!
+                                  .scriptModelList[index].scene_contents,
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontFamily: 'DDO',
+                          ),
+                        )
+                      : Container(),
                 ),
               ),
             ],
@@ -77,11 +116,11 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageMovementRunning = false;
+          _isPageMovementRunning = false;
           if (clr_index.value != 0 || clr_index.value != 9) {
-            doTTSRunning = true;
+            _doTTSRunning = true;
           } else {
-            doPageMovementRunning = true;
+            _doPageMovementRunning = true;
           }
         },
         front: Container(),
@@ -121,6 +160,7 @@ class BookHomePage extends StatelessWidget {
                               ),
                               height: 600,
                               width: 600,
+                              gaplessPlayback: true,
                             )
                       : Container(),
                 ),
@@ -146,11 +186,11 @@ class BookHomePage extends StatelessWidget {
         side: CardSide.FRONT,
         speed: 1000,
         onFlipDone: (status) {
-          isPageMovementRunning = false;
+          _isPageMovementRunning = false;
           if (clr_index.value != 0 || clr_index.value != 9) {
-            doTTSRunning = true;
+            _doTTSRunning = true;
           } else {
-            doPageMovementRunning = true;
+            _doPageMovementRunning = true;
           }
         },
         front: Container(
@@ -168,7 +208,8 @@ class BookHomePage extends StatelessWidget {
                   alignment: Alignment.center,
                   color: color,
                   child: Text(
-                    (useDummy) ? '더미에용' : gSceneModel!.theme,
+                    '캐릭터 배치 시작하기'
+                    '화면을 눌러주세요',
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
@@ -184,167 +225,58 @@ class BookHomePage extends StatelessWidget {
     );
   }
 
-  _renderQRBack(context, int index, color) {
-    return Card(
-      elevation: 0.0,
-      color: Color(0x00000000),
-      child: FlipCard(
-        controller: controllerB[index],
-        direction: FlipDirection.HORIZONTAL,
-        side: CardSide.FRONT,
-        speed: 1000,
-        onFlipDone: (status) {
-          isPageMovementRunning = false;
-          if (clr_index.value != 0 || clr_index.value != 9) {
-            doTTSRunning = true;
-          } else {
-            doPageMovementRunning = true;
-          }
-        },
-        front: Container(),
-        back: Container(
-          child: Row(
-            children: [
-              Flexible(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: color,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      QrImageView(
-                        data: "https://github.com/StoryBridge2024",
-                        version: QrVersions.auto,
-                        size: 200.0,
-                      ),
-                      Text(
-                        'by juyoung Kim, haeseung Lee, yejin Choi',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   FrontBookCoverOnStack(context, index, color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-        Expanded(
-          flex: 10,
-          child: _renderQRFront(context, index, color),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-      ],
-    );
+    return _renderQRFront(context, index, color);
   }
 
   FrontOnStack(context, index, color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-        Expanded(
-          flex: 10,
-          child: _renderContentFront(context, index, color),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-      ],
-    );
+    return _renderContentFront(context, index, color);
   }
 
   BackOnStack(context, index, color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-        Expanded(
-          flex: 10,
-          child: _renderContentBack(context, index, color),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-      ],
-    );
-  }
-
-  BackBookCoverOnStack(context, index, color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-        Expanded(
-          flex: 10,
-          child: _renderQRBack(context, index, color),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(),
-        ),
-      ],
-    );
+    return _renderContentBack(context, index, color);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Stack(
-        children: <Widget>[
-          FrontOnStack(context, 8, Color(0xFFFFFFFF)), // 8th page right
-          FrontOnStack(context, 7, Color(0xFFFFFFFF)), // 7th page right
-          FrontOnStack(context, 6, Color(0xFFFFFFFF)), // 6th page right
-          FrontOnStack(context, 5, Color(0xFFFFFFFF)), // 5th page right
-          FrontOnStack(context, 4, Color(0xFFFFFFFF)), // 4th page right
-          FrontOnStack(context, 3, Color(0xFFFFFFFF)), // 3rd page right
-          FrontOnStack(context, 2, Color(0xFFFFFFFF)), // 2nd page right
-          FrontOnStack(context, 1, Color(0xFFFFFFFF)), // 1st page right
-          FrontBookCoverOnStack(context, 0, Colors.white), // front cover
-          BackOnStack(context, 0, Color(0xFFFFFFFF)), // 1st page left
-          BackOnStack(context, 1, Color(0xFFFFFFFF)), // 2nd page left
-          BackOnStack(context, 2, Color(0xFFFFFFFF)), // 3rd page left
-          BackOnStack(context, 3, Color(0xFFFFFFFF)), // 4th page left
-          BackOnStack(context, 4, Color(0xFFFFFFFF)), // 5th page left
-          BackOnStack(context, 5, Color(0xFFFFFFFF)), // 6th page left
-          BackOnStack(context, 6, Color(0xFFFFFFFF)), // 7th page left
-          BackOnStack(context, 7, Color(0xFFFFFFFF)), // 8th page left
-          BackBookCoverOnStack(context, 8, Colors.white), // back cover
-          pageFlip(),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text('캐릭터 배치하기'),
+            ),
+          ),
+          Expanded(
+            flex: 10,
+            child: Stack(
+              children: <Widget>[
+                FrontOnStack(context, 8, Color(0xFFFFFFFF)), // 8th page right
+                FrontOnStack(context, 7, Color(0xFFFFFFFF)), // 7th page right
+                FrontOnStack(context, 6, Color(0xFFFFFFFF)), // 6th page right
+                FrontOnStack(context, 5, Color(0xFFFFFFFF)), // 5th page right
+                FrontOnStack(context, 4, Color(0xFFFFFFFF)), // 4th page right
+                FrontOnStack(context, 3, Color(0xFFFFFFFF)), // 3rd page right
+                FrontOnStack(context, 2, Color(0xFFFFFFFF)), // 2nd page right
+                FrontOnStack(context, 1, Color(0xFFFFFFFF)), // 1st page right
+                FrontBookCoverOnStack(context, 0, Colors.white), // front cover
+                BackOnStack(context, 0, Color(0xFFFFFFFF)), // 1st page left
+                BackOnStack(context, 1, Color(0xFFFFFFFF)), // 2nd page left
+                BackOnStack(context, 2, Color(0xFFFFFFFF)), // 3rd page left
+                BackOnStack(context, 3, Color(0xFFFFFFFF)), // 4th page left
+                BackOnStack(context, 4, Color(0xFFFFFFFF)), // 5th page left
+                BackOnStack(context, 5, Color(0xFFFFFFFF)), // 6th page left
+                BackOnStack(context, 6, Color(0xFFFFFFFF)), // 7th page left
+                BackOnStack(context, 7, Color(0xFFFFFFFF)), // 8th page left
+                pageFlip(),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
         ],
       ),
     );
@@ -435,10 +367,10 @@ class BookHomePage extends StatelessWidget {
                     focusColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
-                      doTTSRunning = false;
-                      doMissionChecking = false;
-                      doStampRunning = false;
-                      doPageMovementRunning = true;
+                      _doTTSRunning = false;
+                      _doMissionChecking = false;
+                      _doStampRunning = false;
+                      _doPageMovementRunning = true;
 
                       toggle(false);
                     },
@@ -459,10 +391,10 @@ class BookHomePage extends StatelessWidget {
                     hoverColor: Color(0x00000000),
                     backgroundColor: Color(0x00000000),
                     onPressed: () {
-                      doTTSRunning = false;
-                      doMissionChecking = false;
-                      doStampRunning = false;
-                      doPageMovementRunning = true;
+                      _doTTSRunning = false;
+                      _doMissionChecking = false;
+                      _doStampRunning = false;
+                      _doPageMovementRunning = true;
 
                       toggle(true);
                     },

@@ -18,11 +18,6 @@ class ShowFairytale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     for (int i = 0; i < NUMBER_OF_SCENE; i++) {
-      if (useDummy) {
-      } else {}
-    }
-
-    for (int i = 0; i < NUMBER_OF_SCENE; i++) {
       String mission = '';
       String content = '';
       if (useDummy) {
