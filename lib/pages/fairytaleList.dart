@@ -50,11 +50,23 @@ class _TablePageState extends State<TablePage> {
         future: _fairytalesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Text('동화를 불러오는 중이에요!'));
+            return Center(
+                child: Text(
+              '동화를 불러오는 중이에요!',
+              style: TextStyle(
+                fontSize: 40,
+              ),
+            ));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('아직 만들어진 동화가 없어요.'));
+            return Center(
+                child: Text(
+              '아직 만들어진 동화가 없어요.',
+              style: TextStyle(
+                fontSize: 40,
+              ),
+            ));
           } else {
             List<SceneModel> items = snapshot.data!;
             return GridView.builder(
