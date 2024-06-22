@@ -26,7 +26,7 @@ Story Bridge는 생성형 AI를 이용하여 아이에게 맞춤형 동화를 �
 
 ## 서비스 흐름
 
-![image](https://github.com/StoryBridge2024/Story-bridge/assets/163294595/6a45381d-4cb1-4cde-b75f-da75c4dd42b9)
+![image](https://github.com/StoryBridge2024/Story-bridge/assets/163294595/5f5a048a-a0f1-4202-86be-1356fbdb00d8)
 
 ## 핵심 기능
 
