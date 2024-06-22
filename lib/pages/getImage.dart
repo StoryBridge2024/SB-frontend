@@ -105,7 +105,7 @@ class _GetImageFromGalleryState extends State<GetImageFromGallery> {
       Future.delayed(
         const Duration(milliseconds: 1000),
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => MakeCharacterBody(
@@ -242,9 +242,9 @@ class _GetImageFromCameraState extends State<GetImageFromCamera> {
     );
     if (file != null && _croppedFile != null) {
       Future.delayed(
-        const Duration(milliseconds: 2000),
+        const Duration(milliseconds: 1000),
         () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => MakeCharacterBody(

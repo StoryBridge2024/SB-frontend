@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
@@ -7,11 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/constants/dummy_data.dart';
-import 'package:google_mlkit_commons/google_mlkit_commons.dart';
-
-import 'package:frontend/main.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
-import '../../constants/fairytaleConstants.dart';
+import 'package:frontend/main.dart';
+import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 ValueNotifier<CameraController?> controller = ValueNotifier(null);
 

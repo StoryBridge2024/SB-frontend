@@ -1,18 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/settingCamera.dart';
-
-import 'showFairytale.dart';
 import 'package:scribble/scribble.dart';
 import 'package:value_notifier_tools/value_notifier_tools.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ShowImage extends StatefulWidget {
   var image;
@@ -60,43 +56,8 @@ class MakeCharacterBody extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                    Flexible(
-                      flex: 11,
-                      child: Stack(
-                        children: [
-                          DrawBox(face: file),
-                          Center(
-                            child: IgnorePointer(
-                              ignoring: true,
-                              child: Container(
-                                child: Image.asset(
-                                  "assets/image/human_shape_no_head.png",
-                                  scale: 0.85,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topCenter,
-                            child: SizedBox(
-                              height: 130,
-                              child: file,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
+                child: DrawBox(
+                  face: file,
                 ),
               ),
             ),
@@ -135,14 +96,39 @@ class _DrawBoxState extends State<DrawBox> {
         child: Column(
           children: [
             Expanded(
-              child: Card(
-                clipBehavior: Clip.hardEdge,
-                margin: EdgeInsets.zero,
-                color: Colors.white,
-                surfaceTintColor: Colors.white,
-                child: Scribble(
-                  notifier: notifier,
-                  drawPen: true,
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Card(
+                  clipBehavior: Clip.hardEdge,
+                  margin: EdgeInsets.zero,
+                  color: Colors.white,
+                  surfaceTintColor: Colors.white,
+                  child: Column(
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Container(),
+                      ),
+                      Flexible(
+                        flex: 11,
+                        child: Stack(
+                          children: [
+                            Scribble(
+                              notifier: notifier,
+                              drawPen: true,
+                            ),
+                            IgnorePointer(
+                              child: CharacterShape(face),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Container(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -163,6 +149,123 @@ class _DrawBoxState extends State<DrawBox> {
           ],
         ),
       ),
+    );
+  }
+
+  CharacterShape(face) {
+    return Row(
+      children: [
+        Flexible(
+          flex: 23,
+          child: Container(),
+        ),
+        Flexible(
+          flex: 18,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(), // 투명한 컨테이너
+              ),
+              Flexible(
+                flex: 5,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 2),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 31,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 12,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(
+                  height: double.infinity,
+                  child: Center(
+                    child: face,
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 15,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 2),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 20,
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 2),
+                        ),
+                        child: Container(),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 2),
+                        ),
+                        child: Container(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 18,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 13,
+                child: Container(),
+              ),
+              Flexible(
+                flex: 5,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 2),
+                  ),
+                  child: Container(),
+                ),
+              ),
+              Flexible(
+                flex: 31,
+                child: Container(),
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          flex: 23,
+          child: Container(),
+        ),
+      ],
     );
   }
 
@@ -219,21 +322,26 @@ class _DrawBoxState extends State<DrawBox> {
           height: 400,
           width: 400,
           child: FutureBuilder<List<Uint8List>>(
-            future: image.then((imgData) {
+            future: image.then((imgData) async {
               Uint8List imagedata = imgData.buffer.asUint8List();
+
+              Uint8List resizedImageData =
+                  await _resizeImageToMultiple(imagedata);
+
               var temp = Future.wait([
-                _extractTile(imagedata, 41, 13, 12, 15), //0 몸통
-                _extractTile(imagedata, 33, 13, 8, 4), //1 왼팔 팔꿈치~어깨
-                _extractTile(imagedata, 25, 13, 8, 4), //2 왼팔 손~팔꿈치
-                _extractTile(imagedata, 53, 13, 8, 4), //3 오른팔 팔꿈치~어깨
-                _extractTile(imagedata, 61, 13, 8, 4), //4 오른팔 손~팔꿈치
-                _extractTile(imagedata, 41, 28, 6, 10), //5 왼다리 위
-                _extractTile(imagedata, 41, 38, 6, 10), //6 왼다리 아래
-                _extractTile(imagedata, 47, 28, 6, 10), //7 오른 다리 위
-                _extractTile(imagedata, 47, 38, 6, 10) //8 오른 다리 아래
+                _extractTile(resizedImageData, 41, 13, 12, 15), //0 몸통
+                _extractTile(resizedImageData, 32, 13, 9, 5), //1 왼팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 23, 13, 9, 5), //2 왼팔 손~팔꿈치
+                _extractTile(resizedImageData, 53, 13, 9, 5), //3 오른팔 팔꿈치~어깨
+                _extractTile(resizedImageData, 62, 13, 9, 5), //4 오른팔 손~팔꿈치
+                _extractTile(resizedImageData, 41, 28, 6, 10), //5 왼다리 위
+                _extractTile(resizedImageData, 41, 38, 6, 10), //6 왼다리 아래
+                _extractTile(resizedImageData, 47, 28, 6, 10), //7 오른 다리 위
+                _extractTile(resizedImageData, 47, 38, 6, 10) //8 오른 다리 아래
               ]);
+
               clr_index.value = 9;
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => SettingCam(body: images, face: face),
@@ -262,15 +370,38 @@ class _DrawBoxState extends State<DrawBox> {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              print(image.runtimeType);
-            },
+            onPressed: () {},
             child: const Text("Close"),
           )
         ],
       ),
     );
+  }
+
+  Future<Uint8List> _resizeImageToMultiple(Uint8List imageData) async {
+    final codec = await instantiateImageCodec(imageData);
+    final frame = await codec.getNextFrame();
+    final image = frame.image;
+
+    // Calculate new width and height as multiples of 94
+    int newWidth = (image.width / 94).ceil() * 94;
+    int newHeight = (image.height / 49).ceil() * 49;
+
+    final recorder = PictureRecorder();
+    final canvas = Canvas(recorder);
+    final paint = Paint();
+
+    // Draw the resized image
+    canvas.drawImageRect(
+        image,
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+        Rect.fromLTWH(0, 0, newWidth.toDouble(), newHeight.toDouble()),
+        paint);
+
+    final picture = recorder.endRecording();
+    final resizedImage = await picture.toImage(newWidth, newHeight);
+    final byteData = await resizedImage.toByteData(format: ImageByteFormat.png);
+    return byteData!.buffer.asUint8List();
   }
 
   Future<Uint8List> _extractTile(Uint8List imageData, int startCol,
@@ -279,7 +410,7 @@ class _DrawBoxState extends State<DrawBox> {
     final frame = await codec.getNextFrame();
     final image = frame.image;
 
-    final int tileWidth = image.width ~/ 92;
+    final int tileWidth = image.width ~/ 94;
     final int tileHeight = image.height ~/ 46;
 
     final recorder = PictureRecorder();

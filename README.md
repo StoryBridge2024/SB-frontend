@@ -1,156 +1,126 @@
-# SB-frontend
+# Story Bridge
 
-# CheckList before Demo
-1. GPT Api billing
+> 기간: 2024.02 ~ ing  
+> 소속: 중앙대학교 소프트웨어학부  
+> 교과목: 캡스톤디자인(2)
 
-# How to Setup
-## dotenv
-1. 최상위 디렉토리에 '.env'파일 생성
-2. 디스코드 Settings 채널에 올려둔 내용을 위 파일에 기입
+2024-2 중앙대학교 소프트웨어학부 캡스톤디자인(2) Story Bridge 입니다.
 
-## firebase
-1. 아래 디렉토리에 google-services.json파일 추가
+Story Bridge는 생성형 AI를 이용하여 아이에게 맞춤형 동화를 제작해 주는 서비스입니다. 부모가 아이에게 전달하고자 하는 메시지를 입력하면, 그와 연관된 동화를 제공합니다. 아이는 동화 속 캐릭터로 등장해 움직일 수 있으며, 동화 속 미션을 클리어하면 이야기가 전개됩니다.
 
-- **주의**
-    - dotenv, google-services.json 파일에는 apiKey처럼 공개되면 안되는 내용이 들어가는거라 github에 올라가면 안됌
-    - push하기 전에 항상 dotenv파일 올라가지 않는지 확인하기
-    - 사실 .gitignore로 빠지긴 할텐데 혹시 모르니 확인
+## 팀원
 
-# 가이드라인
+소프트웨어학부 20223908 김주영
 
-## 브랜치 전략
+소프트웨어학부 20225215 이해승
 
-### 작업 순서
+소프트웨어학부 20223086 최예진
 
-- 평소
-    1. `develop`에서 `feature/~` 브랜치 생성 후 작업
-    2. 로컬 테스트 후 이상 없을 시 `develop`으로 PR
-    3. 상호 코드 리뷰
-    4. `Approve`시 `develop`에 merge
-    5. 어느 정도 커밋이 쌓이면 `develop`에서 `release/<version>` 브랜치 생성
-    6. QA 진행, 수정사항 발생 시 해당 release 브랜치에서 작업 후 commit
-    7. 모든 테스트 완료 후 `main`으로 merge 및 배포
-- 긴급 수정(hotfix)
-    1. 관리자에게 연락
-    2. `main`에서 `hotfix`브랜치 생성 후 작업
-    3. 로컬 테스트 후 `main` 으로 PR
-    4. 관리자 확인 후 `merge`
+## 목적
 
-### Git 사용하기
+전두엽이 미성숙한 아이들은 강제적인 학습에 어려움을 느낄 수 있습니다.
+최근 아이들에게 친근한 동화를 활용한 여러 서비스가 제공되는 추세입니다.
+이러한 서비스들은 아이들의 관심을 유발하며 학습 내용을 자연스럽게 익히도록 유도할 수 있습니다.
+이에 스토리 브릿지는 부모님이 전하고자 하는 메시지를 동화라는 요소를 이용해 아이들에게 전해주고자 합니다.
+특히 아이들의 집중력을 높여주고 정서적인 측면에 긍정적인 영향을 미칠 수 있는 참여형 요소를 추가하였습니다.
 
-- Branch Usage
-    - Repository name should be like following format
-        - `feature/<issue_number>`
-        - `feature/<feature_name>`
-        - `release/<version_number>`
-        - `hotfix/<issue_number>`
-- Commit Message
-    - Commit with the smallest change unit
-    - Use category in commit messages
-        - `int`: only for initial commit
-        - `doc`: changes document or comment
-        - `ftr`: add new feature
-        - `mod`: modify existing feature
-        - `fix`: fix an error or issue
-        - `rfc`: refactor code
-        - `add`: add new file or directory
-        - `rmv`: remove existing file or directory
-    - Example
-        - `int: initial commit`
+## 서비스 흐름
 
-## 코딩 컨벤션
+![image](https://github.com/StoryBridge2024/Story-bridge/assets/163294595/5f5a048a-a0f1-4202-86be-1356fbdb00d8)
 
-- 웬만하면 따를 것
+## 핵심 기능
 
-### 1. 네이밍
+1. **동화 생성**
 
-- 변수 이름은 길어도 괜찮으니 필요한 내용은 다 담아주세요.
-- boolean 변수는 `is~` 로 시작
-    - MediaQuery Breakpoints
-    `isNotMobile`(sm), `isNotTablet`(md), `isNotDesktop`(lg)
-- 이벤트 핸들러 함수는 `‘handle’ + ElementName + EventType` 으로 해주세요.
-    - 예시
-        - `handleAddButtonClick`
-        - `handleMemberSelectedChange`
-- 함수 이름은 동사로 시작합니다.
-- 배열 변수 이름
-    - numbers : 배열의 원소들이 number
-    - numberArray : 배열의 이름이 **number**
-    - 대부분의 상황에서는 -s 를 붙인 복수형 명사를 사용하시게 됩니다.
-- 페이지 컴포넌트 변수명은 끝에 `Page`를 붙인다.
-    - ex. `MigrationPage`
+   - 사용자는 원하는 동화 주제를 입력하고 이를 토대로 LLM을 통해 동화 내용과 삽화를 생성합니다.
 
-### 2. 파일, 폴더 이름
+   > GPT를 통해 장면별로 동화 내용, 해당 장면에 필요한 삽화에 대한 설명, 등장인물 등 각종 메타데이타를 함께 생성해줍니다.  
+   > 이후 Dall-E를 통해 장면별로 삽화를 생성합니다.
 
-- 컴포넌트는 `PascalCase`, 나머지 util 함수는 `camelCase`
-- 대부분의 상황에서 `~.ts`는 소문자, `~.tsx`는 대문자입니다.
+2. **주인공 캐릭터 제작**
 
-### 3. 컴포넌트 구현
+   - 아이의 얼굴 사진을 찍어 캐릭터의 얼굴을 만듭니다.
+   - 아이가 직접 그림을 그려 캐릭터의 몸을 만듭니다.
 
-- 코드 순서
-    - useState, useRef 등의 hooks
-    - useEffect
-    - handler
-    - return
-- 굳이 다른 파일로 빼지 않아도 될 컴포넌트는 export할 컴포넌트의 아래에 둡니다.
+   > 그린 몸 그림을 사람 틀 크기에 맞게 몸통, 관절을 기준으로 왼팔 두 부분, 오른팔 두 부분, 왼쪽 다리 두 부분, 오른쪽 다리 두 부분으로 나눕니다.
 
-### 4. 파일 경로
+3. **미션**
 
-- 절대 경로 사용(상대 경로 사용 금지)
+   - 보다 동적인 사용자 경험을 이끌어내기 위해 참여형 요소인 미션 기능을 도입하였습니다.
+   - 동화의 일부 장면에 미션이 포함되어 있어, 미션을 통과해야 스탬프가 찍히고 효과음이 나옵니다.
+   - 제시된 미션(ex. _오른손 흔들기_, _양손 번쩍_, _박수 치기_, ...)을 하면 미션을 통과할 수 있습니다.
+   - 미션을 어려워하는 아이의 경우, 동화 페이지를 클릭해 다음 페이지로 넘어갈 수 있습니다.
 
-### 5. 상수 하드코딩 지양
+   > 미디어파이프를 통해 사용자의 행동을 추적하며, 동화 주인공에 사용자의 행동을 대입합니다.
 
-- 상수는 data 폴더에 둡니다.
-- 상수 변수명은 대문자 스네이크 표기법(`NUM_QUESTIONS`)을 사용합니다.
-- 여기서 상수란 아래와 같은 것들이 있습니다.
-    - 시스템 상수
-        - 동아리 지원서 질문 갯수
-    - 에러 메세지
-        - `const API_RESPONSE_ERROR_MESSEGE = “서버에 문제가 생긴 것 같아요”`
-    - 각종 데이터
-        - `const CATEGORIES = ['정치/사회', '종교', '봉사', '순수과학', 'IT/공학', '예체능', 'STUDY']`
-    - 경로
+4. **저장된 동화 다시보기**
 
-### 6. 함수는 화살표 함수(arrow function) 사용
+   - 봤던 동화를 다시 보기 원하는 사용자를 위해, 만들었던 동화의 내용과 삽화를 다시 볼 수 있게 하였습니다.
 
-- `function` 키워드는 사용을 자제해주세요.
+   > SQL Lite를 통해 동화 내용과 삽화, TTS를 저장해두고 다시 불러올 수 있습니다.
 
-### 7. interface vs. type
+## 요구사항
 
-- 객체 타입은 `interface`, 나머지는 type 키워드 사용
-- [참고 문서](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces)
+- apk실행
+   > device OS: only android  
+   > android version - v17
 
-### 8. Type은 가능한 좁히면 좋습니다.
+- 개발환경
 
-- 단순히 string, number보다 `type Semester = `${'SPRING' | 'FALL'}${number}`` 가 좋습니다.
-- [참고 문서](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
+   > Android API 34  
+   > Flutter 3.22.2  
+   > Dart SDK 3.4.3  
+   > Android Studio 2023.3.1  
 
-### 9. 이벤트 핸들러의 이벤트 객체 타입을 지정해주세요.
+## 실행
 
-- 이벤트 핸들러는 아래 예시처럼 선언하시면 됩니다.
-    - `const handleElementClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {…}`
-- MUI 컴포넌트 중 일부는 리액트에서 제공하는 이벤트 타입이 아닌, 자체 커스텀 이벤트 타입을 가지는 것이 있습니다. 아래 예시처럼 작성하시면 됩니다.
-    
-    ```
-    // MUI TextField의 경우 event 객체의 타입은 아래와 같습니다.
-    
-    const handleChange = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
-      ):void => {...}
-    ```
-    
+1. download `.apk` file on android device
+2. install _story bridge_ application
+3. start story bridge
 
-### 10. API Response Type 반드시 작성해주세요.
+## 데모영상
 
-- API Response Type은  API 호출하는 함수 바로 위에 작성해주세요.
-    - 이 함수는 컴포넌트 안이 아니라, 다른 코드에 작성되어 있어야 합니다.
+[Youtube 데모 영상](https://youtu.be/jtCZxolFO4g): 아이들이 어플을 사용하는 장면을 녹화한 영상입니다.
 
-### 11. 반드시 모든 타입을 달 필요는 없습니다.
+## 개발환경
 
-- TS 컴파일러가 충분히 추론 가능할 경우 달지 않아도 됩니다.
-- [참고 문서](https://www.typescriptlang.org/docs/handbook/type-inference.html#handbook-content)
+### 프레임워크
 
-### 12. 기타
+![flutter](https://img.shields.io/badge/flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![dart](https://img.shields.io/badge/dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
 
-- eslint, prettier 설정을 따릅니다.
-- 애매하면 최대한 strict하게 짜시면 됩니다.
+### 데이타베이스
+
+![sqlite](https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+
+### IDE
+
+![androidstudio](https://img.shields.io/badge/androidstudio-3DDC84.svg?style=for-the-badge&logo=androidstudio&logoColor=white)
+
+### OS
+
+![windows10](https://img.shields.io/badge/windows10-0078D6.svg?style=for-the-badge&logo=windows10&logoColor=white)
+![ubuntu](https://img.shields.io/badge/ubuntu-E95420.svg?style=for-the-badge&logo=ubuntu&logoColor=white)
+
+### Device
+
+![android](https://img.shields.io/badge/android-34A853.svg?style=for-the-badge&logo=android&logoColor=white)
+
+## 개발 환경 설정
+
+1. install _android studio_, _flutter_
+2. git clone
+
+   ```git
+   git clone https://github.com/StoryBridge2024/SB-frontend
+   ```
+
+3. open repository as project on android studio
+4. add `.env` file on root of directory
+
+   ```
+   OPENAI_APIKEY=<Your Openai api key>
+   ```
+
+5. select emulator
+6. run main.dart
