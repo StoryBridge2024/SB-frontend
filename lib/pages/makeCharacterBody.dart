@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:frontend/constants/fairytaleConstants.dart';
 import 'package:frontend/pages/settingCamera.dart';
@@ -55,35 +56,8 @@ class MakeCharacterBody extends StatelessWidget {
                 height: double.infinity,
                 color: Color(0xFFFFFFFF),
                 margin: EdgeInsets.all(25),
-                child: Row(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                    Flexible(
-                      flex: 11,
-                      child: Stack(
-                        children: [
-                          DrawBox(face: file),
-                          IgnorePointer(
-                            ignoring: true,
-                            child: Container(
-                              alignment: Alignment.topCenter,
-                              child: SizedBox(
-                                height: 130,
-                                child: file,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(),
-                    ),
-                  ],
+                child: DrawBox(
+                  face: file,
                 ),
               ),
             ),
@@ -129,14 +103,29 @@ class _DrawBoxState extends State<DrawBox> {
                   margin: EdgeInsets.zero,
                   color: Colors.white,
                   surfaceTintColor: Colors.white,
-                  child: Stack(
+                  child: Column(
                     children: [
-                      Scribble(
-                        notifier: notifier,
-                        drawPen: true,
+                      Flexible(
+                        flex: 1,
+                        child: Container(),
                       ),
-                      IgnorePointer(
-                        child: CharacterShape(),
+                      Flexible(
+                        flex: 11,
+                        child: Stack(
+                          children: [
+                            Scribble(
+                              notifier: notifier,
+                              drawPen: true,
+                            ),
+                            IgnorePointer(
+                              child: CharacterShape(face),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        flex: 1,
+                        child: Container(),
                       ),
                     ],
                   ),
@@ -163,7 +152,7 @@ class _DrawBoxState extends State<DrawBox> {
     );
   }
 
-  CharacterShape() {
+  CharacterShape(face) {
     return Row(
       children: [
         Flexible(
@@ -182,7 +171,7 @@ class _DrawBoxState extends State<DrawBox> {
                 flex: 5,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey, width: 2),
                   ),
                   child: Container(),
                 ),
@@ -200,13 +189,18 @@ class _DrawBoxState extends State<DrawBox> {
             children: [
               Flexible(
                 flex: 13,
-                child: Container(),
+                child: Container(
+                  height: double.infinity,
+                  child: Center(
+                    child: face,
+                  ),
+                ),
               ),
               Flexible(
                 flex: 15,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey, width: 2),
                   ),
                   child: Container(),
                 ),
@@ -219,7 +213,7 @@ class _DrawBoxState extends State<DrawBox> {
                       flex: 1,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(color: Colors.grey, width: 2),
                         ),
                         child: Container(),
                       ),
@@ -228,7 +222,7 @@ class _DrawBoxState extends State<DrawBox> {
                       flex: 1,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border: Border.all(color: Colors.grey, width: 2),
                         ),
                         child: Container(),
                       ),
@@ -255,7 +249,7 @@ class _DrawBoxState extends State<DrawBox> {
                 flex: 5,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey, width: 2),
                   ),
                   child: Container(),
                 ),

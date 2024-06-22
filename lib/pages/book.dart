@@ -176,7 +176,7 @@ class BookHomePage extends StatelessWidget {
                   alignment: Alignment.center,
                   color: color,
                   child: Text(
-                    title,
+                    (useDummy) ? '더미에용' : gSceneModel!.theme,
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
